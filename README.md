@@ -7,7 +7,8 @@ This parser get data from the next sites:
 - csmoney
 - skinsjar (they are banned on 17.08.2017)
 
-File coefficients.txt need to edit sites comission
+_File **coefficients.txt** allows to edit sites comission.
+The price of goods is indicated in **rubles**_
 
 Coming feauture:
 
