@@ -17,34 +17,91 @@ import cfscrape
 
 pd.options.mode.chained_assignment = None
 
+class ParseMarkets():
 
-def magic_str(numList):
-    try:
-        if numList != None:
-            s = map(str, numList)  # ['1','2','3']
-            s = ''.join(s)  # '123'
-        else:
-            s = 'None'
-            return s
-    except (ValueError, TypeError, RuntimeError):
-        print('\nEmpty object or none, continue, value = None\n')
-        s = 'None'
+    def __init__(self):
+
+        #INIT URLS
+        self.initUI()
+
+    def initUI(self):
         pass
-    return s
+
+        #метод записи данных в файл
+        #метод чтения данных из файла
+
+        #метод get_safe запросов
+        #метод get_regular запросов
+
+    def convert_to_str(self, numlist):
+        try:
+            if numlist != None:
+                s = map(str, numlist)  # ['1','2','3']
+                s = ''.join(s)  # '123'
+            else:
+                s = 'None'
+                return s
+        except (ValueError, TypeError, RuntimeError):
+            print('\nEmpty object or none, continue, value = None\n')
+            s = 'None'
+            pass
+        return s
+
+    def check_file_exist(self, filename):
+        directory = os.getcwd()
+
+        file_path = directory + '\\' + 'filename'
+
+        #if os.path.isfile(file_path) == False:
+        pass
+
+    def get_comission(self):
+        num_pattern = r'\d+'
+        num_coeff = []
+        find_num = ''
+
+        with open('coefficients.txt') as f:
+            for line in f:
+                find_num = re.findall(num_pattern, str(line))
+                num_coeff.append(self.convert_to_str(find_num))
+
+        print(num_coeff)
+        return num_coeff
+
+    def get_regular(self, link):
+        get_r = requests.get(link)
+
+        webpage = get_r.content.decode('utf-8')
+
+        return webpage
+
+# def magic_str(numList):
+#     try:
+#         if numList != None:
+#             s = map(str, numList)  # ['1','2','3']
+#             s = ''.join(s)  # '123'
+#         else:
+#             s = 'None'
+#             return s
+#     except (ValueError, TypeError, RuntimeError):
+#         print('\nEmpty object or none, continue, value = None\n')
+#         s = 'None'
+#         pass
+#     return s
 
 
-def show_ip():
-    try:
-        url = 'http://whatismycountry.com'
-        r = requests.Session()
-        page = r.get(url)
-        soup = BeautifulSoup(page.content, 'html5lib')
-        h3 = soup.find('h3')
-        strong = soup.find('strong')
-        print('\nCountry: ', str(h3.get_text()).strip())
-        print('\nIP: ', str(strong.get_text()).strip())
-    except:
-        print('\nCannot parse IP, continue')
+# def show_ip():
+#     try:
+#         url = 'http://whatismycountry.com'
+#         r = requests.Session()
+#         page = r.get(url)
+#         soup = BeautifulSoup(page.content, 'html5lib')
+#         h3 = soup.find('h3')
+#         strong = soup.find('strong')
+#         print('\nCountry: ', str(h3.get_text()).strip())
+#         print('\nIP: ', str(strong.get_text()).strip())
+#     except:
+#         print('\nCannot parse IP, continue')
 
 
 def csgo_market(cs_go_tm_comission):
@@ -261,17 +318,21 @@ def get_comission():
 
 # добавить функцию для проверки кода отклика сервера
 if __name__ == '__main__':
-    convert_usd = ''
+    # convert_usd = ''
 
-    comission_list = get_comission()
+    # comission_list = get_comission()
 
-    print('\n=====Parse data from https://cs.money/=====')
-    convert_usd = csmoney_market(comission_list[1])
+    MainApp = ParseMarkets()
+
+    check = MainApp.get_comission()
+
+    # print('\n=====Parse data from https://cs.money/=====')
+    # convert_usd = csmoney_market(comission_list[1])
 
 
-    print('\n=====Parse data from https://market.csgo.com/=====')
-    csgo_market(comission_list[0])
+    # print('\n=====Parse data from https://market.csgo.com/=====')
+    # csgo_market(comission_list[0])
 
 
-    print('\n=====Parse data from https://csgosell.com/=====')
-    csgosell_market(convert_usd, comission_list[3])
+    # print('\n=====Parse data from https://csgosell.com/=====')
+    # csgosell_market(convert_usd, comission_list[3])
