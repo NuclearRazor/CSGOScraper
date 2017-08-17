@@ -11,17 +11,14 @@ import csv
 import json
 from lxml import html
 import codecs
-import pprint
 import pandas as pd
 
 import cfscrape
 
-global get_method
-
 pd.options.mode.chained_assignment = None
 
 
-def magic_str(numList):  # вспомогательная функция
+def magic_str(numList):
     try:
         if numList != None:
             s = map(str, numList)  # ['1','2','3']
@@ -34,6 +31,7 @@ def magic_str(numList):  # вспомогательная функция
         s = 'None'
         pass
     return s
+
 
 def show_ip():
     try:
@@ -48,131 +46,108 @@ def show_ip():
     except:
         print('\nCannot parse IP, continue')
 
+
 def csgo_market(cs_go_tm_comission):
-    try:
 
-        csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
-        r = requests.get('https://market.csgo.com/itemdb/current_730.json')
+    csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
+    r = requests.get('https://market.csgo.com/itemdb/current_730.json')
 
-        data = []
-        data = json.loads(r.content.decode('utf-8'))
+    csgotm_header = ["index", "c_market_name_en", "c_price", "c_quality"]
 
-        for item in data:
-            try:
-                if item == 'db':  # get from json db index
-                    print('\nDatabase csgotm name: ', data[item])
-                    table_data = 'https://market.csgo.com/itemdb/' + data[item]
-            except:
-                print('\nCannot parse JSON data')
+    data = json.loads(r.content)
 
-        print('\nURL of csgotm database: ', table_data)
+    file_name = 'https://market.csgo.com/itemdb/' + data['db']
 
-        r = requests.get(table_data)
+    r = requests.get(file_name)
 
-        with open('csgotm_full_data.csv', 'wb') as file:
-            file.write(r.content)
-            file.close()
-    except:
+    with open('csgotm_full_data.csv', 'wb') as file:
+        file.write(r.content)
+        file.close()
 
-        print('\nCannot parse data from https://market.csgo.com/')
+    print('\nURL of csgotm database: ', file_name)
 
-    # try:
     print('\nEditing csgotm database')
+
     f = pd.read_csv('csgotm_full_data.csv', delimiter=";")
 
     keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
 
     new_file = f[keep_col]
 
-    COMISSION = int(cs_go_tm_comission) / 100
+    COMISSION = int(cs_go_tm_comission)/100
 
     print("\nComission: ", COMISSION)
 
     new_file['c_price'] = new_file['c_price'].apply(
-        lambda x: round(float(str((x) * 0.01 * (1 + COMISSION))), 2))  # + учет комиссии
+        lambda x: round(float((x) * (1 + COMISSION)), 2))  # + учет комиссии
 
     csgotm_csv_db = new_file.reset_index()
 
     csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
 
     print('\n=====Csgotm parsing is done=====\n')
-    # except:
-    # print('\nEdit database error')
 
 
 def csmoney_market(cs_money_comission):
     csmoney_url = 'https://cs.money/load_bots_inventory?hash='
 
+    r = requests.get(csmoney_url)
+
+    webpage = r.content.decode('utf-8')
+
+    data = []
+    name = []
+    quality = []
+    price = []
+    csshellpriceToWrite = []
+    float_val = []
+    row_index = []
+    row_value = 0
+
+    data = json.loads(webpage)
+
+    for each in data:
+        if 'm' in each:
+            name.append(each['m'])
+            row_index.append(row_value)
+            row_value += 1
+        if 'e' in each:
+            quality.append(each['e'])
+        if 'p' in each:
+            price.append(each['p'])
+        if 'f' in each:
+            float_val.append(each['f'])
+
+    COMISSION = int(cs_money_comission)/100
+    
+    print("\nComission: ", COMISSION)
+
     money_url = 'https://cs.money/get_info?hash='
 
     money_pattern = r'(\d+\.\d+)'
 
-    find_pattern = r'\{(.*?)\}'
+    r = requests.get(money_url)
 
-    name_pattern = r'\"m\"\:(.*?)\,\"'
+    money_webpage = r.content.decode('utf-8')
 
-    quality_pattern = r'\"e\"\:(.*?)\,\"'
-
-    price_pattern = r'\"p\"\:(\d+\.\d+)'
-
-    # float_pattern = r'\"(\d+\.\d+)\"'
-    # convert to json algorithm
-
-    r = requests.get(csmoney_url)
-    rr = requests.get(money_url)
-
-    webpage = str(r.content.decode('utf-8'))
-
-    money_webpage = str(rr.content.decode('utf-8'))
-
-    find_value = re.findall(find_pattern, webpage)
     money_value = re.findall(money_pattern, money_webpage)
-    name = re.findall(name_pattern, str(find_value))
-    quality = re.findall(quality_pattern, str(find_value))
-    price_value = re.findall(price_pattern, str(find_value))
 
-    print('\nURL of cs.money database: ', csmoney_url)
-    print('\nRouble course in Csmoney = ', (money_value[1]))
-
-    listToWrite = []
-
-    COMISSION = int(cs_money_comission) / 100
-    print("\nComission: ", COMISSION)
-
-    name_items = []
-    quality_items = []
-    row_index = []
-    row_value = 0
-
-    for name_item in name:
-        name_value = magic_str(name_item)
-        name_clear = name_value.replace('"', '')
-        name_items.append(name_clear)
-        row_index.append(row_value)
-        row_value += 1
-
-    for quality_item in quality:
-        quality_value = magic_str(quality_item)
-        quality_clear = quality_value.replace('"', '')
-        quality_items.append(quality_clear)
-
-    for item in price_value:
-        price = float(magic_str(item)) * (1 + COMISSION) * float(money_value[1])
-        price = round(price, 2)
-        listToWrite.append(price)
-
-    csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
-    my_df = pd.DataFrame(list(map(list, zip(row_index, name_items, listToWrite, quality_items))),
-                         columns=csmoney_header)
-    my_df.to_csv('csmoney_data.csv', index=False)
-
-    print('\n=====Cs.money parsing is done=====\n')
+    print('TEST = ', float(money_value[1]))
 
     convert_value_item = float(money_value[1])
 
+    for price_element in price:
+        price_value = float(price_element)*(1+COMISSION)*convert_value_item
+        price_value = round(price_value, 2)
+        csshellpriceToWrite.append(price_value)
+
+    csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+    csmoney_df = pd.DataFrame(list(map(list, zip(row_index, name, csshellpriceToWrite, quality))), columns = csmoney_header)
+    csmoney_df.to_csv('csmoney_data.csv', index=False)
+
     return convert_value_item
 
-
+#site banned
 def skinsjar_market(convert_value, skinsjar_comission):
     skinsjar_url = 'https://skinsjar.com/api/v3/load/bots?refresh=0&v=0'
 
@@ -284,65 +259,19 @@ def get_comission():
 
     return num_coeff
 
-
 # добавить функцию для проверки кода отклика сервера
-
 if __name__ == '__main__':
     convert_usd = ''
 
     comission_list = get_comission()
 
-    # print('\nYour info:')
-    # show_ip()
-    print('\n=====Parse data from https://market.csgo.com/=====')
-    csgo_market(comission_list[0])
-
-    # print('\nYour info:')
-    # show_ip()
     print('\n=====Parse data from https://cs.money/=====')
     convert_usd = csmoney_market(comission_list[1])
 
-    # print('\nYour info:')
-    # show_ip()
-    # print('\n=====Parse data from https://skinsjar.com/ru/=====')
-    # skinsjar_market(convert_usd, comission_list[2])
 
-    # print('\nYour info:')
-    # show_ip()
+    print('\n=====Parse data from https://market.csgo.com/=====')
+    csgo_market(comission_list[0])
+
+
     print('\n=====Parse data from https://csgosell.com/=====')
     csgosell_market(convert_usd, comission_list[3])
-
-    '''
-
-    try:
-        print('\nYour info:')
-        show_ip()
-        print('\n=====Parse data from https://market.csgo.com/=====')
-        csgo_market()
-    except:
-        print('\n!!!Cannot parse data from https://market.csgo.com/!!!')
-
-    try:
-        print('\nYour info:')
-        show_ip()
-        print('\n=====Parse data from https://cs.money/=====')
-        convert_usd = csmoney_market()
-    except:
-        print('\n!!!Cannot parse data from https://cs.money/!!!')
-
-    try:
-        print('\nYour info:')
-        show_ip()
-        print('\n=====Parse data from https://skinsjar.com/ru/=====')
-        skinsjar_market(convert_usd)
-    except:
-        print('\n!!!Cannot parse data from https://skinsjar.com/ru/!!!')
-
-    try:
-        print('\nYour info:')
-        show_ip()
-        print('\n=====Parse data from https://csgosell.com/=====')
-        csgosell_market(convert_usd)
-    except:
-        print('\n!!!Cannot parse data from https://csgosell.com/!!!')
-    '''
