@@ -135,6 +135,35 @@ class ParseMarkets():
 
         convert_value_item = float(money_value[1])
 
+        return convert_value_item
+
+    def parse_csmoneymarket(self, site_comission):
+        csmoney_url = 'https://cs.money/load_bots_inventory?hash='
+
+        site_data = self.get_url_regular(csmoney_url)
+
+        clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
+
+        convert_course = self.csmoney_usd_course()
+
+        COMISSION = int(convert_course)/100
+        
+        print("\nComission: ", COMISSION)
+
+        csmoney_fixed_price = []
+
+        for price_element in clear_data['prices']:
+            price_value = float(price_element)*(1+COMISSION)*convert_course
+            price_value = round(price_value, 2)
+            csmoney_fixed_price.append(price_value)
+
+        csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+
+        csmoney_df = pd.DataFrame(list(map(list, zip(clear_data['rows_num'], \
+            clear_data['names'], csmoney_fixed_price, clear_data['qualitys']))), columns = csmoney_header)
+
+        csmoney_df.to_csv('csmoney_data.csv', index=False)
+
     def json_filter(self, webpage, name, quality, price, flt):
 
         data = []
@@ -161,16 +190,10 @@ class ParseMarkets():
             if flt in each:
                 float_items.append(each[flt])
 
-        payload = [[]]
+        json_dict = {'rows_num': row_index, 'names': name_items, \
+        'qualitys': quality_items, 'prices': price_items, 'floats': float_items}
 
-        payload.append((row_index, name_items, quality_items, price_items, float_items))
-
-        return payload
-
-
-
-
-
+        return json_dict
 
 # def magic_str(numList):
 #     try:
@@ -276,6 +299,8 @@ def csmoney_market(cs_money_comission):
     
     print("\nComission: ", COMISSION)
 
+    ###----------------------------------------------------------
+
     money_url = 'https://cs.money/get_info?hash='
 
     money_pattern = r'(\d+\.\d+)'
@@ -287,6 +312,8 @@ def csmoney_market(cs_money_comission):
     money_value = re.findall(money_pattern, money_webpage)
 
     print('TEST = ', float(money_value[1]))
+
+    ###-----------------------------------------------------------
 
     convert_value_item = float(money_value[1])
 
@@ -413,7 +440,6 @@ def get_comission():
 
     return num_coeff
 
-# добавить функцию для проверки кода отклика сервера
 if __name__ == '__main__':
 
     MainApp = ParseMarkets()
@@ -421,6 +447,8 @@ if __name__ == '__main__':
     comission_list = MainApp.get_comission()
 
     check = MainApp.parse_csgotmmarket(comission_list[0])
+
+    check_prices = MainApp.parse_csmoneymarket(comission_list[1])
 
     convert_course = MainApp.csmoney_usd_course()
 
