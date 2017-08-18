@@ -21,17 +21,10 @@ class ParseMarkets():
 
     def __init__(self):
 
-        #INIT URLS
         self.initUI()
 
     def initUI(self):
         pass
-
-        #метод записи данных в файл
-        #метод чтения данных из файла
-
-        #метод get_safe запросов
-        #метод get_regular запросов
 
     def convert_to_str(self, numlist):
         try:
@@ -52,8 +45,12 @@ class ParseMarkets():
 
         file_path = directory + '\\' + 'filename'
 
-        #if os.path.isfile(file_path) == False:
-        pass
+        #check_file_init = None
+
+        if os.path.isfile(file_path) == False:
+            return False
+        else:
+            return True
 
     def get_comission(self):
         num_pattern = r'\d+'
@@ -68,12 +65,112 @@ class ParseMarkets():
         print(num_coeff)
         return num_coeff
 
-    def get_regular(self, link):
+    def get_url_regular(self, link):
         get_r = requests.get(link)
 
-        webpage = get_r.content.decode('utf-8')
+        webpage = get_r.content
 
         return webpage
+
+    def get_url_safe(self, link):
+
+        scraper = cfscrape.create_scraper()
+        webpage = scraper.get(csgosell_url).content.decode('utf-8')
+        
+        return webpage
+
+    def parse_csgotmmarket(self, site_comission):
+
+        csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
+
+        site_data = self.get_url_regular(csgo_url)
+        #r = requests.get('https://market.csgo.com/itemdb/current_730.json')
+
+        csgotm_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+
+        data = json.loads(site_data)
+
+        file_name = 'https://market.csgo.com/itemdb/' + data['db']
+
+        site_data = self.get_url_regular(file_name)
+
+        with open('csgotm_full_data.csv', 'wb') as file:
+            file.write(site_data)
+
+        print('\nURL of csgotm database: ', file_name)
+
+        print('\nEditing csgotm database')
+
+        f = pd.read_csv('csgotm_full_data.csv', delimiter=";")
+
+        keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
+
+        new_file = f[keep_col]
+
+        comission = int(site_comission)/100
+
+        print("\nComission: ", comission)
+
+        new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float((x) * (1 + comission)), 2))
+
+        csgotm_csv_db = new_file.reset_index()
+
+        csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
+
+        print('\n=====Csgotm parsing is done=====\n')
+
+    def csmoney_usd_course(self):
+
+        money_url = 'https://cs.money/get_info?hash='
+
+        money_pattern = r'(\d+\.\d+)'
+
+        r = requests.get(money_url)
+
+        money_webpage = self.get_url_regular(money_url)
+
+        money_value = re.findall(money_pattern, money_webpage.decode('utf-8'))
+
+        print('\nRUB = ', float(money_value[1]))
+
+        convert_value_item = float(money_value[1])
+
+    def json_filter(self, webpage, name, quality, price, flt):
+
+        data = []
+        name_items = []
+        quality_items = []
+        price_items = []
+        csshellpriceToWrite = []
+        float_items = []
+
+        row_index = []
+        row_value = 0
+
+        data = json.loads(webpage)
+
+        for each in data:
+            if name in each:
+                name_items.append(each[name])
+                row_index.append(row_value)
+                row_value += 1
+            if quality in each:
+                quality_items.append(each[quality])
+            if price in each:
+                price_items.append(each[price])
+            if flt in each:
+                float_items.append(each[flt])
+
+        payload = [[]]
+
+        payload.append((row_index, name_items, quality_items, price_items, float_items))
+
+        return payload
+
+
+
+
+
 
 # def magic_str(numList):
 #     try:
@@ -318,13 +415,14 @@ def get_comission():
 
 # добавить функцию для проверки кода отклика сервера
 if __name__ == '__main__':
-    # convert_usd = ''
-
-    # comission_list = get_comission()
 
     MainApp = ParseMarkets()
 
-    check = MainApp.get_comission()
+    comission_list = MainApp.get_comission()
+
+    check = MainApp.parse_csgotmmarket(comission_list[0])
+
+    convert_course = MainApp.csmoney_usd_course()
 
     # print('\n=====Parse data from https://cs.money/=====')
     # convert_usd = csmoney_market(comission_list[1])
