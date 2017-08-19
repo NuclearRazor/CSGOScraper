@@ -1,6 +1,6 @@
 import time
+import datetime
 import re
-import os
 import csv
 import json
 
@@ -8,63 +8,23 @@ from lxml import html
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+import config as mc
 
 import cfscrape
 
 pd.options.mode.chained_assignment = None
 
-class MetaConfig():
+
+class ParseMarkets(mc.MetaConfig):
 
     def __init__(self):
-
-        self.initReTU()
-
-
-    def initReTU(self):
-        self.check_file_exist('coefficients.txt')
-
-
-    def save_data(self, file_headers, data, mag_fixed_price, mag_name):
-
-        df = pd.DataFrame(list(map(list, zip(data['rows_num'], \
-            data['names'], mag_fixed_price, data['qualitys']))), columns = file_headers)
-
-        file_name = mag_name + '.csv'
-
-        df.to_csv(file_name, index=False)
-
-
-    def evaluate_price(self, prices_data, comission, cource_value):
-
-        fixed_price = []
-
-        for price_element in prices_data:
-            price_value = float(price_element)*(1+comission)*cource_value
-            price_value = round(price_value, 2)
-            fixed_price.append(price_value)
-
-        return fixed_price
-
-
-    def check_file_exist(self, filename):
-        directory = os.getcwd()
-
-        file_path = directory + '\\' + filename
-
-        if os.path.isfile(file_path) == False:
-            print('Cannot find file: ', filename)
-            return False
-        else:
-            return True
-
-
-class ParseMarkets(MetaConfig):
-
-    def __init__(self):
+        super().__init__()
 
         self.initUI()
 
     def initUI(self):
+
+        print("\nStarted. TIME: "+repr(time.ctime()))
 
         comission_list = self.get_comission()
 
@@ -73,6 +33,8 @@ class ParseMarkets(MetaConfig):
         check_csmoney = self.parse_csmoneymarket(comission_list[1])
 
         check_csgosell = self.parse_csgosellmarket(comission_list[3])
+
+        print("Finished. TIME: "+repr(time.ctime()))
 
 
     def convert_to_str(self, numlist):
@@ -326,5 +288,5 @@ def skinsjar_market(convert_value, skinsjar_comission):
 
 if __name__ == '__main__':
 
-    MetaApp = MetaConfig()
+    MetaApp = mc.createWidget()
     MainApp = ParseMarkets()
