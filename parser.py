@@ -196,16 +196,11 @@ class ParseMarkets(DataEngine):
 
         print('\nURL of https://csgosell.com database: ', csgosell_url)
 
-        COMISSION = int(site_comission) / 100
+        csgosell_comission = int(site_comission) / 100
 
-        print("\nComission: ", COMISSION)
+        print("\nComission: ", csgosell_comission)
 
-        csgosell_fixed_price = []
-
-        for price_element in clear_data['prices']:
-            price_value = float(price_element)*(1+COMISSION)*convert_course
-            price_value = round(price_value, 2)
-            csgosell_fixed_price.append(price_value)
+        csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, convert_course)
 
         csgosell_header = ["index", "c_market_name_en", "c_price", "c_quality"]
 
