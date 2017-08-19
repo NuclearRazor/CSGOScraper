@@ -1,21 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
-from random import choice
-from time import sleep
-from random import uniform
+import time
 import re
-
+import os
 import csv
 import json
+
 from lxml import html
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
 import cfscrape
-import os
 
 pd.options.mode.chained_assignment = None
 
-class DataEngine():
+class MetaConfig():
 
     def __init__(self):
 
@@ -60,7 +58,7 @@ class DataEngine():
             return True
 
 
-class ParseMarkets(DataEngine):
+class ParseMarkets(MetaConfig):
 
     def __init__(self):
 
@@ -121,6 +119,8 @@ class ParseMarkets(DataEngine):
 
 
     def parse_csgotmmarket(self, site_comission):
+        print('\n=====Parse data from https://market.csgo.com/=====')
+
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
 
         site_data = self.get_url_regular(csgo_url)
@@ -136,19 +136,19 @@ class ParseMarkets(DataEngine):
         with open('csgotm_full_data.csv', 'wb') as file:
             file.write(site_data)
 
-        print('\nURL of csgotm database: ', file_name)
+        #print('\nURL of csgotm database: ', file_name)
 
-        print('\nEditing csgotm database')
+        #print('\nEditing csgotm database')
 
-        f = pd.read_csv('csgotm_full_data.csv', delimiter=";")
+        origin_file = pd.read_csv('csgotm_full_data.csv', delimiter=";")
 
         keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
 
-        new_file = f[keep_col]
+        new_file = origin_file[keep_col]
 
         comission = int(site_comission)/100
 
-        print("\nComission: ", comission)
+        #print("\nComission: ", comission)
 
         new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float((x) * (1 + comission)), 2))
 
@@ -172,7 +172,7 @@ class ParseMarkets(DataEngine):
 
         csmoney_comission = int(site_comission)/100
         
-        print("\nComission: ", csmoney_comission)
+        #print("\nComission: ", csmoney_comission)
 
         csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, convert_course)
 
@@ -194,11 +194,11 @@ class ParseMarkets(DataEngine):
 
         convert_course = self.csmoney_usd_course()
 
-        print('\nURL of https://csgosell.com database: ', csgosell_url)
+        #print('\nURL of https://csgosell.com database: ', csgosell_url)
 
         csgosell_comission = int(site_comission) / 100
 
-        print("\nComission: ", csgosell_comission)
+        #print("\nComission: ", csgosell_comission)
 
         csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, convert_course)
 
@@ -326,5 +326,5 @@ def skinsjar_market(convert_value, skinsjar_comission):
 
 if __name__ == '__main__':
 
-    ExistApp = DataEngine()
+    MetaApp = MetaConfig()
     MainApp = ParseMarkets()
