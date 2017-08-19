@@ -254,7 +254,7 @@ try:
 except:
 	print("Can't remove database file")
 	
-# Действием с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
+# Действия с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
 dir = "./files"
 try:
     os.makedirs("./files")
@@ -265,15 +265,17 @@ except OSError as e:
 # Наполняем базу данных информацией
 coeff_csgotm = 0.1
 min_price = 100
-max_price = 500
+max_price = 2000
 coeff_csmoney = 0.03
 csgotm_database = parse_info(db_name, 'csgotm_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csgotm, min_price, max_price)
-sj_database = parse_info(db_name, 'skinsjar_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price)
+sj_database = parse_info(db_name, 'csgosell_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price)
 csmoney_database = parse_info(db_name, 'csmoney_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price) 
 
 result_tables_names=[]
+
 # ------------------------------------------------------ СРАВНЕНИЯ ДЛЯ csgotm ----------------------------------------------------------------------------
 # --------- Сравниваем csgotm к csmoney ----------------------------
+
 print("\nStarted csgotm_csmoney. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
 res_table_name = "csgotm_csmoney"
@@ -283,20 +285,24 @@ columns = ('Index', str(csgotm_database+'_Name'), str(csgotm_database+'_Price'),
 select_data_from_db(db_name, str(dir+"/"+res_table_name), res_table_name, columns)
 print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
+
 # ------------------------------------------------------------------
-# --------- Сравниваем csgotm к skinsjar ---------------------------
-print("\nStarted csgotm_skinsjar. TIME: "+repr(time.ctime()))
+# --------- Сравниваем csgotm к csgosell ---------------------------
+
+print("\nStarted csgotm_csgosell. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
-res_table_name = "csgotm_skinsjar"
+res_table_name = "csgotm_csgosell"
 create_result_table_from_select(db_name, res_table_name, csgotm_database, sj_database)
 # Записываем ее в файл
 columns = ('Index', str(csgotm_database+'_Name'), str(csgotm_database+'_Price'), str(csgotm_database+'_Quality'), str(sj_database+'_Name'), str(sj_database+'_Price'), str(sj_database+'_Quality'), str('Profit_'+csgotm_database+'_TO_'+sj_database))
 select_data_from_db(db_name, str(dir+"/"+res_table_name), res_table_name, columns)
 print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
+
 # ------------------------------------------------------------------
 # ------------------------------------------------------ СРАВНЕНИЯ ДЛЯ csmoney ----------------------------------------------------------------------------
 # --------- Сравниваем csmoney к csgotm ----------------------------
+
 print("\nStarted csmoney_csgotm. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
 res_table_name = "csmoney_csgotm"
@@ -308,11 +314,11 @@ print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
 # -------------------------------------------------------------------
-# --------- Сравниваем csmoney к skinsjar ---------------------------
+# --------- Сравниваем csmoney к csgosell ---------------------------
 
-print("\nStarted csmoney_skinsjar. TIME: "+repr(time.ctime()))
+print("\nStarted csmoney_csgosell. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
-res_table_name = "csmoney_skinsjar"
+res_table_name = "csmoney_csgosell"
 create_result_table_from_select(db_name, res_table_name, csmoney_database, sj_database)
 # Записываем ее в файл
 columns = ('Index', str(csmoney_database+'_Name'), str(csmoney_database+'_Price'), str(csmoney_database+'_Quality'), str(sj_database+'_Name'), str(sj_database+'_Price'), str(sj_database+'_Quality'), str('Profit_'+csmoney_database+'_TO_'+sj_database))
@@ -321,12 +327,12 @@ print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
 # ------------------------------------------------------------------
-# ------------------------------------------------------ СРАВНЕНИЯ ДЛЯ skinsjar ----------------------------------------------------------------------------
-# --------- Сравниваем skinsjar к csgotm ---------------------------
+# ------------------------------------------------------ СРАВНЕНИЯ ДЛЯ csgosell ----------------------------------------------------------------------------
+# --------- Сравниваем csgosell к csgotm ---------------------------
 
-print("\nStarted skinsjar_csgotm. TIME: "+repr(time.ctime()))
+print("\nStarted csgosell_csgotm. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
-res_table_name = "skinsjar_csgotm"
+res_table_name = "csgosell_csgotm"
 create_result_table_from_select(db_name, res_table_name, sj_database, csgotm_database)
 # Записываем ее в файл
 columns = ('Index', str(sj_database+'_Name'), str(sj_database+'_Price'), str(sj_database+'_Quality'), str(csgotm_database+'_Name'), str(csgotm_database+'_Price'), str(csgotm_database+'_Quality'), str('Profit_'+sj_database+'_TO_'+csgotm_database))
@@ -335,11 +341,11 @@ print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
 # ------------------------------------------------------------------
-# --------- Сравниваем skinsjar к csmoney ---------------------------
+# --------- Сравниваем csgosell к csmoney ---------------------------
 
-print("\nStarted skinsjar_csmoney. TIME: "+repr(time.ctime()))
+print("\nStarted csgosell_csmoney. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
-res_table_name = "skinsjar_csmoney"
+res_table_name = "csgosell_csmoney"
 create_result_table_from_select(db_name, res_table_name, sj_database, csmoney_database)
 # Записываем ее в файл
 columns = ('Index', str(sj_database+'_Name'), str(sj_database+'_Price'), str(sj_database+'_Quality'), str(csmoney_database+'_Name'), str(csmoney_database+'_Price'), str(csmoney_database+'_Quality'), str('Profit_'+sj_database+'_TO_'+csmoney_database))
@@ -347,6 +353,6 @@ select_data_from_db(db_name, str(dir+"/"+res_table_name), res_table_name, column
 print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
-# Находим профиты среди всех выборок в диапазоне 20-60%
-output_file_name = dir+"/interval_20_to_60"
-find_profit_in_DB_in_range(db_name, 20, 60, result_tables_names, output_file_name)
+
+output_file_name = dir+"/interval_30_to_110"
+find_profit_in_DB_in_range(db_name, 30, 110, result_tables_names, output_file_name)
