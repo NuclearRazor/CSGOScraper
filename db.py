@@ -34,15 +34,19 @@ def parse_info(db_name, filename, col_index, col_name, col_price, col_quality, c
 
 	c.execute(parameter_name)
 	
+	# Делаем проверку цен для входных аргументов функции. Возвращаемое значение - корректные границы цен
 	correct_prices = check_prices(min_price, max_price)
 	with open(filename_csv,'r') as fin: 
 		dr = csv.DictReader(fin) # comma is default delimiter
+		# float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
+		# Если нет границ для цены, то добавляем в бд все записи
 		if correct_prices[0]==None:
 			to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
+		# Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
 		else:
 			to_db=[]
 			for i in dr:
-				price = round(float(i[col_price])+float(i[col_price])*coeff,4)
+				price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
 				if price>=correct_prices[0] and price<=correct_prices[1]:
 					to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
 		fin.close()
@@ -55,19 +59,26 @@ def parse_info(db_name, filename, col_index, col_name, col_price, col_quality, c
 	conn.close()
 	return filename
 
+# Проверяет цены
 def check_prices(min_price, max_price):
+	# Если цены не указаны или имеют отрицательное значение, то считаем, что цен нет
 	if min_price==None or max_price==None or float(min_price)<0 or float(max_price)<0:
 		return [None, None]
-		
+	# Запоминаем значение цен
 	l_min = float(min_price)
 	l_max = float(max_price)
+	# Если цены "перевернуты", то возвращаем их "наоборот"
 	if l_min>l_max:
 		return [l_max, l_min]
+	# Иначе возвращаем цены как есть
 	else:
 		return [l_min, l_max]
+		
 # Делает выборку всех данных из бд и записывает их в файл с именем "имя_таблицы+1.csv"
 def select_data_from_db(db_name, filename, table_name, columns):
 	new_fn = str(filename+"1.csv")
+	
+	# Запрос на выборку всех столбцов всех записей из бд с заданным названием
 	parameter_name = 'SELECT * FROM %s' % (table_name)
 	parameter_name = parameter_name.replace('\'', '"')
 
@@ -135,6 +146,7 @@ def create_result_table_from_select(db_name, res_table_name, tb1, tb2):
 		#parameter_name = parameter_name.replace('\'', '"')
 		c.execute(parameter_name)
 		result = c.fetchone()
+
 		# 1. Если такого товара нет в "подпольной" таблице
 		if result==None:
 			# 1.1. Записываем товар в подпольную таблицу
@@ -254,7 +266,7 @@ try:
 except:
 	print("Can't remove database file")
 	
-# Действия с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
+# Действием с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
 dir = "./files"
 try:
     os.makedirs("./files")
@@ -265,14 +277,13 @@ except OSError as e:
 # Наполняем базу данных информацией
 coeff_csgotm = 0.1
 min_price = 100
-max_price = 2000
+max_price = 500
 coeff_csmoney = 0.03
 csgotm_database = parse_info(db_name, 'csgotm_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csgotm, min_price, max_price)
 sj_database = parse_info(db_name, 'csgosell_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price)
 csmoney_database = parse_info(db_name, 'csmoney_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price) 
 
 result_tables_names=[]
-
 # ------------------------------------------------------ СРАВНЕНИЯ ДЛЯ csgotm ----------------------------------------------------------------------------
 # --------- Сравниваем csgotm к csmoney ----------------------------
 
@@ -342,7 +353,6 @@ result_tables_names.append(res_table_name)
 
 # ------------------------------------------------------------------
 # --------- Сравниваем csgosell к csmoney ---------------------------
-
 print("\nStarted csgosell_csmoney. TIME: "+repr(time.ctime()))
 # Получаем таблицу - объединение
 res_table_name = "csgosell_csmoney"
@@ -353,6 +363,6 @@ select_data_from_db(db_name, str(dir+"/"+res_table_name), res_table_name, column
 print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
-
-output_file_name = dir+"/interval_30_to_110"
-find_profit_in_DB_in_range(db_name, 30, 110, result_tables_names, output_file_name)
+# Находим профиты среди всех выборок в диапазоне 20-60%
+output_file_name = dir+"/interval_20_to_60"
+find_profit_in_DB_in_range(db_name, 20, 60, result_tables_names, output_file_name)
