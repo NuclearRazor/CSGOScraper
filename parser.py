@@ -126,7 +126,7 @@ class ParseMarkets(mc.MetaConfig):
 
         csmoney_url = 'https://cs.money/load_bots_inventory?hash='
 
-        site_data = self.get_url_regular(csmoney_url)
+        site_data = self.get_url_safe(csmoney_url)
 
         clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
 
