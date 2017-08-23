@@ -131,9 +131,11 @@ def create_result_table_from_select(db_name, res_table_name, tb1, tb2):
 	WHERE %s.%s=%s.%s""" % (tb1, '`index`', tb1, 'c_market_name_en', tb1, 'c_price', tb1, 'c_quality', tb2, 'c_market_name_en', tb2, 'c_price', tb2, 'c_quality', tb1, tb2, tb1, 'c_market_name_en', tb2, 'c_market_name_en')
 	parameter_name = parameter_name.replace('\'', '"')
 	c.execute(parameter_name)
+
 	# Для каждого элемента выборки
 	curProfit_1to2 = 0
 	curProfit_2to1 = 0
+
 	for row in c.fetchall():
 		# Рассчитываем текущую выгоду
 		# Остаток процентов из 8 (3 уже учитываются)
@@ -275,10 +277,10 @@ except OSError as e:
         raise
 
 # Наполняем базу данных информацией
-coeff_csgotm = 0.1
-min_price = 100
-max_price = 500
-coeff_csmoney = 0.03
+coeff_csgotm = 0
+min_price = 1
+max_price = 8000
+coeff_csmoney = 0
 csgotm_database = parse_info(db_name, 'csgotm_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csgotm, min_price, max_price)
 sj_database = parse_info(db_name, 'csgosell_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price)
 csmoney_database = parse_info(db_name, 'csmoney_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price) 
@@ -364,5 +366,5 @@ print("Finished. TIME: "+repr(time.ctime()))
 result_tables_names.append(res_table_name)
 
 # Находим профиты среди всех выборок в диапазоне 20-60%
-output_file_name = dir+"/interval_20_to_60"
-find_profit_in_DB_in_range(db_name, 20, 60, result_tables_names, output_file_name)
+output_file_name = dir+"/interval_20_to_110"
+find_profit_in_DB_in_range(db_name, 20, 110, result_tables_names, output_file_name)
