@@ -365,6 +365,6 @@ class DataAnalyse():
 
 if __name__ == "__main__":
 
-    magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
+    magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv']
     db = DataAnalyse(magasines_data)
 
