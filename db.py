@@ -255,9 +255,9 @@ class DataAnalyse():
             # Рассчитываем текущую выгоду
             # Остаток процентов из 8 (3 уже учитываются)
 
-            second_price = float(row[2]) #+0.05*float(row[5])
+            second_price = float(row[5]) #+0.05*float(row[5])
 
-            curProfit_1to2 = int(100*(1-abs(float(row[5])/second_price)))
+            curProfit_1to2 = int(100*(1-abs(float(row[2])/second_price)))
             
             # Ищем товар в подпольной таблице
             parameter_name = """SELECT * FROM %s WHERE name = %s""" % (my_table_name, repr(row[1]))
