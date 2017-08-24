@@ -63,6 +63,7 @@ class DataAnalyse():
 
                     first_database = self.parse_info(db_name, all_data[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
                     second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+                    
                     self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
                     # Записываем ее в файл
@@ -253,9 +254,10 @@ class DataAnalyse():
         for row in c.fetchall():
             # Рассчитываем текущую выгоду
             # Остаток процентов из 8 (3 уже учитываются)
-            second_price = float(row[5])+0.05*float(row[5])
-            curProfit_1to2 = int(100*(1-abs(float(row[2])/second_price)))
-            #curProfit_2to1 = int(100*(1-abs(float(row[5])/float(row[2]))))
+
+            second_price = float(row[2]) #+0.05*float(row[5])
+
+            curProfit_1to2 = int(100*(1-abs(float(row[5])/second_price)))
             
             # Ищем товар в подпольной таблице
             parameter_name = """SELECT * FROM %s WHERE name = %s""" % (my_table_name, repr(row[1]))
