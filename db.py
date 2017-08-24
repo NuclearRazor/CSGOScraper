@@ -45,7 +45,7 @@ class DataAnalyse():
         min_profit = 25
         max_profit = 150
 
-        compare_fx = repr(time.ctime()
+        compare_fx = repr(time.ctime())
 
         for index_i, i in enumerate(all_data):
             #parse each csv file
@@ -54,24 +54,15 @@ class DataAnalyse():
             mag_list.append(mag_database)
             for index_j, j in enumerate(all_data):
                 if i != j:
-                    print('i = ', i, 'data[i] = ', all_data[index_i])
-                    print('j = ', i, 'data[j] = ', all_data[index_j])
-                    #расчет комиссий при попарном сравнении
-                    #добавление каждого сравнения комиссий k1, k2, ..., kn в список
-                    #добавление каждого значения сравнения комиссий с именем результирующей таблицы
-                    #res_table_name = "i_j"
-                    #поиск мин значения комиссии среди элементов полученного списка
-                    #вывод имени таблицы и этой мин комиссии для отладки
-
-                    #compare data[i] and data[j] files
+                    # print('i = ', i, 'data[i] = ', all_data[index_i])
+                    # print('j = ', i, 'data[j] = ', all_data[index_j])
 
                     what_to_cmpr = all_data[index_i].replace('.csv', '') + "_" + all_data[index_j].replace('.csv', '')
 
-                    print("\Compare " + all_data[index_i].replace('.csv', '') + " and " + all_data[index_i].replace('.csv', '')
+                    print("\nCompare " + all_data[index_i].replace('_data.csv', '') + " and " + all_data[index_i].replace('_data.csv', ''))
 
                     first_database = self.parse_info(db_name, all_data[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
                     second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-
                     self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
                     # Записываем ее в файл
@@ -82,18 +73,16 @@ class DataAnalyse():
 
                     self.result_tables_names.append(what_to_cmpr)
 
-            
-            # Находим профиты среди всех выборок в диапазоне 
-            output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
-            self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
+                    # Находим профиты среди всех выборок в диапазоне 
+                    output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
+                    self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
+        
+        endcompare_fx = repr(time.ctime())
 
-            endcompare_fx = repr(time.ctime())
-
-
-        print('Start compare: ', compare_fx)
+        print('\nStart compare: ', compare_fx)
         print('End compare: ', endcompare_fx)
  
-        print('Number of mag datas = ', len(mag_list))   
+        print('\nNumber of mag datas = ', len(mag_list))   
 
         self.get_comission()
 
@@ -376,6 +365,4 @@ if __name__ == "__main__":
 
     magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
     db = DataAnalyse(magasines_data)
-
-    print('comission test = ', comission[0])
 
