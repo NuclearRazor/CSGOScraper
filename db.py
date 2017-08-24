@@ -40,7 +40,7 @@ class DataAnalyse():
         min_price = 1
         max_price = 8000
         mag_list = []
-        self.result_tables_names=[]
+        self.result_tables_names = []
 
         min_profit = 25
         max_profit = 150
@@ -68,6 +68,7 @@ class DataAnalyse():
 
                     # Записываем ее в файл
                     columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
+                    
                     str(second_database + '_Name'), str(second_database + '_Price'), str(second_database + '_Quality'), str('Profit_' + first_database + '_TO_' + second_database))
                     
                     self.select_data_from_db(db_name, str(dir + "/" + what_to_cmpr), what_to_cmpr, columns)
