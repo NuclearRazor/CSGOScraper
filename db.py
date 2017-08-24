@@ -20,6 +20,22 @@ class DataAnalyse():
 
     def initUI(self, all_data):
 
+        db_name = 'parsing_data'
+        # Удаляем файл базы данных, если такой уже существует воизбежание перезаполнения данных и для увеличения скорости работы
+        try:
+            os.remove(db_name+'.db')
+            print('File removed: '+db_name+'.db')
+        except:
+            print("Can't remove database file")
+            
+        # Действием с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
+        dir = "./files"
+        try:
+            os.makedirs("./files")
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
         coeff_mag = 0
         min_price = 1
         max_price = 8000
@@ -33,10 +49,29 @@ class DataAnalyse():
             for index_j, j in enumerate(all_data):
                 if i != j:
                     print('i = ', i, 'data[i] = ', all_data[index_i])
+                    print('j = ', i, 'data[j] = ', all_data[index_j])
+                    #расчет комиссий при попарном сравнении
+                    #добавление каждого сравнения комиссий k1, k2, ..., kn в список
+                    #добавление каждого значения сравнения комиссий с именем результирующей таблицы
+                    #res_table_name = "i_j"
+                    #поиск мин значения комиссии среди элементов полученного списка
+                    #вывод имени таблицы и этой мин комиссии для отладки
  
         print('Number of mag datas = ', len(mag_list))   
 
         self.get_comission()
+
+    def delete_tb(self, db_name, table_name):
+        parameter_name = 'DROP TABLE IF EXISTS %s' % (table_name)
+        parameter_name = parameter_name.replace('\'', '"')
+        conn = sqlite3.connect(db_name + '.db')
+        #print('\ncsv file name = ', filename_csv)
+        print('schema = ', parameter_name)
+        c = conn.cursor()
+        c.execute(parameter_name)
+        conn.commit()
+        c.close()
+        conn.close()
 
     def get_comission(self):
         num_pattern = r'\d+'
@@ -112,56 +147,6 @@ class DataAnalyse():
         c.close()
         conn.close()
         return filename
-
-
-def parse_info(db_name, filename, col_index, col_name, col_price, col_quality, coeff, min_price, max_price):
-        
-    global c
-    global conn
-
-    filename_csv = filename
-    filename = filename.replace('.csv', '')
-
-    # Добавлены вызовы функции repr() для преобразования объектов в строки
-    parameter_name = 'CREATE TABLE IF NOT EXISTS %s(%s, %s, %s, %s)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality))
-    parameter_save = 'INSERT INTO %s(%s, %s, %s, %s) VALUES (?, ?, ?, ?)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality))
-    parameter_name = parameter_name.replace('\'', '"')
-    parameter_save = parameter_save.replace('\'', '"')
-
-    conn = sqlite3.connect(db_name + '.db')
-
-    print('\ncsv file name = ', filename_csv)
-    print('schema = ', parameter_name)
-    print('insert data schema = ', parameter_save)
-
-    c = conn.cursor()
-
-    c.execute(parameter_name)
-    
-    # Делаем проверку цен для входных аргументов функции. Возвращаемое значение - корректные границы цен
-    correct_prices = check_prices(min_price, max_price)
-    with open(filename_csv,'r') as fin: 
-        dr = csv.DictReader(fin) # comma is default delimiter
-        # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
-        # Если нет границ для цены, то добавляем в бд все записи
-        if correct_prices[0]==None:
-            to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
-        # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
-        else:
-            to_db=[]
-            for i in dr:
-                price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
-                if price>=correct_prices[0] and price<=correct_prices[1]:
-                    to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
-        fin.close()
-
-    c.executemany(parameter_save, to_db)
-
-    conn.commit()
-
-    c.close()
-    conn.close()
-    return filename
 
 # Проверяет цены
 def check_prices(min_price, max_price):
@@ -349,51 +334,13 @@ VALUES (%s, %s, %s, %s, %s, %s, %s,
     conn.commit()
     c.close()
     conn.close()
-    
-    
-# Удаляет таблицу   
-def delete_tb(db_name, table_name):
-    parameter_name = 'DROP TABLE IF EXISTS %s' % (table_name)
-    parameter_name = parameter_name.replace('\'', '"')
-    conn = sqlite3.connect(db_name + '.db')
-    #print('\ncsv file name = ', filename_csv)
-    print('schema = ', parameter_name)
-    c = conn.cursor()
-    c.execute(parameter_name)
-    conn.commit()
-    c.close()
-    conn.close()
 
-db_name = 'parsing_data'
-# Удаляем файл базы данных, если такой уже существует воизбежание перезаполнения данных и для увеличения скорости работы
-try:
-    os.remove(db_name+'.db')
-    print('File removed: '+db_name+'.db')
-except:
-    print("Can't remove database file")
-    
-# Действием с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
-dir = "./files"
-try:
-    os.makedirs("./files")
-except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
 
 if __name__ == "__main__":
 
-    magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv']
+    magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
     db = DataAnalyse(magasines_data)
     comission = db.get_comission()
-
-    # # Наполняем базу данных информацией
-    # coeff_csgotm = 0
-    # min_price = 1
-    # max_price = 8000
-    # coeff_csmoney = 0
-    # csgotm_database = parse_info(db_name, 'csgotm_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csgotm, min_price, max_price)
-    # sj_database = parse_info(db_name, 'csgosell_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price)
-    # csmoney_database = parse_info(db_name, 'csmoney_data.csv', 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_csmoney, min_price, max_price) 
 
 
 
