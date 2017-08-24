@@ -33,7 +33,7 @@ class MetaConfig():
         fixed_price = []
 
         for price_element in prices_data:
-            price_value = float(price_element)*(1+comission)*cource_value
+            price_value = (float(price_element)*(1+comission))*cource_value
             price_value = round(price_value, 2)
             fixed_price.append(price_value)
 
