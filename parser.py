@@ -24,7 +24,7 @@ class ParseMarkets(mc.MetaConfig):
 
     def initUI(self):
 
-        print("\nStarted. TIME: "+repr(time.ctime()))
+        start_fx = repr(time.ctime())
 
         comission_list = self.get_comission()
 
@@ -33,6 +33,8 @@ class ParseMarkets(mc.MetaConfig):
         check_csmoney = self.parse_csmoneymarket(comission_list[1])
 
         check_csgosell = self.parse_csgosellmarket(comission_list[3])
+
+        print("\nStarted. TIME: "+start_fx)
 
         print("Finished. TIME: "+repr(time.ctime()))
 
