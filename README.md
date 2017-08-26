@@ -13,6 +13,5 @@ The price of goods is indicated in **rubles**_
 Coming feauture:
 
 - parse data from **opskins market**
-- compare loaded data's by sqllite3
 
 ### **For informational purposes only**
