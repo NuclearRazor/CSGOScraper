@@ -114,7 +114,7 @@ class ParseMarkets(mc.MetaConfig):
 
         #print("\nComission: ", comission)
 
-        new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float((x) * (1 + comission)), 2))
+        new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float(x/100)*(1 + comission), 2))
 
         csgotm_csv_db = new_file.reset_index()
 
@@ -160,7 +160,7 @@ class ParseMarkets(mc.MetaConfig):
 
         #print('\nURL of https://csgosell.com database: ', csgosell_url)
 
-        csgosell_comission = int(site_comission) / 100
+        csgosell_comission = int(site_comission)/100
 
         #print("\nComission: ", csgosell_comission)
 
