@@ -11,6 +11,25 @@ import time
 conn = None
 c = None
 
+
+class Shopinfo():
+    def __init__(self, shop_name, table_name, comission):
+    super().__init__()
+
+    self.initUI()
+
+    def initUI(self):
+        pass
+
+    def get_file_name(self):
+        pass
+
+    def get_comission(self):
+        pass
+
+    def get_table_name(self):
+        pass
+
 class DataAnalyse():
 
     def __init__(self, all_data):
@@ -383,6 +402,6 @@ class DataAnalyse():
 
 if __name__ == "__main__":
 
-    magasines_data = ['csgosell_data.csv', 'skinsjar_data.csv', 'csmoney_data.csv']
+    magasines_data = ['csgosell_data.csv', 'skinsjar_data.csv', 'csmoney_data.csv', 'csgotm_data.csv']
     db = DataAnalyse(magasines_data)
 
