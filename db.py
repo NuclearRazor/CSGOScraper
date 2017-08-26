@@ -24,7 +24,7 @@ class DataAnalyse():
         # Удаляем файл базы данных, если такой уже существует воизбежание перезаполнения данных и для увеличения скорости работы
         try:
             os.remove(db_name+'.db')
-            print('File removed: '+db_name+'.db')
+            #print('File removed: '+db_name+'.db')
         except:
             print("Can't remove database file")
             
@@ -49,21 +49,25 @@ class DataAnalyse():
 
         for index_i, i in enumerate(all_data):
             #parse each csv file
-            print('\nParse data from: ', all_data[index_i])
+            #print('\nParse data from: ', all_data[index_i])
             mag_database = self.parse_info(db_name, all_data[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
             mag_list.append(mag_database)
             for index_j, j in enumerate(all_data):
                 if i != j:
-                    # print('i = ', i, 'data[i] = ', all_data[index_i])
-                    # print('j = ', i, 'data[j] = ', all_data[index_j])
 
                     what_to_cmpr = all_data[index_i].replace('.csv', '') + "_" + all_data[index_j].replace('.csv', '')
 
-                    print("\nCompare " + all_data[index_i].replace('_data.csv', '') + " and " + all_data[index_i].replace('_data.csv', ''))
+                    print("\nCompare " + all_data[index_i].replace('_data.csv', '') + " and " + all_data[index_j].replace('_data.csv', ''))
 
-                    first_database = self.parse_info(db_name, all_data[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-                    second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-                    
+                    # Первой дб считаем ту, что в итерации главного цикла
+                    first_database = mag_database
+                    # Если в главном цикле итерация для первого магазина, то парсим информацию для j-го магазина
+                    if all_data[index_i]==all_data[0]:
+                        second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+                    # Иначе считаем именем второго магазина имя файла - расширение
+                    else:
+                        second_database = all_data[index_j].replace('.csv', '')
+
                     self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
                     # Записываем ее в файл
@@ -93,7 +97,7 @@ class DataAnalyse():
         parameter_name = parameter_name.replace('\'', '"')
         conn = sqlite3.connect(db_name + '.db')
         #print('\ncsv file name = ', filename_csv)
-        print('schema = ', parameter_name)
+        #print('schema = ', parameter_name)
         c = conn.cursor()
         c.execute(parameter_name)
         conn.commit()
@@ -142,9 +146,9 @@ class DataAnalyse():
 
         conn = sqlite3.connect(db_name + '.db')
 
-        print('\ncsv file name = ', filename_csv)
-        print('schema = ', parameter_name)
-        print('insert data schema = ', parameter_save)
+        #print('\ncsv file name = ', filename_csv)
+        #print('schema = ', parameter_name)
+        #print('insert data schema = ', parameter_save)
 
         c = conn.cursor()
 
@@ -200,8 +204,8 @@ class DataAnalyse():
 
         conn = sqlite3.connect(db_name + '.db')
 
-        print('\ncsv file name = ', filename)
-        print('schema = ', parameter_name)
+        # print('\ncsv file name = ', filename)
+        # print('schema = ', parameter_name)
 
         c = conn.cursor()
 
@@ -214,7 +218,7 @@ class DataAnalyse():
                  wr.writerow(row)
             selected.close()
 
-        print ("Data written to"+repr(new_fn))
+        # print ("Data written to"+repr(new_fn))
         conn.commit()
         c.close()
         conn.close()
@@ -254,46 +258,57 @@ class DataAnalyse():
 
         for row in c.fetchall():
             # Рассчитываем текущую выгоду
-            # Остаток процентов из 8 (3 уже учитываются)
 
-            second_price = float(row[5]) #+0.05*float(row[5])
+            second_price = float(row[5]) #цены во втором магазине
+            first_price = float(row[2])
 
-            curProfit_1to2 = int(100*(1-abs(float(row[2])/second_price)))
-            
-            # Ищем товар в подпольной таблице
-            parameter_name = """SELECT * FROM %s WHERE name = %s""" % (my_table_name, repr(row[1]))
-            #parameter_name = parameter_name.replace('\'', '"')
-            c.execute(parameter_name)
-            result = c.fetchone()
+            # print('second price = ', float(row[5][1:5]))
+            # print('first price = ', float(row[2][1:5]))
 
-            # 1. Если такого товара нет в "подпольной" таблице
-            if result==None:
-                # 1.1. Записываем товар в подпольную таблицу
-                parameter_save = '''INSERT OR IGNORE INTO %s(`index`, name, price1, price2, profit1to2) 
-            VALUES (%s, %s, %s, %s, %d)''' % (my_table_name, repr(row[0]), repr(row[1]), repr(row[2]), repr(second_price), curProfit_1to2)
-                c.execute(parameter_save)
-                # 1.2. Записываем товар в результирующую таблицу
-                parameter_save = '''INSERT OR IGNORE INTO %s(%s, %s, %s, %s, %s, %s, %s, %s) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %d)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2', repr(row[0]), repr(row[1]), repr(row[2]), repr(row[3]), repr(row[4]), repr(second_price), repr(row[6]), curProfit_1to2)
-                c.execute(parameter_save)
-            # 2. Если такой товар есть
-            else:           
-                # 2.1. Запрашиваем какие у него выгоды
-                profit_in_bd = result[4]
-                # 2.1.1. Если выгоды лучше, чем на текущий момент, то мы игнорим эту запись и не добавляем ее в результат вообще
-                if profit_in_bd>=curProfit_1to2:
-                    continue
-                # 2.1.2. Если выгоды хуже, чем на текущий момент
-                else:
-                    # 2.1.2.1. Обновляем значения в подпольной таблице                  
-                    parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, price2 = %s, profit1to2 = %d 
-                    WHERE `index` = %s AND name = %s''' % (my_table_name, repr(row[0]), repr(row[2]), repr(second_price), curProfit_1to2, repr(result[0]), repr(result[1]))
-                    c.execute(parameter_save)
-                    # 2.1.2.1. Обновляем значения в результирующей таблице
-                    #(name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2')
-                    parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, quality1 = %s, price2 = %s, quality2 = %s, profit1to2 = %d
-                    WHERE `index` = %s AND name1 = %s''' % (name, repr(row[0]), repr(row[2]), repr(row[3]), repr(second_price), repr(row[6]), curProfit_1to2, repr(result[0]), repr(result[1]))
-                    c.execute(parameter_save)
+            ###сравнение ----------------------------------------
+            if second_price > first_price:
+
+                k = float(first_price/second_price)
+                check = None
+
+                curProfit_1to2 = int(100*abs(1 - k))
+
+                if curProfit_1to2 > 25:
+                    
+                    # Ищем товар в подпольной таблице
+                    parameter_name = """SELECT * FROM %s WHERE name = %s""" % (my_table_name, repr(row[1]))
+                    #parameter_name = parameter_name.replace('\'', '"')
+                    c.execute(parameter_name)
+                    result = c.fetchone()
+
+                    # 1. Если такого товара нет в "подпольной" таблице
+                    if result==None:
+                        # 1.1. Записываем товар в подпольную таблицу
+                        parameter_save = '''INSERT OR IGNORE INTO %s(`index`, name, price1, price2, profit1to2) 
+                    VALUES (%s, %s, %s, %s, %d)''' % (my_table_name, repr(row[0]), repr(row[1]), repr(row[2]), repr(second_price), curProfit_1to2)
+                        c.execute(parameter_save)
+                        # 1.2. Записываем товар в результирующую таблицу
+                        parameter_save = '''INSERT OR IGNORE INTO %s(%s, %s, %s, %s, %s, %s, %s, %s) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %d)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2', repr(row[0]), repr(row[1]), repr(row[2]), repr(row[3]), repr(row[4]), repr(second_price), repr(row[6]), curProfit_1to2)
+                        c.execute(parameter_save)
+                    # 2. Если такой товар есть
+                    else:           
+                        # 2.1. Запрашиваем какие у него выгоды
+                        profit_in_bd = result[4]
+                        # 2.1.1. Если выгоды лучше, чем на текущий момент, то мы игнорим эту запись и не добавляем ее в результат вообще
+                        if profit_in_bd>=curProfit_1to2:
+                            continue
+                        # 2.1.2. Если выгоды хуже, чем на текущий момент
+                        else:
+                            # 2.1.2.1. Обновляем значения в подпольной таблице                  
+                            parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, price2 = %s, profit1to2 = %d 
+                            WHERE `index` = %s AND name = %s''' % (my_table_name, repr(row[0]), repr(row[2]), repr(second_price), curProfit_1to2, repr(result[0]), repr(result[1]))
+                            c.execute(parameter_save)
+                            # 2.1.2.1. Обновляем значения в результирующей таблице
+                            #(name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2')
+                            parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, quality1 = %s, price2 = %s, quality2 = %s, profit1to2 = %d
+                            WHERE `index` = %s AND name1 = %s''' % (name, repr(row[0]), repr(row[2]), repr(row[3]), repr(second_price), repr(row[6]), curProfit_1to2, repr(result[0]), repr(result[1]))
+                            c.execute(parameter_save)
         conn.commit()
         c.close()
         conn.close()
@@ -350,6 +365,7 @@ class DataAnalyse():
         parameter_name = 'SELECT * FROM %s ORDER BY Price2 DESC' % (tn)
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
+        
         with open(new_fn, 'w', newline='') as selected:
             wr = csv.writer(selected, quoting = csv.QUOTE_MINIMAL, dialect='excel')
             wr.writerow(columns)
@@ -358,7 +374,7 @@ class DataAnalyse():
                  wr.writerow(row)
             selected.close()
 
-        print ("Data written to"+repr(new_fn))
+        #print ("Data written to"+repr(new_fn))
         conn.commit()
         c.close()
         conn.close()
@@ -366,6 +382,6 @@ class DataAnalyse():
 
 if __name__ == "__main__":
 
-    magasines_data = ['csgotm_data.csv', 'csgosell_data.csv', 'csmoney_data.csv']
+    magasines_data = ['csgosell_data.csv', 'skinsjar_data.csv', 'csmoney_data.csv']
     db = DataAnalyse(magasines_data)
 
