@@ -21,14 +21,14 @@ class DataAnalyse():
     def initUI(self, all_data):
 
         db_name = 'parsing_data'
-        # Удаляем файл базы данных, если такой уже существует воизбежание перезаполнения данных и для увеличения скорости работы
+        #delete file for speed boost
         try:
             os.remove(db_name+'.db')
             #print('File removed: '+db_name+'.db')
         except:
             print("Can't remove database file")
             
-        # Действием с директорией для цсв, чтобы не засорять папку со скриптом и входными данными
+        #make new directory
         dir = "./files"
         try:
             os.makedirs("./files")
@@ -59,18 +59,19 @@ class DataAnalyse():
 
                     print("\nCompare " + all_data[index_i].replace('_data.csv', '') + " and " + all_data[index_j].replace('_data.csv', ''))
 
-                    # Первой дб считаем ту, что в итерации главного цикла
+                    #first data in main loop
                     first_database = mag_database
-                    # Если в главном цикле итерация для первого магазина, то парсим информацию для j-го магазина
+
+                    #if in main loop for the first data than to start parse info from the j data
                     if all_data[index_i]==all_data[0]:
                         second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-                    # Иначе считаем именем второго магазина имя файла - расширение
+                    #else file to compare - second data filename
                     else:
                         second_database = all_data[index_j].replace('.csv', '')
 
                     self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
-                    # Записываем ее в файл
+                    #write into file
                     columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
                     
                     str(second_database + '_Name'), str(second_database + '_Price'), str(second_database + '_Quality'), str('Profit_' + first_database + '_TO_' + second_database))
@@ -79,9 +80,9 @@ class DataAnalyse():
 
                     self.result_tables_names.append(what_to_cmpr)
 
-                    # Находим профиты среди всех выборок в диапазоне 
-                    output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
-                    self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
+        #find profit in profit range
+        output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
+        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
         
         endcompare_fx = repr(time.ctime())
 
