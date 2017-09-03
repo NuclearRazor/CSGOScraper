@@ -1,17 +1,17 @@
-**csgo_parser script**
+## **csgo parser**
 
 This parser get data from the next sites:
 
 - csgotm
 - csgosell
 - csmoney
-- skinsjar (they are banned on 17.08.2017)
+- skinsjar
+
+_File **coefficients.txt** allows to edit sites comission.
+The price of goods is indicated in **rubles**_
 
 Coming feauture:
 
-- oop style
-- optimize code
-- load data from opskins market
-- add data files compares by sqllite3
+- parse data from **opskins market**
 
-
+### **For informational purposes only**
