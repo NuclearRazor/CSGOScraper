@@ -13,10 +13,11 @@ c = None
 
 
 class Shopinfo():
-    def __init__(self, shop_name, table_name, comission):
-    super().__init__()
 
-    self.initUI()
+    def __init__(self, shop_name, table_name, comission):
+        super().__init__()
+
+        self.initUI()
 
     def initUI(self):
         pass
