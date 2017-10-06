@@ -24,7 +24,6 @@ class MetaConfig():
             data['names'], mag_fixed_price, data['qualitys']))), columns = file_headers)
 
         file_name = mag_name + '.csv'
-
         df.to_csv(file_name, index=False)
 
 
@@ -39,12 +38,16 @@ class MetaConfig():
 
         return fixed_price
 
+    def evaluate_opskins_price(self, price_element, comission, cource_value):
+
+        price_value = (float(price_element)*(1+comission))*cource_value
+        fixed_price = round(price_value, 2)
+
+        return fixed_price
 
     def check_file_exist(self, filename):
         directory = os.getcwd()
-
         file_path = directory + '\\' + filename
-
         if os.path.isfile(file_path) == False:
             print('Cannot find file: ', filename)
             return False
