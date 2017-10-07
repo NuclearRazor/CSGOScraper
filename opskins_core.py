@@ -15,11 +15,11 @@ instance = None
 
 class Opskins_Market(mc.MetaConfig):
 
-    def __init__(self, site_comission = 0, rouble_cource = 60):
+    def __init__(self, site_comission = 0, exchange_rate = 60):
         super().__init__()
 
         self.comission = site_comission
-        self.course = rouble_cource
+        self.course = exchange_rate
         self.record_count = 100
         # Ajax wait delay
         # wait_time = ajax_wait_base+0.01*random.randint(0,ajax_wait_random)
@@ -79,9 +79,7 @@ class Opskins_Market(mc.MetaConfig):
         return [u"%d%% OFF" % discount_prc]
 
     def convert_price(self, price_value_list):
-        price = 0.0
-        for index, item in enumerate(price_value_list):
-            price = item.replace(u'$', u'').strip()
+        price = price_value_list[0].replace(u'$', u'').strip()
         return price
 
     def parse_output(self, data):
@@ -112,9 +110,7 @@ class Opskins_Market(mc.MetaConfig):
 
             opskins_comission = int(self.comission)/100
             opskins_fixed_price = self.evaluate_opskins_price(price, opskins_comission, self.course)
-            fixed_price = str(opskins_fixed_price)
-            price_list_transit = list()
-            price_list_transit.append(fixed_price)
+            price_list_transit = [str(opskins_fixed_price)]
 
             full_record_fixed = [href, name, name2, price_list_transit,
                            quality_formatted, wear_value_formatted,
