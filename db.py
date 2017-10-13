@@ -7,6 +7,7 @@ import chardet
 import os, errno
 import re
 import time
+import io
 
 conn = None
 c = None
@@ -130,7 +131,7 @@ class DataAnalyse():
         num_coeff = []
         find_num = ''
 
-        with open('coefficients.txt') as f:
+        with io.open('coefficients.txt', encoding='utf-8', errors='ignore') as f:
             for line in f:
                 find_num = re.findall(num_pattern, str(line))
                 num_coeff.append(self.convert_to_str(find_num))
@@ -177,7 +178,7 @@ class DataAnalyse():
         
         # Делаем проверку цен для входных аргументов функции. Возвращаемое значение - корректные границы цен
         correct_prices = self.check_prices(min_price, max_price)
-        with open(filename_csv,'r') as fin: 
+        with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin: 
             dr = csv.DictReader(fin) # comma is default delimiter
             # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
             # Если нет границ для цены, то добавляем в бд все записи
@@ -190,7 +191,7 @@ class DataAnalyse():
                     price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
                     if price>=correct_prices[0] and price<=correct_prices[1]:
                         to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
-            fin.close()
+            #fin.close()
 
         c.executemany(parameter_save, to_db)
 
@@ -231,13 +232,13 @@ class DataAnalyse():
         c = conn.cursor()
 
         c.execute(parameter_name)
-        with open(new_fn, 'w', newline='') as selected:
+        with io.open(new_fn, 'w', newline='', encoding='utf-8', errors='ignore') as selected:
             wr = csv.writer(selected, quoting = csv.QUOTE_MINIMAL, dialect='excel')
             wr.writerow(columns)
-
-            for row in c.fetchall():
-                 wr.writerow(row)
-            selected.close()
+            # for row in c.fetchall():
+            #      wr.writerow(row)
+            [wr.writerow(row) for row in c.fetchall()]
+            #selected.close()
 
         # print ("Data written to"+repr(new_fn))
         conn.commit()
@@ -387,13 +388,13 @@ class DataAnalyse():
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
         
-        with open(new_fn, 'w', newline='') as selected:
+        with io.open(new_fn, 'w', newline='', encoding='utf-8', errors='ignore') as selected:
             wr = csv.writer(selected, quoting = csv.QUOTE_MINIMAL, dialect='excel')
             wr.writerow(columns)
-
-            for row in c.fetchall():
-                 wr.writerow(row)
-            selected.close()
+            # for row in c.fetchall():
+            #      wr.writerow(row)
+            [wr.writerow(row) for row in c.fetchall()]
+            #selected.close()
 
         #print ("Data written to"+repr(new_fn))
         conn.commit()
@@ -403,6 +404,6 @@ class DataAnalyse():
 
 if __name__ == "__main__":
 
-    magasines_data = ['csgosell_data.csv', 'skinsjar_data.csv', 'csmoney_data.csv', 'csgotm_data.csv']
+    magasines_data = ['csmoney_data.csv', 'csgotm_data.csv']
     db = DataAnalyse(magasines_data)
 
