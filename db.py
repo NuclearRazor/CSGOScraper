@@ -34,12 +34,12 @@ class Shopinfo():
 
 class DataAnalyse():
 
-    def __init__(self, all_data):
+    def __init__(self, shops, exchangers):
         super().__init__()
 
         self.initUI(all_data)
 
-    def initUI(self, all_data):
+    def initUI(self, shops, exchangers):
 
         db_name = 'parsing_data'
         #delete file for speed boost
@@ -60,7 +60,8 @@ class DataAnalyse():
         coeff_mag = 0
         min_price = 1
         max_price = 8000
-        mag_list = []
+        shops_db_names = []
+        exhangers_db_names = []
         self.result_tables_names = []
 
         min_profit = 25
@@ -68,40 +69,37 @@ class DataAnalyse():
 
         compare_fx = repr(time.ctime())
 
-        for index_i, i in enumerate(all_data):
-            #parse each csv file
-            #print('\nParse data from: ', all_data[index_i])
-            mag_database = self.parse_info(db_name, all_data[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-            mag_list.append(mag_database)
-            for index_j, j in enumerate(all_data):
-                if i != j:
+        #1. parse shops
+        for index_i, i in enumerate(shops):
+            shop_db = self.parse_info(db_name, shops[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+            shops_db_names.append(shop_db)
+        #2. parse exhangers
+        for index_i, i in enumerate(exchangers):
+            exchanger_db = self.parse_info(db_name, exchangers[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+            exhangers_db_names.append(exchanger_db)
+        #3. for each shop..
+        for index_i, i in enumerate(shops_db_names):
+            #3.1. remember current shop
+            first_database = shops_db_names[index_i]
+            #3.2. for each exchanger..
+            for index_j, j in enumerate(exhangers_db_names):
+                #3.2.1. remember current exchanger
+                second_database = exhangers_db_names[index_j]
+                #3.2.2. make string for filename
+                what_to_cmpr = first_database+ "_" + second_database
+                print("\nCompare " + first_database + " and " + second_database)
+                #3.2.3. find profit for sale from current shop to current exhanger
+                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
-                    what_to_cmpr = all_data[index_i].replace('.csv', '') + "_" + all_data[index_j].replace('.csv', '')
+                #3.2.4. write into file
+                columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
+                
+                str(second_database + '_Name'), str(second_database + '_Price'), str(second_database + '_Quality'), str('Profit_' + first_database + '_TO_' + second_database))
+                
+                self.select_data_from_db(db_name, str(dir + "/" + what_to_cmpr), what_to_cmpr, columns)
+                self.result_tables_names.append(what_to_cmpr)                    
 
-                    print("\nCompare " + all_data[index_i].replace('_data.csv', '') + " and " + all_data[index_j].replace('_data.csv', ''))
-
-                    #first data in main loop
-                    first_database = mag_database
-
-                    #if in main loop for the first data than to start parse info from the j data
-                    if all_data[index_i]==all_data[0]:
-                        second_database = self.parse_info(db_name, all_data[index_j], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
-                    #else file to compare - second data filename
-                    else:
-                        second_database = all_data[index_j].replace('.csv', '')
-
-                    self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
-
-                    #write into file
-                    columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
-                    
-                    str(second_database + '_Name'), str(second_database + '_Price'), str(second_database + '_Quality'), str('Profit_' + first_database + '_TO_' + second_database))
-                    
-                    self.select_data_from_db(db_name, str(dir + "/" + what_to_cmpr), what_to_cmpr, columns)
-
-                    self.result_tables_names.append(what_to_cmpr)
-
-        #find profit in profit range
+        #4. find profit in profit range
         output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
         self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
         
