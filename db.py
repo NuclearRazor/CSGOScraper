@@ -179,32 +179,12 @@ class DataAnalyse():
         correct_prices = self.check_prices(min_price, max_price)
         if filename_csv == 'csgotm_data.csv':
             with io.open(filename_csv, 'r', errors='ignore') as fin:
-                dr = csv.DictReader(fin) # comma is default delimiter
-                # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
-                # Если нет границ для цены, то добавляем в бд все записи
-                if correct_prices[0]==None:
-                    to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality])) for i in dr]
-                # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
-                else:
-                    to_db=[]
-                    for i in dr:
-                        price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
-                        if price>=correct_prices[0] and price<=correct_prices[1]:
-                            to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality])))
+                dr = csv.DictReader(fin) # comma is default delimiter                
+                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, True)
         else:
             with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin:
                 dr = csv.DictReader(fin) # comma is default delimiter
-                # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
-                # Если нет границ для цены, то добавляем в бд все записи
-                if correct_prices[0]==None:
-                    to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
-                # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
-                else:
-                    to_db=[]
-                    for i in dr:
-                        price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
-                        if price>=correct_prices[0] and price<=correct_prices[1]:
-                            to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
+                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, False)
 
         c.executemany(parameter_save, to_db)
 
@@ -214,6 +194,26 @@ class DataAnalyse():
         conn.close()
         return filename
 
+    def parse_items(self, dr, prices, coeff, col_index, col_name, col_price, col_quality, translate):
+        to_db = []
+        # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
+        # Если нет границ для цены, то добавляем в бд все записи
+        if prices[0]==None:
+            if translate:
+                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality])) for i in dr]
+            else:
+                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
+        # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
+        else:
+            to_db=[]
+            for i in dr:
+                price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
+                if price>=prices[0] and price<=prices[1]:
+                    if translate:
+                        to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality])))
+                    else:
+                        to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
+        return to_db
     # Проверяет цены
     def check_prices(self, min_price, max_price):
         # Если цены не указаны или имеют отрицательное значение, то считаем, что цен нет
