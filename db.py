@@ -282,14 +282,14 @@ class DataAnalyse():
 
             second_price = float(row[5]) #цены во втором магазине
             first_price = float(row[2])
-            first_qual = row[6]
-            second_qual = row[3]
+            second_qual = row[6]
+            first_qual = row[3]
 
             # print('second price = ', float(row[5][1:5]))
             # print('first price = ', float(row[2][1:5]))
 
             ###сравнение ----------------------------------------
-            if (second_price > first_price && !quality_matters) || (second_price > first_price && quality_matters && first_qual==second_qual):
+            if (second_price > first_price and quality_matters==False ) or (second_price > first_price and quality_matters and first_qual==second_qual):
 
                 k = float(first_price/second_price)
                 check = None
