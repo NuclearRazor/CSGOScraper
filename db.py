@@ -177,20 +177,34 @@ class DataAnalyse():
         
         # Делаем проверку цен для входных аргументов функции. Возвращаемое значение - корректные границы цен
         correct_prices = self.check_prices(min_price, max_price)
-        with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin: 
-            dr = csv.DictReader(fin) # comma is default delimiter
-            # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
-            # Если нет границ для цены, то добавляем в бд все записи
-            if correct_prices[0]==None:
-                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
-            # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
-            else:
-                to_db=[]
-                for i in dr:
-                    price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
-                    if price>=correct_prices[0] and price<=correct_prices[1]:
-                        to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
-            #fin.close()
+        if filename_csv == 'csgotm_data.csv':
+            with io.open(filename_csv, 'r', errors='ignore') as fin:
+                dr = csv.DictReader(fin) # comma is default delimiter
+                # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
+                # Если нет границ для цены, то добавляем в бд все записи
+                if correct_prices[0]==None:
+                    to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality])) for i in dr]
+                # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
+                else:
+                    to_db=[]
+                    for i in dr:
+                        price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
+                        if price>=correct_prices[0] and price<=correct_prices[1]:
+                            to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality])))
+        else:
+            with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin:
+                dr = csv.DictReader(fin) # comma is default delimiter
+                # float(i[col_price])+float(i[col_price])*coeff - прибавление к цене товара комиссии самого магазина на покупку/продажу
+                # Если нет границ для цены, то добавляем в бд все записи
+                if correct_prices[0]==None:
+                    to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
+                # Иначе добавляем в бд лишь те записи, у которых цены лежат в заданном промежутке
+                else:
+                    to_db=[]
+                    for i in dr:
+                        price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
+                        if price>=correct_prices[0] and price<=correct_prices[1]:
+                            to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
 
         c.executemany(parameter_save, to_db)
 
@@ -282,8 +296,8 @@ class DataAnalyse():
 
             second_price = float(row[5]) #цены во втором магазине
             first_price = float(row[2])
-            second_qual = row[6]
-            first_qual = row[3]
+            first_qual = repr(row[3])
+            second_qual = repr(row[6])
 
             # print('second price = ', float(row[5][1:5]))
             # print('first price = ', float(row[2][1:5]))
@@ -335,7 +349,20 @@ class DataAnalyse():
         conn.commit()
         c.close()
         conn.close()
-        
+    # Переводит качество предмета из csgotm в унифицированный формат
+    def translate_csgotm_qual(self, current_qual):  
+        #print(current_qual)
+        if current_qual == 'Закаленное в боях':
+            return u'BS'
+        if current_qual == 'Поношенное':
+            return u'WW'
+        if current_qual == 'После полевых испытаний':
+            return u'FT'
+        if current_qual == 'Немного поношенное':
+            return u'MW'
+        if current_qual == 'Прямо с завода':
+            return u'FN'
+        return ''
     # Создает общую таблицу профитов в заданных границах
     def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath):
         # Всегда приводим входной аргумент к int для безопасности
