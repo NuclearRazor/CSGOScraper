@@ -1,13 +1,9 @@
-import time
 import datetime
 import re
-import csv
 import json
 
-from lxml import html
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 import config as mc
 import opskins_core as op
 
@@ -25,18 +21,20 @@ class ParseMarkets(mc.MetaConfig):
 
     def initUI(self):
 
-        start_fx = repr(time.ctime())
+        start_fx = datetime.datetime.now().replace(microsecond=0)
 
         comission_list = self.get_comission()
-        check_csmoney = self.parse_csmoneymarket(comission_list[1])
-        check_skinsjar = self.parse_skinsjarmarket(comission_list[2])
-        check_csgosell = self.parse_csgosellmarket(comission_list[3])
-        check_csgotm = self.parse_csgotmmarket(comission_list[0])
+        self.parse_csmoneymarket(comission_list[1])
+        self.parse_skinsjarmarket(comission_list[2])
+        self.parse_csgosellmarket(comission_list[3])
+        self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
-        check_opskins = op.Opskins_Market(comission_list[4], convert_course)
+        op.Opskins_Market(comission_list[4], convert_course)
 
-        print("\nStarted. TIME: " + start_fx)
-        print("Finished. TIME: " + repr(time.ctime()))
+        finish_fx = datetime.datetime.now().replace(microsecond=0)
+        print("\nStarted. TIME: " + str(start_fx))
+        print("Finished. TIME: " + str(finish_fx))
+        print("Elapsed. Time:", str((finish_fx - start_fx)))
 
 
     def convert_to_str(self, numlist):
@@ -84,10 +82,7 @@ class ParseMarkets(mc.MetaConfig):
 
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
         site_data = self.get_url_regular(csgo_url)
-
-        csgotm_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         data = json.loads(site_data)
-
         file_name = 'https://market.csgo.com/itemdb/' + data['db']
         site_data = self.get_url_regular(file_name)
 
@@ -158,14 +153,12 @@ class ParseMarkets(mc.MetaConfig):
 
         site_data = self.get_url_regular(skinsjar_url)
 
-        data = []
         name = []
         short_name = []
         price = []
         each_el = []
         float_val = []
         ext = []
-        priceToWrite = []
         row_index = []
         row_value = 0
         data = json.loads(site_data)
@@ -205,7 +198,6 @@ class ParseMarkets(mc.MetaConfig):
     def csmoney_usd_course(self):
         money_url = 'https://cs.money/get_info?hash='
         money_pattern = r'(\d+\.\d+)'
-        r = requests.get(money_url)
         money_webpage = self.get_url_regular(money_url)
         money_value = re.findall(money_pattern, money_webpage.decode('utf-8'))
         convert_value_item = float(money_value[1])
@@ -214,11 +206,9 @@ class ParseMarkets(mc.MetaConfig):
 
     def json_filter(self, webpage, name, quality, price, flt):
 
-        data = []
         name_items = []
         quality_items = []
         price_items = []
-        csshellpriceToWrite = []
         float_items = []
 
         row_index = []
