@@ -403,5 +403,7 @@ class DataAnalyse():
 if __name__ == "__main__":
 
     magasines_data = ['csmoney_data.csv', 'csgotm_data.csv']
-    db = DataAnalyse(magasines_data)
+    shops = ['csgotm_data.csv', 'opskins_data.csv']
+    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
+    db = DataAnalyse(shops, exchangers)
 
