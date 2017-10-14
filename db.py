@@ -215,9 +215,9 @@ class DataAnalyse():
         else:
             return [l_min, l_max]
             
-    # Делает выборку всех данных из бд и записывает их в файл с именем "имя_таблицы+1.csv"
+    # Делает выборку всех данных из бд и записывает их в файл с именем "имя_таблицы_selected.csv"
     def select_data_from_db(self, db_name, filename, table_name, columns):
-        new_fn = str(filename+"1.csv")
+        new_fn = str(filename+"_selected.csv")
         
         # Запрос на выборку всех столбцов всех записей из бд с заданным названием
         parameter_name = 'SELECT * FROM %s' % (table_name)
