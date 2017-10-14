@@ -37,7 +37,7 @@ class DataAnalyse():
     def __init__(self, shops, exchangers):
         super().__init__()
 
-        self.initUI(all_data)
+        self.initUI(shops, exchangers)
 
     def initUI(self, shops, exchangers):
 
