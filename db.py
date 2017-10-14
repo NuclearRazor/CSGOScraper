@@ -108,7 +108,8 @@ class DataAnalyse():
         print('\nStart compare: ', compare_fx)
         print('End compare: ', endcompare_fx)
  
-        print('\nNumber of mag datas = ', len(mag_list))   
+        print('\nNumber of shops = ', len(shops_db_names))   
+        print('\nNumber of exchangers = ', len(exhangers_db_names))   
 
         self.get_comission()
 
