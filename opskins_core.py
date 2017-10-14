@@ -187,8 +187,8 @@ class Opskins_Market(mc.MetaConfig):
 
     def save_items(self, file_name, data):
         f = open(file_name, 'wb')
-        header = u"index, URL, c_market_name_en, c_market_name_origin, " \
-                 u"c_price, c_quality, c_float, discount\n"
+        header = u"index,URL,c_market_name_en,c_market_name_origin," \
+                 u"c_price,c_quality,c_float,discount\n"
         f.write(header.encode('utf-8'))
         index = 0
         for record in data:
