@@ -34,12 +34,12 @@ class Shopinfo():
 
 class DataAnalyse():
 
-    def __init__(self, shops, exchangers):
+    def __init__(self, shops, exchangers, quality_matters):
         super().__init__()
 
-        self.initUI(shops, exchangers)
+        self.initUI(shops, exchangers, quality_matters)
 
-    def initUI(self, shops, exchangers):
+    def initUI(self, shops, exchangers, quality_matters):
 
         db_name = 'parsing_data'
         #delete file for speed boost
@@ -89,7 +89,7 @@ class DataAnalyse():
                 what_to_cmpr = first_database.replace('_data', '')+ "_" + second_database.replace('_data', '')
                 print("\nCompare " + first_database.replace('_data', '') + " and " + second_database.replace('_data', ''))
                 #3.2.3. find profit for sale from current shop to current exhanger
-                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
+                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters)
 
                 #3.2.4. write into file
                 columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
@@ -245,7 +245,7 @@ class DataAnalyse():
         conn.close()
 
     # Создает результирующую таблицу выборки двух таблиц
-    def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2):
+    def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2, quality_matters):
 
         conn = sqlite3.connect(db_name + '.db')
 
@@ -282,12 +282,14 @@ class DataAnalyse():
 
             second_price = float(row[5]) #цены во втором магазине
             first_price = float(row[2])
+            first_qual = row[6]
+            second_qual = row[3]
 
             # print('second price = ', float(row[5][1:5]))
             # print('first price = ', float(row[2][1:5]))
 
             ###сравнение ----------------------------------------
-            if second_price > first_price:
+            if (second_price > first_price && !quality_matters) || (second_price > first_price && quality_matters && first_qual==second_qual):
 
                 k = float(first_price/second_price)
                 check = None
