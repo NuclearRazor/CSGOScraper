@@ -86,8 +86,8 @@ class DataAnalyse():
                 #3.2.1. remember current exchanger
                 second_database = exhangers_db_names[index_j]
                 #3.2.2. make string for filename
-                what_to_cmpr = first_database+ "_" + second_database
-                print("\nCompare " + first_database + " and " + second_database)
+                what_to_cmpr = first_database.replace('_data', '')+ "_" + second_database.replace('_data', '')
+                print("\nCompare " + first_database.replace('_data', '') + " and " + second_database.replace('_data', ''))
                 #3.2.3. find profit for sale from current shop to current exhanger
                 self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database)
 
