@@ -367,7 +367,7 @@ class DataAnalyse():
             return u'FN'
         return ''
     # Создает общую таблицу профитов в заданных границах
-    # --profit_and_price2-- defines if analyzer should sort items only by price2 (DESC) or by profit (DESC) and price2 (DESC)
+    # --profit_and_price2-- defines the way analyzer should sort items
     def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath, profit_and_price2):
         # Всегда приводим входной аргумент к int для безопасности
         loc_min_pr = int(min_profit)
@@ -416,7 +416,7 @@ class DataAnalyse():
         %d, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', repr(element[0]), repr(element[1]), repr(element[2]), repr(element[3]), repr(element[4]), repr(element[5]), repr(element[6]), element[7], repr(cur_table))
                     c.execute(insert_str)
         # Выбираем из получившихся записей все, сортируя их по выгоде и цене во втором магазине
-        parameter_name = self.get_select_with_sort_param('profit_priceDESC', tn)
+        parameter_name = self.get_select_with_sort_param(profit_and_price2, tn)
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
         
