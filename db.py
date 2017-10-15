@@ -34,6 +34,7 @@ class Shopinfo():
 
 class DataAnalyse():
 
+    # --quality_matters-- defines if analyzer should compare items only with same quality
     def __init__(self, shops, exchangers, quality_matters):
         super().__init__()
 
@@ -89,6 +90,7 @@ class DataAnalyse():
                 what_to_cmpr = first_database.replace('_data', '')+ "_" + second_database.replace('_data', '')
                 print("\nCompare " + first_database.replace('_data', '') + " and " + second_database.replace('_data', ''))
                 #3.2.3. find profit for sale from current shop to current exhanger
+                # --quality_matters-- defines if analyzer should compare items only with same quality
                 self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters)
 
                 #3.2.4. write into file
@@ -259,6 +261,7 @@ class DataAnalyse():
         conn.close()
 
     # Создает результирующую таблицу выборки двух таблиц
+	# --quality_matters-- defines if analyzer should compare items only with same quality
     def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2, quality_matters):
 
         conn = sqlite3.connect(db_name + '.db')
@@ -364,6 +367,7 @@ class DataAnalyse():
             return u'FN'
         return ''
     # Создает общую таблицу профитов в заданных границах
+    # --profit_and_price2-- defines if analyzer should sort items only by price2 (DESC) or by profit (DESC) and price2 (DESC)
     def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath, profit_and_price2):
         # Всегда приводим входной аргумент к int для безопасности
         loc_min_pr = int(min_profit)
