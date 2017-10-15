@@ -390,16 +390,16 @@ class DataAnalyse():
 
     #sort data regulator
     def get_select_with_sort_param(self, param, table_name):
-        # Сортировка по цене во втором магазине по возрастанию
+        #sort by price from second shop/exchanger by asc
         if param == 'priceASC':
             return 'SELECT * FROM %s ORDER BY Price2 ASC' % (table_name)
-        # Сортировка по цене во втором магазине по убыванию
+        #sort by price from second shop/exchanger by desc
         if param == 'priceDESC':
             return 'SELECT * FROM %s ORDER BY Price2 DESC' % (table_name)
-        # Сортировка по выгоде и цене во втором магазине по возрастанию
+        #sort by price and profit from second shop/exchanger by asc
         if param == 'profit_priceASC':
             return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 ASC' % (table_name)
-        # Сортировка по выгоде и цене во втором магазине по убыванию (значениие сортировки по умолчанию)
+        #sort by price and profit from second shop/exchanger by desc (default)
         return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 DESC' % (table_name)
 
 
