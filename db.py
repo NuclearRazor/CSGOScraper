@@ -101,7 +101,7 @@ class DataAnalyse():
 
         #4. find profit in profit range
         output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
-        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name)
+        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name, True)
         
         endcompare_fx = repr(time.ctime())
 
@@ -364,7 +364,7 @@ class DataAnalyse():
             return u'FN'
         return ''
     # Создает общую таблицу профитов в заданных границах
-    def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath):
+    def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath, profit_and_price2):
         # Всегда приводим входной аргумент к int для безопасности
         loc_min_pr = int(min_profit)
         loc_max_pr = int(max_profit)
@@ -412,7 +412,10 @@ class DataAnalyse():
         %d, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', repr(element[0]), repr(element[1]), repr(element[2]), repr(element[3]), repr(element[4]), repr(element[5]), repr(element[6]), element[7], repr(cur_table))
                     c.execute(insert_str)
         # Выбираем из получившихся записей все, сортируя их по цене во втором магазине
-        parameter_name = 'SELECT * FROM %s ORDER BY Price2 DESC' % (tn)
+        if profit_and_price2:
+            parameter_name = 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 DESC' % (tn)
+        else:
+            parameter_name = 'SELECT * FROM %s ORDER BY Price2 DESC' % (tn)
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
         
