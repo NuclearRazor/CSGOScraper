@@ -103,7 +103,7 @@ class DataAnalyse():
 
         #4. find profit in profit range
         output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
-        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name, True)
+        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name, 'profit_priceDESC')
         
         endcompare_fx = repr(time.ctime())
 
