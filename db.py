@@ -17,14 +17,14 @@ class DataAnalyse():
 
     # --quality_matters-- defines if analyzer should compare items only with same quality
     def __init__(self, shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var):
+        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var):
         super().__init__()
 
         self.initUI(shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var)
+        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var)
 
     def initUI(self, shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var):
+        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var):
 
         db_name = 'parsing_data'
         #delete file for speed boost
@@ -51,6 +51,7 @@ class DataAnalyse():
 
         min_profit = min_profit_var
         max_profit = max_profit_var
+        absolute_profit = absolute_profit_var
 
         sort_flag = sort_flag_var
 
@@ -77,7 +78,7 @@ class DataAnalyse():
                 print("\nCompare " + first_database.replace('_data', '') + " and " + second_database.replace('_data', ''))
                 #3.2.3. find profit for sale from current shop to current exhanger
                 # --quality_matters-- defines if analyzer should compare items only with same quality
-                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters, min_profit)
+                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters, min_profit, absolute_profit)
 
                 #3.2.4. write into file
                 columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
@@ -228,7 +229,7 @@ class DataAnalyse():
 
 
     # --quality_matters-- defines if analyzer should compare items only with same quality
-    def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2, quality_matters, min_profit):
+    def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2, quality_matters, min_profit, absolute_profit):
 
         conn = sqlite3.connect(db_name + '.db')
 
@@ -267,18 +268,16 @@ class DataAnalyse():
             ###Comparing ----------------------------------------
             if (second_price > first_price and quality_matters==False ) or (second_price > first_price and quality_matters and first_qual==second_qual):
 
-                k = float(first_price/second_price)
-                check = None
+                # k = float(first_price/second_price)
+                # check = None
 
-                curProfit_1to2 = int(100*abs(1 - k))
+                # curProfit_1to2 = int(100*abs(1 - k))
 
-                # k = float(second_price/first_price)
+                k = float(second_price/first_price)
 
-                # curProfit_1to2 = int(abs(k - 1)*100)
+                curProfit_1to2 = int(abs(k - 1)*100)
 
-
-
-                if curProfit_1to2 > min_profit: #25 - empiric value
+                if curProfit_1to2 > min_profit and curProfit_1to2 <= absolute_profit: #25 - empiric value
                     
                     #find item in buffer table
                     parameter_name = """SELECT * FROM %s WHERE name = %s""" % (my_table_name, repr(row[1]))
@@ -416,8 +415,9 @@ if __name__ == "__main__":
     max_profit = 150
     sort_flag = 'profit_priceDESC'
     compare_equal_qualitys = True
+    empiric_profit_bound = 150
 
     db = DataAnalyse(shops, exchangers, compare_equal_qualitys,\
-    coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag)
+    coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
 
 
