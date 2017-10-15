@@ -261,7 +261,7 @@ class DataAnalyse():
         conn.close()
 
     # Создает результирующую таблицу выборки двух таблиц
-	# --quality_matters-- defines if analyzer should compare items only with same quality
+    # --quality_matters-- defines if analyzer should compare items only with same quality
     def create_result_table_from_select(self, db_name, res_table_name, tb1, tb2, quality_matters):
 
         conn = sqlite3.connect(db_name + '.db')
@@ -415,11 +415,8 @@ class DataAnalyse():
         VALUES (%s, %s, %s, %s, %s, %s, %s, 
         %d, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', repr(element[0]), repr(element[1]), repr(element[2]), repr(element[3]), repr(element[4]), repr(element[5]), repr(element[6]), element[7], repr(cur_table))
                     c.execute(insert_str)
-        # Выбираем из получившихся записей все, сортируя их по цене во втором магазине
-        if profit_and_price2:
-            parameter_name = 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 DESC' % (tn)
-        else:
-            parameter_name = 'SELECT * FROM %s ORDER BY Price2 DESC' % (tn)
+        # Выбираем из получившихся записей все, сортируя их по выгоде и цене во втором магазине
+        parameter_name = self.get_select_with_sort_param('profit_priceDESC', tn)
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
         
@@ -435,6 +432,20 @@ class DataAnalyse():
         conn.commit()
         c.close()
         conn.close()
+    
+    # Регулирует параметр сортировки результатов и возвращает строку с корректным запросом
+    def get_select_with_sort_param(self, param, table_name):
+        # Сортировка по цене во втором магазине по возрастанию
+        if param == 'priceASC':
+            return 'SELECT * FROM %s ORDER BY Price2 ASC' % (table_name)
+        # Сортировка по цене во втором магазине по убыванию
+        if param == 'priceDESC':
+            return 'SELECT * FROM %s ORDER BY Price2 DESC' % (table_name)
+        # Сортировка по выгоде и цене во втором магазине по возрастанию
+        if param == 'profit_priceASC':
+            return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 ASC' % (table_name)
+        # Сортировка по выгоде и цене во втором магазине по убыванию (значениие сортировки по умолчанию)
+        return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 DESC' % (table_name)
 
 
 if __name__ == "__main__":
