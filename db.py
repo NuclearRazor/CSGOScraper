@@ -184,7 +184,7 @@ class DataAnalyse():
             if translate:
                 to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality])) for i in dr]
             else:
-                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
+                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.check_default_qual(i[col_quality])) for i in dr]
         else:
             to_db=[]
             for i in dr:
@@ -193,8 +193,14 @@ class DataAnalyse():
                     if translate:
                         to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality])))
                     else:
-                        to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
+                        to_db.append((i[col_index], i[col_name], repr(price), self.check_default_qual(i[col_quality])))
         return to_db
+        
+    # checks and converts default quality
+    def check_default_qual(this, quality):
+        if quality == '':
+            return '--'
+        return quality
 
 
     def check_prices(self, min_price, max_price):
