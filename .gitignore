@@ -1,8 +1,7 @@
 **/*.pyc
 **/__pycache__
-
+**/files
 *.csv
-
 *.db
 
-db\.py
+parser\.py
