@@ -73,7 +73,6 @@ class ParseMarkets(mc.MetaConfig):
 
 
     def parse_csgotmmarket(self, site_comission):
-        print('\n=====Parse data from https://market.csgo.com/=====')
 
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
         site_data = self.get_url_regular(csgo_url)
@@ -84,65 +83,40 @@ class ParseMarkets(mc.MetaConfig):
         with open('csgotm_full_data.csv', 'wb') as file:
             file.write(site_data)
 
-        #print('\nURL of csgotm database: ', file_name)
-
-        #print('\nEditing csgotm database')
-
         origin_file = pd.read_csv('csgotm_full_data.csv', delimiter=";")
         keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
         new_file = origin_file[keep_col]
         comission = int(site_comission)/100
-
-        #print("\nComission: ", comission)
-
         new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float(x/100)*(1 + comission), 2))
         csgotm_csv_db = new_file.reset_index()
         csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
 
-        print('\n=====Csgotm parsing is done=====\n')
-
 
     def parse_csmoneymarket(self, site_comission):
-        print('\n=====Parse data from https://cs.money/=====')
 
         csmoney_url = 'https://cs.money/load_bots_inventory?hash='
         site_data = self.get_url_safe(csmoney_url)
         clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
         convert_course = self.csmoney_usd_course()
         csmoney_comission = int(site_comission)/100
-        
-        #print("\nComission: ", csmoney_comission)
-
         csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, convert_course)
         csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         self.save_data(csmoney_header, clear_data, csmoney_fixed_price, 'csmoney_data')
 
-        print('\n=====Cs.money parsing is done=====\n')
-
 
     def parse_csgosellmarket(self, site_comission):
-        print('\n=====Parse data from https://csgosell.com/=====')
 
         csgosell_url = 'https://csgosell.com/phpLoaders/forceBotUpdate/all.txt'
         site_data = self.get_url_safe(csgosell_url)
         clear_data = self.json_filter(site_data, 'h', 'e', 'p', 'f')
         convert_course = self.csmoney_usd_course()
-
-        #print('\nURL of https://csgosell.com database: ', csgosell_url)
-
         csgosell_comission = int(site_comission)/100
-
-        #print("\nComission: ", csgosell_comission)
-
         csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, convert_course)
         csgosell_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         self.save_data(csgosell_header, clear_data, csgosell_fixed_price, 'csgosell_data')
 
-        print('\n=====Csgosell parsing is done=====\n')
-
 
     def parse_skinsjarmarket(self, site_comission):
-        print('\n=====Parse data from https://skinsjar.com=====')
 
         skinsjar_url = 'https://skinsjar.com/api/v3/load/bots?refresh=0&v=0'
 
@@ -175,19 +149,12 @@ class ParseMarkets(mc.MetaConfig):
             if 'floatMax' in item:
                 float_val.append(item['floatMax'])
 
-        #print('\nURL of skinsjar.com/ru/ database: ', skinsjar_url)
-
         convert_course = self.csmoney_usd_course()
         skinsjar_comission = int(site_comission)/100
-
-        #print("\nComission: ", csgosell_comission)
-
         skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, convert_course)
         skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         my_df = pd.DataFrame(list(map(list, zip(row_index, name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
         my_df.to_csv('skinsjar_data.csv', index=False)
-
-        print('\n=====Skinsjar parsing is done=====\n')
 
 
     def csmoney_usd_course(self):

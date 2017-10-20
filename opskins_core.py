@@ -127,7 +127,6 @@ class Opskins_Market(mc.MetaConfig):
 
 
     def parse_opskins(self):
-        print('\n=====Parse data from https://opskins.com/?loc=shop_browse=====')
         try: #too rude
             driver = selenium.webdriver.Chrome()
         except:
@@ -175,11 +174,8 @@ class Opskins_Market(mc.MetaConfig):
             page_index += 1
             results = results + self.parse_output(r.text)
             if (len(results) > self.record_count):
-                print("Loaded %d, records, returning values..." % len(results))
                 break
             wait_time = self.ajax_wait_base + 0.01 * random.randint(0, self.ajax_wait_random)
-            print("Loaded %d/%d, waiting for %.2fs"
-                  % (len(results), self.record_count, wait_time))
             time.sleep(wait_time)
         driver.close()
         return results
@@ -200,4 +196,3 @@ class Opskins_Market(mc.MetaConfig):
                     .replace(u'\r', u'').encode('utf-8'))
             f.write(u'\n'.encode('utf-8'))
         f.close()
-        print('\n=====Opskins parsing is done=====\n')

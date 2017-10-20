@@ -25,7 +25,6 @@ class DataAnalyse():
         #delete file for speed boost
         try:
             os.remove(db_name+'.db')
-            #print('File removed: '+db_name+'.db')
         except:
             print("Can't remove database file")
             
@@ -68,7 +67,6 @@ class DataAnalyse():
                 second_database = exhangers_db_names[index_j]
                 #3.2.2. make string for filename
                 what_to_cmpr = first_database.replace('_data', '')+ "_" + second_database.replace('_data', '')
-                print("\nCompare " + first_database.replace('_data', '') + " and " + second_database.replace('_data', ''))
                 #3.2.3. find profit for sale from current shop to current exhanger
                 # --quality_matters-- defines if analyzer should compare items only with same quality
                 self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters, min_profit, absolute_profit)
@@ -316,8 +314,7 @@ class DataAnalyse():
 
 
     #ru quality to universal quality
-    def translate_csgotm_qual(self, current_qual):  
-        #print(current_qual)
+    def translate_csgotm_qual(self, current_qual):
         if current_qual == 'Закаленное в боях':
             return u'BS'
         if current_qual == 'Поношенное':
