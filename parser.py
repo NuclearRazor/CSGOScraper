@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 import config as mc
 import opskins_core as op
+import db as da
 
 import cfscrape
 
@@ -19,9 +20,8 @@ class ParseMarkets(mc.MetaConfig):
 
         self.initUI()
 
-    def initUI(self):
 
-        start_fx = datetime.datetime.now().replace(microsecond=0)
+    def initUI(self):
 
         comission_list = self.get_comission()
         self.parse_csmoneymarket(comission_list[1])
@@ -30,11 +30,6 @@ class ParseMarkets(mc.MetaConfig):
         self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
         op.Opskins_Market(comission_list[4], convert_course)
-
-        finish_fx = datetime.datetime.now().replace(microsecond=0)
-        print("\nStarted. TIME: " + str(start_fx))
-        print("Finished. TIME: " + str(finish_fx))
-        print("Elapsed. Time:", str((finish_fx - start_fx)))
 
 
     def convert_to_str(self, numlist):
@@ -236,5 +231,28 @@ class ParseMarkets(mc.MetaConfig):
 
 if __name__ == '__main__':
 
+    start_fx = datetime.datetime.now().replace(microsecond=0)
+
     MetaApp = mc.createWidget()
     MainApp = ParseMarkets()
+
+    shops = ['csgotm_data.csv', 'opskins_data.csv']
+    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
+
+    coeff_mag = 0
+    min_price = 1
+    max_price = 1000
+    min_profit = 25
+    max_profit = 150
+    sort_flag = 'profit_priceDESC'
+    compare_equal_qualitys = True
+    empiric_profit_bound = 150
+
+    db = da.DataAnalyse(shops, exchangers, compare_equal_qualitys,\
+    coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
+
+    finish_fx = datetime.datetime.now().replace(microsecond=0)
+
+    print("\nStarted. TIME: " + str(start_fx))
+    print("Finished. TIME: " + str(finish_fx))
+    print("Elapsed. Time:", str((finish_fx - start_fx)))

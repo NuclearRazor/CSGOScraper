@@ -1,12 +1,7 @@
 import sqlite3
-import time
-import datetime
-import random
 import csv
-import chardet
 import os, errno
 import re
-import time
 import io
 
 conn = None
@@ -55,8 +50,6 @@ class DataAnalyse():
 
         sort_flag = sort_flag_var
 
-        compare_fx = repr(time.ctime())
-
         #1. parse shops
         for index_i, i in enumerate(shops):
             shop_db = self.parse_info(db_name, shops[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', coeff_mag, min_price, max_price)
@@ -91,14 +84,6 @@ class DataAnalyse():
         #4. find profit in profit range
         output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
         self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name, sort_flag)
-        
-        endcompare_fx = repr(time.ctime())
-
-        print('\nStart compare: ', compare_fx)
-        print('End compare: ', endcompare_fx)
- 
-        print('\nNumber of shops = ', len(shops_db_names))   
-        print('\nNumber of exchangers = ', len(exhangers_db_names))   
 
         self.get_comission()
 
@@ -414,23 +399,3 @@ class DataAnalyse():
             return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 ASC' % (table_name)
         #sort by price and profit from second shop/exchanger by desc (default)
         return 'SELECT * FROM %s ORDER BY Profit_1_TO_2 DESC, Price2 DESC' % (table_name)
-
-
-if __name__ == "__main__":
-
-    shops = ['csgotm_data.csv', 'opskins_data.csv']
-    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
-
-    coeff_mag = 0
-    min_price = 1
-    max_price = 1000
-    min_profit = 25
-    max_profit = 150
-    sort_flag = 'profit_priceDESC'
-    compare_equal_qualitys = True
-    empiric_profit_bound = 150
-
-    db = DataAnalyse(shops, exchangers, compare_equal_qualitys,\
-    coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
-
-
