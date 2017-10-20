@@ -59,11 +59,11 @@ class DataAnalyse():
 
         #1. parse shops
         for index_i, i in enumerate(shops):
-            shop_db = self.parse_info(db_name, shops[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+            shop_db = self.parse_info(db_name, shops[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', coeff_mag, min_price, max_price)
             shops_db_names.append(shop_db)
         #2. parse exhangers
         for index_i, i in enumerate(exchangers):
-            exchanger_db = self.parse_info(db_name, exchangers[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', coeff_mag, min_price, max_price)
+            exchanger_db = self.parse_info(db_name, exchangers[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', coeff_mag, min_price, max_price)
             exhangers_db_names.append(exchanger_db)
         #3. for each shop..
         for index_i, i in enumerate(shops_db_names):
@@ -142,7 +142,7 @@ class DataAnalyse():
         return s
 
 
-    def parse_info(self, db_name, filename, col_index, col_name, col_price, col_quality, coeff, min_price, max_price):
+    def parse_info(self, db_name, filename, col_index, col_name, col_price, col_quality, col_url, coeff, min_price, max_price):
             
         global c
         global conn
@@ -151,8 +151,8 @@ class DataAnalyse():
         filename = filename.replace('.csv', '')
 
         #repr() to convert objects into string
-        parameter_name = 'CREATE TABLE IF NOT EXISTS %s(%s, %s, %s, %s)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality))
-        parameter_save = 'INSERT INTO %s(%s, %s, %s, %s) VALUES (?, ?, ?, ?)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality))
+        parameter_name = 'CREATE TABLE IF NOT EXISTS %s(%s, %s, %s, %s, %s)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality), repr(col_url))
+        parameter_save = 'INSERT INTO %s(%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)' % (filename, repr(col_index), repr(col_name), repr(col_price), repr(col_quality), repr(col_url))
         parameter_name = parameter_name.replace('\'', '"')
         parameter_save = parameter_save.replace('\'', '"')
 
@@ -164,11 +164,11 @@ class DataAnalyse():
         if filename_csv == 'csgotm_data.csv':
             with io.open(filename_csv, 'r', errors='ignore') as fin:
                 dr = csv.DictReader(fin) # comma is default delimiter                
-                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, True)
+                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, col_url, True)
         else:
             with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin:
                 dr = csv.DictReader(fin) # comma is default delimiter
-                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, False)
+                to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, col_url, False)
 
         c.executemany(parameter_save, to_db)
         conn.commit()
@@ -177,24 +177,37 @@ class DataAnalyse():
         return filename
 
 
-    def parse_items(self, dr, prices, coeff, col_index, col_name, col_price, col_quality, translate):
+    def parse_items(self, dr, prices, coeff, col_index, col_name, col_price, col_quality, col_url, translate):
         to_db = []
         # float(i[col_price])+float(i[col_price])*coeff
+        fields = dr.fieldnames
         if prices[0]==None:
             if translate:
-                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality])) for i in dr]
+                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.translate_csgotm_qual(i[col_quality]), self.get_item_url(fields, i, col_url)) for i in dr]
             else:
-                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), i[col_quality]) for i in dr]
+                to_db = [(i[col_index], i[col_name], repr(round(float(i[col_price])+float(i[col_price])*coeff,4)), self.check_default_qual(i[col_quality]), self.get_item_url(fields, i, col_url)) for i in dr]
         else:
             to_db=[]
             for i in dr:
                 price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
                 if price>=prices[0] and price<=prices[1]:
                     if translate:
-                        to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality])))
+                        to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality]), self.get_item_url(fields, i, col_url)))
                     else:
-                        to_db.append((i[col_index], i[col_name], repr(price), i[col_quality]))
+                        to_db.append((i[col_index], i[col_name], repr(price), self.check_default_qual(i[col_quality]), self.get_item_url(fields, i, col_url)))
         return to_db
+
+    # checks if current item has url
+    def get_item_url(self, dr_fields, cur_item, url_col):
+        if url_col in dr_fields:
+            return cur_item[url_col]
+        return "--"
+
+    # checks and converts default quality
+    def check_default_qual(this, quality):
+        if quality == '':
+            return '--'
+        return quality
 
 
     def check_prices(self, min_price, max_price):
@@ -237,7 +250,7 @@ class DataAnalyse():
         #result table name
         name = res_table_name
         parameter_name = '''CREATE TABLE IF NOT EXISTS 
-        %s(%s, %s, %s, %s, %s, %s, %s, %s)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2')
+        %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2', 'url1', 'url2')
         parameter_name = parameter_name.replace('\'', '"')
         #create a table
         c.execute(parameter_name)
@@ -250,8 +263,8 @@ class DataAnalyse():
         #create buffer table
         c.execute(parameter_name)
 
-        parameter_name = """SELECT DISTINCT %s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s FROM %s, %s 
-        WHERE %s.%s=%s.%s""" % (tb1, '`index`', tb1, 'c_market_name_en', tb1, 'c_price', tb1, 'c_quality', tb2, 'c_market_name_en', tb2, 'c_price', tb2, 'c_quality', tb1, tb2, tb1, 'c_market_name_en', tb2, 'c_market_name_en')
+        parameter_name = """SELECT DISTINCT %s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s,%s.%s FROM %s, %s 
+        WHERE %s.%s=%s.%s""" % (tb1, '`index`', tb1, 'c_market_name_en', tb1, 'c_price', tb1, 'c_quality', tb2, 'c_market_name_en', tb2, 'c_price', tb2, 'c_quality', tb1, 'URL',  tb2, 'URL', tb1, tb2, tb1, 'c_market_name_en', tb2, 'c_market_name_en')
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
 
@@ -291,8 +304,8 @@ class DataAnalyse():
                     VALUES (%s, %s, %s, %s, %d)''' % (my_table_name, repr(row[0]), repr(row[1]), repr(row[2]), repr(second_price), curProfit_1to2)
                         c.execute(parameter_save)
                         # 1.2. Write it a in result table
-                        parameter_save = '''INSERT OR IGNORE INTO %s(%s, %s, %s, %s, %s, %s, %s, %s) 
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %d)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2', repr(row[0]), repr(row[1]), repr(row[2]), repr(row[3]), repr(row[4]), repr(second_price), repr(row[6]), curProfit_1to2)
+                        parameter_save = '''INSERT OR IGNORE INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %d, %s, %s)''' % (name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2', 'url1', 'url2', repr(row[0]), repr(row[1]), repr(row[2]), repr(row[3]), repr(row[4]), repr(second_price), repr(row[6]), curProfit_1to2, repr(row[7]), repr(row[8]))
                         c.execute(parameter_save)
                     # 2. if item exist
                     else:           
@@ -309,8 +322,8 @@ class DataAnalyse():
                             c.execute(parameter_save)
                             # 2.1.2.1. rewrite value in result table
                             #(name, '`index`', 'name1', 'price1', 'quality1', 'name2', 'price2', 'quality2', 'profit1to2')
-                            parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, quality1 = %s, price2 = %s, quality2 = %s, profit1to2 = %d
-                            WHERE `index` = %s AND name1 = %s''' % (name, repr(row[0]), repr(row[2]), repr(row[3]), repr(second_price), repr(row[6]), curProfit_1to2, repr(result[0]), repr(result[1]))
+                            parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, quality1 = %s, price2 = %s, quality2 = %s, profit1to2 = %d, url1 = %s, url2 = %s
+                            WHERE `index` = %s AND name1 = %s''' % (name, repr(row[0]), repr(row[2]), repr(row[3]), repr(second_price), repr(row[6]), curProfit_1to2, repr(row[7]), repr(row[8]), repr(result[0]), repr(result[1]))
                             c.execute(parameter_save)
         conn.commit()
         c.close()
@@ -349,13 +362,13 @@ class DataAnalyse():
             loc_min_pr = tmp
             
         new_fn = output_filepath+".csv"
-        columns = ('Index', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO')
+        columns = ('Index', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', 'URL1', 'URL2')
         
         conn = sqlite3.connect(db_name + '.db')
         c = conn.cursor()
         tn = 'interval_table'
         parameter_name = '''CREATE TABLE IF NOT EXISTS 
-        %s(%s, %s, %s, %s, %s, %s, %s, %s, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO')
+        %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', 'URL1', 'URL2')
         parameter_name = parameter_name.replace('\'', '"')
         c.execute(parameter_name)
         
@@ -370,9 +383,9 @@ class DataAnalyse():
                 continue
             else:
                 for element in results:
-                    insert_str = '''INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s) 
+                    insert_str = '''INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) 
         VALUES (%s, %s, %s, %s, %s, %s, %s, 
-        %d, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', repr(element[0]), repr(element[1]), repr(element[2]), repr(element[3]), repr(element[4]), repr(element[5]), repr(element[6]), element[7], repr(cur_table))
+        %d, %s, %s, %s)''' % (tn, 'Ind', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', 'URL1', 'URL2', repr(element[0]), repr(element[1]), repr(element[2]), repr(element[3]), repr(element[4]), repr(element[5]), repr(element[6]), element[7], repr(cur_table), repr(element[8]), repr(element[9]))
                     c.execute(insert_str)
         parameter_name = self.get_select_with_sort_param(profit_and_price2, tn)
         parameter_name = parameter_name.replace('\'', '"')
