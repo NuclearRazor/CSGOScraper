@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import random
 import selenium.webdriver
@@ -15,18 +16,18 @@ instance = None
 
 class Opskins_Market(mc.MetaConfig):
 
-    def __init__(self, site_comission = 0, exchange_rate = 60):
+    def __init__(self, site_comission = 0, exchange_rate = 60, record_count = 100, min_wait = 3, max_wait = 200):
         super().__init__()
 
         self.comission = site_comission
         self.course = exchange_rate
-        self.record_count = 100
+        self.record_count = record_count
         # Ajax wait delay
         # wait_time = ajax_wait_base+0.01*random.randint(0,ajax_wait_random)
         # Wait ajax_wait_base seconds
-        self.ajax_wait_base = 3
+        self.ajax_wait_base = min_wait
         # Then wait from 0 to ajax_wait_random * 0.01 seconds
-        self.ajax_wait_random = 200
+        self.ajax_wait_random = max_wait
         self.shop_url = "https://opskins.com/?loc=shop_browse"
         self.shop_prefix = u"https://opskins.com/"
         self.ajax_url = "https://opskins.com/ajax/browse_scroll.php" \
@@ -79,7 +80,11 @@ class Opskins_Market(mc.MetaConfig):
         return [u"%d%% OFF" % discount_prc]
 
     def convert_price(self, price_value_list):
-        price = price_value_list[0].replace(u'$', u'').strip()
+        #except non price values like 'High Grade Key', '99.000.00' etc
+        try:
+            price = price_value_list[0].replace(u'$', u'').strip()
+        except:
+            price = '0.0'
         return price
 
     def parse_output(self, data):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 import re
 import json
@@ -29,7 +30,7 @@ class ParseMarkets(mc.MetaConfig):
         self.parse_csgosellmarket(comission_list[3])
         self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
-        op.Opskins_Market(comission_list[4], convert_course)
+        op.Opskins_Market(comission_list[4], convert_course, 300, 3, 190)
 
 
     def convert_to_str(self, numlist):
@@ -53,9 +54,8 @@ class ParseMarkets(mc.MetaConfig):
         find_num = ''
 
         with open('coefficients.txt') as f:
-            for line in f:
-                find_num = re.findall(num_pattern, str(line))
-                num_coeff.append(self.convert_to_str(find_num))
+            find_num = [re.findall(num_pattern, str(line)) for line in f]
+            [num_coeff.append(self.convert_to_str(item)) for item in find_num]
 
         return num_coeff
 
@@ -208,8 +208,8 @@ if __name__ == '__main__':
 
     coeff_mag = 0
     min_price = 1
-    max_price = 1000
-    min_profit = 25
+    max_price = 700
+    min_profit = 35
     max_profit = 150
     sort_flag = 'profit_priceDESC'
     compare_equal_qualitys = True

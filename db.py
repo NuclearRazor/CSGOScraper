@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sqlite3
 import csv
 import os, errno
@@ -172,7 +173,11 @@ class DataAnalyse():
         else:
             to_db=[]
             for i in dr:
-                price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
+                #except non price values like 'High Grade Key', '99.000.00' etc
+                try:
+                    price = round(float(i[col_price])+float(i[col_price])*coeff, 4)
+                except ValueError:
+                    price = 0.0
                 if price>=prices[0] and price<=prices[1]:
                     if translate:
                         to_db.append((i[col_index], i[col_name], repr(price), self.translate_csgotm_qual(i[col_quality]), self.get_item_url(fields, i, col_url)))

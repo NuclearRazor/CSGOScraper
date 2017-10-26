@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import pandas as pd
 
@@ -17,7 +18,7 @@ class MetaConfig():
     def initReTU(self):
         self.check_file_exist('coefficients.txt')
 
-
+    # save parsed data to dataframe
     def save_data(self, file_headers, data, mag_fixed_price, mag_name):
 
         df = pd.DataFrame(list(map(list, zip(data['rows_num'], \
@@ -26,25 +27,17 @@ class MetaConfig():
         file_name = mag_name + '.csv'
         df.to_csv(file_name, index=False)
 
-
+    # evaluate prices in list
     def evaluate_price(self, prices_data, comission, cource_value):
-
-        fixed_price = []
-
-        for price_element in prices_data:
-            price_value = (float(price_element)*(1+comission))*cource_value
-            price_value = round(price_value, 2)
-            fixed_price.append(price_value)
-
+        fixed_price = [round((float(p_item)*(1.0+comission))*cource_value, 2) for p_item in prices_data]
         return fixed_price
 
+    # evaluate price value while scrape opskins items
     def evaluate_opskins_price(self, price_element, comission, cource_value):
-
-        price_value = (float(price_element)*(1+comission))*cource_value
-        fixed_price = round(price_value, 2)
-
+        fixed_price = round((float(price_element)*(1.0+comission))*cource_value, 2)
         return fixed_price
 
+    # check file coefficients.txt
     def check_file_exist(self, filename):
         directory = os.getcwd()
         file_path = directory + '\\' + filename
@@ -54,6 +47,7 @@ class MetaConfig():
         else:
             return True
 
+# return instance of MetaConfig class
 def createWidget():
     global instance
     if instance != None:
