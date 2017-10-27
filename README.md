@@ -1,6 +1,6 @@
 ## **csgo parser**
 
-This parser get data from the next sites:
+This parser get and compare data from the next sites:
 
 - csgotm
 - csgosell
@@ -11,7 +11,7 @@ This parser get data from the next sites:
 _File **coefficients.txt** allows to edit sites comission.
 The price of goods is indicated in **rubles**_
 
-### **Usage:**
+### **Usage**
 
 Software was tested on Windows 8.1, x64, i386, MSC v.1900 (AMD 64).
 
@@ -21,12 +21,24 @@ Software was tested on Windows 8.1, x64, i386, MSC v.1900 (AMD 64).
 2. Start scraping items by following command in your terminal:
 	-	python parser.py
     
-3. Open .txt files near your script for analytical usage
+3. Open .txt files in folder 'files' for analytical usage
 
-**Coming feauture:**
+**Advantages**
 
-- comparing data's between item shops and item exchangers
-- bug fixies (while testing)
-- telegram bot for simple UI
+1. Parse and compare data take amount of 1 minute (a lot of chargeable parsers do it in 10 - 50 minutes)
+
+2. In result table you can see URL link's to each good item on opskins market
+
+3. You can controll market and exchangers comission
+
+**Coming feauture**
+
+- search and parse info about item by name from steam-analyst
+- bug fixies (csgosell shortnames, csgotm parsing time boost etc)
+- telegram bot for simple UI (API)
+
+**License**
+
+MIT
 
 ### **For informational purposes only**
