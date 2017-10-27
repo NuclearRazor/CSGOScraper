@@ -30,7 +30,7 @@ class ParseMarkets(mc.MetaConfig):
         self.parse_csgosellmarket(comission_list[3])
         self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
-        op.Opskins_Market(comission_list[4], convert_course, 300, 3, 190)
+        op.Opskins_Market(comission_list[4], convert_course, 100, 3, 190)
 
 
     def convert_to_str(self, numlist):
@@ -134,12 +134,18 @@ class ParseMarkets(mc.MetaConfig):
 
         for each in data['items']:
             each_el.append(each)
-            if 'name' in each:
-                name.append(each['name'])
+            '''
+            item names with qualities
+            # if 'name' in each:
+            #     name.append(each['name'])
+            #     row_index.append(row_value)
+            #     row_value += 1
+            '''
+            if 'shortName' in each:
+                #item names without qualities
+                short_name.append(each['shortName'])
                 row_index.append(row_value)
                 row_value += 1
-            if 'shortName' in each:
-                short_name.append(each['shortName'])
             if 'exterior' in each:
                 ext.append(each['exterior'])
 
@@ -153,7 +159,7 @@ class ParseMarkets(mc.MetaConfig):
         skinsjar_comission = int(site_comission)/100
         skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, convert_course)
         skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
-        my_df = pd.DataFrame(list(map(list, zip(row_index, name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
+        my_df = pd.DataFrame(list(map(list, zip(row_index, short_name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
         my_df.to_csv('skinsjar_data.csv', index=False)
 
 
