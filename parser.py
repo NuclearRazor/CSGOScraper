@@ -23,14 +23,13 @@ class ParseMarkets(mc.MetaConfig):
 
 
     def initUI(self):
-
         comission_list = self.get_comission()
         self.parse_csmoneymarket(comission_list[1])
         self.parse_skinsjarmarket(comission_list[2])
         self.parse_csgosellmarket(comission_list[3])
         self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
-        op.Opskins_Market(comission_list[4], convert_course, 100, 3, 190)
+        op.Opskins_Market(comission_list[4], convert_course, 300, 3, 210)
 
 
     def convert_to_str(self, numlist):
@@ -165,10 +164,8 @@ class ParseMarkets(mc.MetaConfig):
 
     def csmoney_usd_course(self):
         money_url = 'https://cs.money/get_info?hash='
-        money_pattern = r'(\d+\.\d+)'
-        money_webpage = self.get_url_regular(money_url)
-        money_value = re.findall(money_pattern, money_webpage.decode('utf-8'))
-        convert_value_item = float(money_value[1])
+        json_mon = json.loads(self.get_url_safe(money_url))
+       	convert_value_item = float(json_mon["list_currency"]["RUB"]["value"])
         return convert_value_item
 
 
@@ -214,14 +211,14 @@ if __name__ == '__main__':
 
     coeff_mag = 0
     min_price = 1
-    max_price = 700
-    min_profit = 35
+    max_price = 600
+    min_profit = 25
     max_profit = 150
     sort_flag = 'profit_priceDESC'
-    compare_equal_qualitys = True
+    compare_equal_qualities = True
     empiric_profit_bound = 150
 
-    db = da.DataAnalyse(shops, exchangers, compare_equal_qualitys,\
+    db = da.DataAnalyse(shops, exchangers, compare_equal_qualities,\
     coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
 
     finish_fx = datetime.datetime.now().replace(microsecond=0)
