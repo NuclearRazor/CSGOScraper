@@ -29,7 +29,7 @@ class ParseMarkets(mc.MetaConfig):
         self.parse_csgosellmarket(comission_list[3])
         self.parse_csgotmmarket(comission_list[0])
         convert_course = self.csmoney_usd_course()
-        op.Opskins_Market(comission_list[4], convert_course, 300, 3, 210)
+        op.Opskins_Market(comission_list[4], convert_course, 500, 3, 100)
 
 
     def convert_to_str(self, numlist):
@@ -183,7 +183,9 @@ class ParseMarkets(mc.MetaConfig):
 
         for each in data:
             if name in each:
-                name_items.append(each[name])
+                # cut item quality in item name string
+                val = each[name].split('(')[0]
+                name_items.append(val)
                 row_index.append(row_value)
                 row_value += 1
             if quality in each:
