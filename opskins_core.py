@@ -44,10 +44,8 @@ class Opskins_Market(mc.MetaConfig):
         self.initUI()
 
     def initUI(self):
-
         output_file_name = "opskins_data.csv"
         results = self.parse_opskins()
-
         self.save_items(output_file_name, results)
 
 
@@ -79,6 +77,7 @@ class Opskins_Market(mc.MetaConfig):
             return [""]
         return [u"%d%% OFF" % discount_prc]
 
+
     def convert_price(self, price_value_list):
         #except non price values like 'High Grade Key', '99.000.00' etc
         try:
@@ -86,6 +85,7 @@ class Opskins_Market(mc.MetaConfig):
         except:
             price = '0.0'
         return price
+
 
     def parse_output(self, data):
         tree = html.fromstring(data)
@@ -104,14 +104,11 @@ class Opskins_Market(mc.MetaConfig):
             suggested_price = record.xpath('.//span[@class="suggested-price"]'
                                            '/text()')
 
+            # format scraped data
             discount = self.calculate_discount(price, suggested_price)
             quality_formatted = self.wear_key(quality)
             wear_value_formatted = self.strip_wear_text(wear_value)
-
             price = self.convert_price(price)
-            full_record = [href, name, name2, price,
-                           quality_formatted, wear_value_formatted,
-                           discount]
 
             opskins_comission = int(self.comission)/100
             opskins_fixed_price = self.evaluate_opskins_price(price, opskins_comission, self.course)
@@ -130,7 +127,7 @@ class Opskins_Market(mc.MetaConfig):
             results.append(flat_list)
         return results
 
-
+    # parse items from opskins market
     def parse_opskins(self):
         try: #too rude
             driver = selenium.webdriver.Chrome()
@@ -138,6 +135,7 @@ class Opskins_Market(mc.MetaConfig):
             driver = selenium.webdriver.Firefox()
 
         driver.get(self.shop_url)
+        # 120 - empiric correctly value
         wait = WebDriverWait(driver, 120)
         wait.until(EC.presence_of_element_located((By.XPATH, self.loaded_xpath)))
         cookies = driver.get_cookies()
@@ -145,6 +143,7 @@ class Opskins_Market(mc.MetaConfig):
         xcsrf = ' '
         b = http.cookiejar.CookieJar()
 
+        # edit cookies for correct work with ajax form
         for i in cookies:
             if i['name'] == 'opskins_csrf_token':
                 xcsrf = i['value']
@@ -161,7 +160,9 @@ class Opskins_Market(mc.MetaConfig):
                 expires=expire_value, discard=True, comment=None,
                 comment_url=None, rfc2109=False
             )
+            # set edited cookies
             b.set_cookie(ck)
+        # create "lazy" headers
         h = {
             'User-Agent': user_agent,
             'referer': 'https://opskins.com/?loc=shop_browse',
@@ -171,21 +172,26 @@ class Opskins_Market(mc.MetaConfig):
             'accept-encoding': 'gzip, deflate, br',
             'accept-language': 'en-US,en;q=0.8'
         }
+
         results = list()
         page_index = 1
+
         while len(results) < self.record_count:
             r = requests.get(self.ajax_url % page_index, cookies=b, headers=h)
             r.encoding = 'utf-8'
             page_index += 1
             results = results + self.parse_output(r.text)
+            # go to the next page or not
             if (len(results) > self.record_count):
                 break
+            # add some "stochastic"
             wait_time = self.ajax_wait_base + 0.01 * random.randint(0, self.ajax_wait_random)
             time.sleep(wait_time)
         driver.close()
         return results
 
 
+    # dump data into file
     def save_items(self, file_name, data):
         f = open(file_name, 'wb')
         header = u"index,URL,c_market_name_en,c_market_name_origin," \
