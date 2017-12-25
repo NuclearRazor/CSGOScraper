@@ -7,3 +7,9 @@
 parser\.py
 
 *.bat
+
+\.idea/
+
+analyst\.py
+
+geckodriver\.log
