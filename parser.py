@@ -87,6 +87,7 @@ class ParseMarkets(mc.MetaConfig):
         new_file = origin_file[keep_col]
         comission = int(site_comission)/100
         new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float(x/100)*(1 + comission), 2))
+        new_file['c_market_name_en'] = new_file['c_market_name_en'].str.replace(r"\(.*\)", "")
         csgotm_csv_db = new_file.reset_index()
         csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
 
