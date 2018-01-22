@@ -30,9 +30,9 @@ class DataAnalyse():
             print("Can't remove database file")
             
         #make new directory
-        dir = "./files"
+        dir = "./scraped_files"
         try:
-            os.makedirs("./files")
+            os.makedirs("./scraped_files")
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
@@ -266,13 +266,8 @@ class DataAnalyse():
             first_qual = repr(row[3])
             second_qual = repr(row[6])
 
-            ###Comparing ----------------------------------------
+            ###Comparing START
             if (second_price > first_price and quality_matters==False ) or (second_price > first_price and quality_matters and first_qual==second_qual):
-
-                # k = float(first_price/second_price)
-                # check = None
-
-                # curProfit_1to2 = int(100*abs(1 - k))
 
                 k = float(second_price/first_price)
 
@@ -313,6 +308,8 @@ class DataAnalyse():
                             parameter_save = '''UPDATE %s SET `index` = %s, price1 = %s, quality1 = %s, price2 = %s, quality2 = %s, profit1to2 = %d, url1 = %s, url2 = %s
                             WHERE `index` = %s AND name1 = %s''' % (name, repr(row[0]), repr(row[2]), repr(row[3]), repr(second_price), repr(row[6]), curProfit_1to2, repr(row[7]), repr(row[8]), repr(result[0]), repr(result[1]))
                             c.execute(parameter_save)
+
+            ###Comparing END
         conn.commit()
         c.close()
         conn.close()
@@ -388,7 +385,7 @@ class DataAnalyse():
         conn.close()
     
 
-    #sort data regulator
+    #sort data controller
     def get_select_with_sort_param(self, param, table_name):
         #sort by price from second shop/exchanger by asc
         if param == 'priceASC':

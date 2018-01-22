@@ -40,12 +40,13 @@ class MetaConfig():
     # check file coefficients.txt
     def check_file_exist(self, filename):
         directory = os.getcwd()
-        file_path = directory + '\\' + filename
-        if os.path.isfile(file_path) == False:
+        file_path = os.path.join(directory, filename)
+
+        if os.path.isfile(file_path):
+            return True
+        else:
             print('Cannot find file: ', filename)
             return False
-        else:
-            return True
 
 # return instance of MetaConfig class
 def createWidget():

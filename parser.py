@@ -16,20 +16,42 @@ pd.options.mode.chained_assignment = None
 
 class ParseMarkets(mc.MetaConfig):
 
-    def __init__(self):
+    def __init__(self, _data):
         super().__init__()
 
-        self.initUI()
+        self.initUI(_data)
 
 
-    def initUI(self):
+    def initUI(self, _data):
+        self.quazi_hash_func(_data)
+
+
+    def quazi_hash_func(self, _data):
+
+        _hash_data = {}
+
         comission_list = self.get_comission()
-        self.parse_csmoneymarket(comission_list[1])
-        self.parse_skinsjarmarket(comission_list[2])
-        self.parse_csgosellmarket(comission_list[3])
-        self.parse_csgotmmarket(comission_list[0])
-        convert_course = self.csmoney_usd_course()
-        op.Opskins_Market(comission_list[4], convert_course, 500, 3, 100)
+
+        # associate shops/exhangers names with referencies to methods
+        _hash_data = {'csgotm_data.csv': self.parse_csgotmmarket,\
+                      'opskins_data.csv': op.Opskins_Market,\
+                      'csgosell_data.csv': self.parse_csgosellmarket,\
+                      'csmoney_data.csv': self.parse_csmoneymarket,\
+                      'skinsjar_data.csv': self.parse_skinsjarmarket\
+                     }
+
+        # associate shops/exhangers names with commision values
+        _hash_params = {'csgotm_data.csv': comission_list[0],\
+                        'opskins_data.csv': comission_list[4],\
+                        'csgosell_data.csv': comission_list[3],\
+                        'csmoney_data.csv': comission_list[1],\
+                        'skinsjar_data.csv': comission_list[2]\
+                       }
+
+        for _list in _data:
+            for _item in _list:
+                if _item in _hash_data and _item in _hash_params:
+                    _hash_data[_item](_hash_params[_item])
 
 
     def convert_to_str(self, numlist):
@@ -71,7 +93,7 @@ class ParseMarkets(mc.MetaConfig):
         return webpage
 
 
-    def parse_csgotmmarket(self, site_comission):
+    def parse_csgotmmarket(self, site_comission = 1):
 
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
         site_data = self.get_url_regular(csgo_url)
@@ -92,7 +114,7 @@ class ParseMarkets(mc.MetaConfig):
         csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
 
 
-    def parse_csmoneymarket(self, site_comission):
+    def parse_csmoneymarket(self, site_comission = 1):
 
         csmoney_url = 'https://cs.money/load_bots_inventory?hash='
         site_data = self.get_url_safe(csmoney_url)
@@ -104,7 +126,7 @@ class ParseMarkets(mc.MetaConfig):
         self.save_data(csmoney_header, clear_data, csmoney_fixed_price, 'csmoney_data')
 
 
-    def parse_csgosellmarket(self, site_comission):
+    def parse_csgosellmarket(self, site_comission = 1):
 
         csgosell_url = 'https://csgosell.com/phpLoaders/forceBotUpdate/all.txt'
         site_data = self.get_url_safe(csgosell_url)
@@ -116,13 +138,13 @@ class ParseMarkets(mc.MetaConfig):
         self.save_data(csgosell_header, clear_data, csgosell_fixed_price, 'csgosell_data')
 
 
-    def parse_skinsjarmarket(self, site_comission):
+    def parse_skinsjarmarket(self, site_comission = 1):
 
         skinsjar_url = 'https://skinsjar.com/api/v3/load/bots?refresh=0&v=0'
 
         site_data = self.get_url_regular(skinsjar_url)
 
-        name = []
+        #name = []
         short_name = []
         price = []
         each_el = []
@@ -206,15 +228,21 @@ if __name__ == '__main__':
 
     start_fx = datetime.datetime.now().replace(microsecond=0)
 
-    MetaApp = mc.createWidget()
-    MainApp = ParseMarkets()
-
     shops = ['csgotm_data.csv', 'opskins_data.csv']
-    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
+    exchangers = ['csgosell_data.csv', 'csmoney_data.csv']
+    # temporary site fix from skinsjar side
+    # 'skinsjar_data.csv']
+    data_to_scrape = list()
+
+    data_to_scrape.append(shops)
+    data_to_scrape.append(exchangers)
+
+    MetaApp = mc.createWidget()
+    MainApp = ParseMarkets(data_to_scrape)
 
     coeff_mag = 0
     min_price = 1
-    max_price = 600
+    max_price = 1000
     min_profit = 25
     max_profit = 150
     sort_flag = 'profit_priceDESC'
@@ -224,7 +252,7 @@ if __name__ == '__main__':
     db = da.DataAnalyse(shops, exchangers, compare_equal_qualities,\
     coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
 
-    finish_fx = datetime.datetime.now().replace(microsecond=0)
+    finish_fx = datetime.datetime.now().replace(microsecond = 0)
 
     print("\nStarted. TIME: " + str(start_fx))
     print("Finished. TIME: " + str(finish_fx))

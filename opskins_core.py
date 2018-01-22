@@ -16,7 +16,7 @@ instance = None
 
 class Opskins_Market(mc.MetaConfig):
 
-    def __init__(self, site_comission = 0, exchange_rate = 60, record_count = 100, min_wait = 3, max_wait = 200):
+    def __init__(self, site_comission = 1, exchange_rate = 60, record_count = 100, min_wait = 3, max_wait = 200):
         super().__init__()
 
         self.comission = site_comission
