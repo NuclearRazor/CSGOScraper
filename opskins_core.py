@@ -66,13 +66,13 @@ class Opskins_Market(mc.MetaConfig):
 
     def calculate_discount(self, price, suggested_price):
         p = float(price[0].replace(u'$', u'').replace(u',', u'').strip())
-        if suggested_price[0] == u'No Market Price':
+        try:
+            if suggested_price[0] == u'No Market Price':
+                return [""]
+            else:
+                sp = float(suggested_price[0].replace(u'$', u'').strip())
+        except ValueError:
             return [""]
-        elif '.' and ',' in suggested_price[0]:
-            suggested_price[0].replace('\'', '')
-            sp = float(suggested_price[0].replace(u'$', u'').strip())
-        else:
-            sp = float(suggested_price[0].replace(u'$', u'').strip())
         discount = (sp - p) / sp
         discount_prc = round(discount * 100)
         if discount_prc <= 0:

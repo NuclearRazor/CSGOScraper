@@ -11,25 +11,28 @@ c = None
 
 class DataAnalyse():
 
-    # --quality_matters-- defines if analyzer should compare items only with same quality
-    def __init__(self, shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var):
+    def __init__(self, *args):
         super().__init__()
 
-        self.initUI(shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var)
+        if len(args) != 0:
+            for item in args[0]:
+                setattr(self, item, args[0][item])
+        else:
+            return
 
-    def initUI(self, shops, exchangers, quality_matters,\
-        coeff_mag_var, min_price_var, max_price_var, min_profit_var, max_profit_var, sort_flag_var, absolute_profit_var):
+        self.initUI()
+
+    def initUI(self):
+
 
         db_name = 'parsing_data'
-        #delete file for speed boost
+        # delete file for speed boost
         try:
             os.remove(db_name+'.db')
         except:
             print("Can't remove database file")
             
-        #make new directory
+        # make new directory
         dir = "./scraped_files"
         try:
             os.makedirs("./scraped_files")
@@ -37,26 +40,19 @@ class DataAnalyse():
             if e.errno != errno.EEXIST:
                 raise
 
-        coeff_mag = coeff_mag_var
-        min_price = min_price_var
-        max_price = max_price_var
         shops_db_names = []
         exhangers_db_names = []
         self.result_tables_names = []
 
-        min_profit = min_profit_var
-        max_profit = max_profit_var
-        absolute_profit = absolute_profit_var
-
-        sort_flag = sort_flag_var
-
         #1. parse shops
-        for index_i, i in enumerate(shops):
-            shop_db = self.parse_info(db_name, shops[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', coeff_mag, min_price, max_price)
+        for index_i, i in enumerate(self.shops):
+            shop_db = self.parse_info(db_name, self.shops[index_i], \
+                                      'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', self.overall_rate, self.min_price, self.max_price)
             shops_db_names.append(shop_db)
         #2. parse exhangers
-        for index_i, i in enumerate(exchangers):
-            exchanger_db = self.parse_info(db_name, exchangers[index_i], 'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', coeff_mag, min_price, max_price)
+        for index_i, i in enumerate(self.exchangers):
+            exchanger_db = self.parse_info(db_name, self.exchangers[index_i], \
+                                           'index', 'c_market_name_en', 'c_price', 'c_quality', 'URL', self.overall_rate, self.min_price, self.max_price)
             exhangers_db_names.append(exchanger_db)
         #3. for each shop..
         for index_i, i in enumerate(shops_db_names):
@@ -70,19 +66,19 @@ class DataAnalyse():
                 what_to_cmpr = first_database.replace('_data', '')+ "_" + second_database.replace('_data', '')
                 #3.2.3. find profit for sale from current shop to current exhanger
                 # --quality_matters-- defines if analyzer should compare items only with same quality
-                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, quality_matters, min_profit, absolute_profit)
+                self.create_result_table_from_select(db_name, what_to_cmpr, first_database, second_database, self.compare_equal, self.min_profit, self.bound_profit)
 
                 #3.2.4. write into file
                 columns = ('Index', str(first_database + '_Name'), str(first_database + '_Price'), str(first_database + '_Quality'),\
-                
+
                 str(second_database + '_Name'), str(second_database + '_Price'), str(second_database + '_Quality'), str('Profit_' + first_database + '_TO_' + second_database))
-                
+
                 self.select_data_from_db(db_name, str(dir + "/" + what_to_cmpr), what_to_cmpr, columns)
-                self.result_tables_names.append(what_to_cmpr)                    
+                self.result_tables_names.append(what_to_cmpr)
 
         #4. find profit in profit range
-        output_file_name = dir+"/interval_%s_to_%s" % (min_profit, max_profit)
-        self.find_profit_in_DB_in_range(db_name, min_profit, max_profit, self.result_tables_names, output_file_name, sort_flag)
+        output_file_name = dir+"/interval_%s_to_%s" % (self.min_profit, self.max_profit)
+        self.find_profit_in_DB_in_range(db_name, self.min_profit, self.max_profit, self.result_tables_names, output_file_name, self.sort_flag)
 
         self.get_comission()
 
@@ -146,7 +142,7 @@ class DataAnalyse():
         
         correct_prices = self.check_prices(min_price, max_price)
         if filename_csv == 'csgotm_data.csv':
-            with io.open(filename_csv, 'r', errors='ignore') as fin:
+            with io.open(filename_csv, 'r', encoding='utf-8', errors='ignore') as fin:
                 dr = csv.DictReader(fin) # comma is default delimiter                
                 to_db=self.parse_items(dr, correct_prices, coeff, col_index, col_name, col_price, col_quality, col_url, True)
         else:

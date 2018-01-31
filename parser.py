@@ -30,9 +30,16 @@ class ParseMarkets(mc.MetaConfig):
 
         _opskins_config = {}
         comission_list = self.get_comission()
+
+        # for the purity of comparison, we will adopt
+        # a constant exchange rate at the time of information scraping
+        self.convert_course = self.csmoney_usd_course()
+
+        # config opskins
         if "opskins_config" in _data and len(_data) != 0:
             _opskins_config = _data["opskins_config"]
             _opskins_config["comission"] = comission_list[4]
+            _opskins_config["exchange_rate"] = self.convert_course
         else:
             return
 
@@ -122,9 +129,8 @@ class ParseMarkets(mc.MetaConfig):
         csmoney_url = 'https://cs.money/load_bots_inventory?hash='
         site_data = self.get_url_safe(csmoney_url)
         clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
-        convert_course = self.csmoney_usd_course()
         csmoney_comission = int(site_comission)/100
-        csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, convert_course)
+        csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, self.convert_course)
         csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         self.save_data(csmoney_header, clear_data, csmoney_fixed_price, 'csmoney_data')
 
@@ -134,9 +140,8 @@ class ParseMarkets(mc.MetaConfig):
         csgosell_url = 'https://csgosell.com/phpLoaders/forceBotUpdate/all.txt'
         site_data = self.get_url_safe(csgosell_url)
         clear_data = self.json_filter(site_data, 'h', 'e', 'p', 'f')
-        convert_course = self.csmoney_usd_course()
         csgosell_comission = int(site_comission)/100
-        csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, convert_course)
+        csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, self.convert_course)
         csgosell_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         self.save_data(csgosell_header, clear_data, csgosell_fixed_price, 'csgosell_data')
 
@@ -180,9 +185,8 @@ class ParseMarkets(mc.MetaConfig):
             if 'floatMax' in item:
                 float_val.append(item['floatMax'])
 
-        convert_course = self.csmoney_usd_course()
         skinsjar_comission = int(site_comission)/100
-        skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, convert_course)
+        skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, self.convert_course)
         skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         my_df = pd.DataFrame(list(map(list, zip(row_index, short_name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
         my_df.to_csv('skinsjar_data.csv', index=False)
@@ -234,27 +238,22 @@ if __name__ == '__main__':
     shops = ['csgotm_data.csv', 'opskins_data.csv']
     exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
 
-    scraping_config = {"shops": shops, "exhangers": exchangers, \
+    scraping_config = {"shops": shops, "exchangers": exchangers, \
                        "opskins_config": \
-                           {"comission": 1, "exchange_rate": 60, "record_count": 200, "mint": 3, "maxt": 200}}
+                           {"comission": 1, "exchange_rate": 60, "record_count": 300, "mint": 3, "maxt": 150}}
 
     MetaApp = mc.createWidget()
     MainApp = ParseMarkets(scraping_config)
 
-    coeff_mag = 0
-    min_price = 1
-    max_price = 1000
-    min_profit = 25
-    max_profit = 150
-    sort_flag = 'profit_priceDESC'
-    compare_equal_qualities = True
-    empiric_profit_bound = 150
+    analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0,\
+                      "min_price": 1, "max_price": 1000,\
+                      "min_profit": 30, "max_profit": 150, \
+                      "sort_flag": 'profit_priceDESC',\
+                      "compare_equal": True, "bound_profit": 150}
 
-    db = da.DataAnalyse(shops, exchangers, compare_equal_qualities,\
-    coeff_mag, min_price, max_price, min_profit, max_profit, sort_flag, empiric_profit_bound)
-
-    finish_fx = datetime.datetime.now().replace(microsecond = 0)
+    db = da.DataAnalyse(analyze_config)
 
     print("\nStarted. TIME: " + str(start_fx))
+    finish_fx = datetime.datetime.now().replace(microsecond = 0)
     print("Finished. TIME: " + str(finish_fx))
     print("Elapsed. Time:", str((finish_fx - start_fx)))
