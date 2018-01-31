@@ -23,14 +23,26 @@ class ParseMarkets(mc.MetaConfig):
 
 
     def initUI(self, _data):
-        self.quazi_hash_func(_data)
+        self.quazi_hash(_data)
 
 
-    def quazi_hash_func(self, _data):
+    def quazi_hash(self, _data):
 
-        _hash_data = {}
-
+        _opskins_config = {}
         comission_list = self.get_comission()
+        if "opskins_config" in _data and len(_data) != 0:
+            _opskins_config = _data["opskins_config"]
+            _opskins_config["comission"] = comission_list[4]
+        else:
+            return
+
+        # associate each shop/exhanger with it config variables
+        _hash_params = {'csgotm_data.csv': comission_list[0],\
+                        'opskins_data.csv': _opskins_config,\
+                        'csgosell_data.csv': comission_list[3],\
+                        'csmoney_data.csv': comission_list[1],\
+                        'skinsjar_data.csv': comission_list[2]\
+                       }
 
         # associate shops/exhangers names with referencies to methods
         _hash_data = {'csgotm_data.csv': self.parse_csgotmmarket,\
@@ -40,18 +52,9 @@ class ParseMarkets(mc.MetaConfig):
                       'skinsjar_data.csv': self.parse_skinsjarmarket\
                      }
 
-        # associate shops/exhangers names with commision values
-        _hash_params = {'csgotm_data.csv': comission_list[0],\
-                        'opskins_data.csv': comission_list[4],\
-                        'csgosell_data.csv': comission_list[3],\
-                        'csmoney_data.csv': comission_list[1],\
-                        'skinsjar_data.csv': comission_list[2]\
-                       }
-
-        for _list in _data:
-            for _item in _list:
-                if _item in _hash_data and _item in _hash_params:
-                    _hash_data[_item](_hash_params[_item])
+        if _data["opskins_config"]:
+            _data.pop('opskins_config', None)
+            [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
 
 
     def convert_to_str(self, numlist):
@@ -229,16 +232,14 @@ if __name__ == '__main__':
     start_fx = datetime.datetime.now().replace(microsecond=0)
 
     shops = ['csgotm_data.csv', 'opskins_data.csv']
-    exchangers = ['csgosell_data.csv', 'csmoney_data.csv']
-    # temporary site fix from skinsjar side
-    # 'skinsjar_data.csv']
-    data_to_scrape = list()
+    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
 
-    data_to_scrape.append(shops)
-    data_to_scrape.append(exchangers)
+    scraping_config = {"shops": shops, "exhangers": exchangers, \
+                       "opskins_config": \
+                           {"comission": 1, "exchange_rate": 60, "record_count": 200, "mint": 3, "maxt": 200}}
 
     MetaApp = mc.createWidget()
-    MainApp = ParseMarkets(data_to_scrape)
+    MainApp = ParseMarkets(scraping_config)
 
     coeff_mag = 0
     min_price = 1

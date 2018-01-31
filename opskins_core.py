@@ -16,18 +16,17 @@ instance = None
 
 class Opskins_Market(mc.MetaConfig):
 
-    def __init__(self, site_comission = 1, exchange_rate = 60, record_count = 100, min_wait = 3, max_wait = 200):
+    def __init__(self, *args):
         super().__init__()
 
-        self.comission = site_comission
-        self.course = exchange_rate
-        self.record_count = record_count
-        # Ajax wait delay
-        # wait_time = ajax_wait_base+0.01*random.randint(0,ajax_wait_random)
-        # Wait ajax_wait_base seconds
-        self.ajax_wait_base = min_wait
-        # Then wait from 0 to ajax_wait_random * 0.01 seconds
-        self.ajax_wait_random = max_wait
+        if len(args) != 0:
+            for item in args[0]:
+                setattr(self, item, args[0][item])
+        else:
+            return
+
+        # wait_time = ajax_wait_base+0.01*random.randint(0, ajax_wait_random)
+
         self.shop_url = "https://opskins.com/?loc=shop_browse"
         self.shop_prefix = u"https://opskins.com/"
         self.ajax_url = "https://opskins.com/ajax/browse_scroll.php" \
@@ -69,6 +68,9 @@ class Opskins_Market(mc.MetaConfig):
         p = float(price[0].replace(u'$', u'').replace(u',', u'').strip())
         if suggested_price[0] == u'No Market Price':
             return [""]
+        elif '.' and ',' in suggested_price[0]:
+            suggested_price[0].replace('\'', '')
+            sp = float(suggested_price[0].replace(u'$', u'').strip())
         else:
             sp = float(suggested_price[0].replace(u'$', u'').strip())
         discount = (sp - p) / sp
@@ -111,7 +113,7 @@ class Opskins_Market(mc.MetaConfig):
             price = self.convert_price(price)
 
             opskins_comission = int(self.comission)/100
-            opskins_fixed_price = self.evaluate_opskins_price(price, opskins_comission, self.course)
+            opskins_fixed_price = self.evaluate_opskins_price(price, opskins_comission, self.exchange_rate)
             price_list_transit = [str(opskins_fixed_price)]
 
             full_record_fixed = [href, name, name2, price_list_transit,
@@ -185,7 +187,7 @@ class Opskins_Market(mc.MetaConfig):
             if (len(results) > self.record_count):
                 break
             # add some "stochastic"
-            wait_time = self.ajax_wait_base + 0.01 * random.randint(0, self.ajax_wait_random)
+            wait_time = self.mint + 0.01 * random.randint(0, self.maxt)
             time.sleep(wait_time)
         driver.close()
         return results
