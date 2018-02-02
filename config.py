@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import os
 import pandas as pd
+import io
+import re
 
 pd.options.mode.chained_assignment = None
 
@@ -17,6 +19,19 @@ class MetaConfig():
 
     def initReTU(self):
         self.check_file_exist('coefficients.txt')
+
+
+    def get_comission(self):
+        num_pattern = r'\d+'
+        num_coeff = []
+        find_num = ''
+
+        with io.open('coefficients.txt', encoding='utf-8', errors='ignore') as f:
+            find_num = [re.findall(num_pattern, str(line)) for line in f]
+            [num_coeff.append(self.convert_to_str(item)) for item in find_num]
+
+        return num_coeff
+
 
     # save parsed data to dataframe
     def save_data(self, file_headers, data, mag_fixed_price, mag_name):

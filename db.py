@@ -2,14 +2,14 @@
 import sqlite3
 import csv
 import os, errno
-import re
 import io
+import config as mc
 
 conn = None
 c = None
 
 
-class DataAnalyse():
+class DataAnalyse(mc.MetaConfig):
 
     def __init__(self, *args):
         super().__init__()
@@ -92,19 +92,6 @@ class DataAnalyse():
         conn.commit()
         c.close()
         conn.close()
-
-
-    def get_comission(self):
-        num_pattern = r'\d+'
-        num_coeff = []
-        find_num = ''
-
-        with io.open('coefficients.txt', encoding='utf-8', errors='ignore') as f:
-            for line in f:
-                find_num = re.findall(num_pattern, str(line))
-                num_coeff.append(self.convert_to_str(find_num))
-
-        return num_coeff
 
 
     def convert_to_str(self, numlist):

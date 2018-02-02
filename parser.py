@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
-import re
 import json
-
 import pandas as pd
 import requests
 import config as mc
@@ -77,18 +75,6 @@ class ParseMarkets(mc.MetaConfig):
             s = 'None'
             pass
         return s
-
-
-    def get_comission(self):
-        num_pattern = r'\d+'
-        num_coeff = []
-        find_num = ''
-
-        with open('coefficients.txt') as f:
-            find_num = [re.findall(num_pattern, str(line)) for line in f]
-            [num_coeff.append(self.convert_to_str(item)) for item in find_num]
-
-        return num_coeff
 
 
     def get_url_regular(self, link):
