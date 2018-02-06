@@ -83,7 +83,7 @@ class Opskins_Market(mc.MetaConfig):
     def convert_price(self, price_value_list):
         #except non price values like 'High Grade Key', '99.000.00' etc
         try:
-            price = price_value_list[0].replace(u'$', u'').strip()
+            price = price_value_list[0].replace(u'$', u'').strip().replace(',', '')
         except:
             price = '0.0'
         return price

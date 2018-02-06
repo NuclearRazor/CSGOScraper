@@ -226,7 +226,7 @@ if __name__ == '__main__':
 
     scraping_config = {"shops": shops, "exchangers": exchangers, \
                        "opskins_config": \
-                           {"comission": 1, "exchange_rate": 60, "record_count": 300, "mint": 3, "maxt": 150}}
+                           {"comission": 1, "exchange_rate": 60, "record_count": 500, "mint": 3, "maxt": 150}}
 
     MetaApp = mc.createWidget()
     MainApp = ParseMarkets(scraping_config)
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0,\
                       "min_price": 1, "max_price": 1000,\
                       "min_profit": 30, "max_profit": 150, \
-                      "sort_flag": 'profit_priceDESC',\
+                      "sort_flag": 'profit_priceASC',\
                       "compare_equal": True, "bound_profit": 150}
 
     db = da.DataAnalyse(analyze_config)
