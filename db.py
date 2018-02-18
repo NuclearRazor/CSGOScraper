@@ -80,8 +80,6 @@ class DataAnalyse(mc.MetaConfig):
         output_file_name = dir+"/interval_%s_to_%s" % (self.min_profit, self.max_profit)
         self.find_profit_in_DB_in_range(db_name, self.min_profit, self.max_profit, self.result_tables_names, output_file_name, self.sort_flag)
 
-        self.get_comission()
-
 
     def delete_tb(self, db_name, table_name):
         parameter_name = 'DROP TABLE IF EXISTS %s' % (table_name)
@@ -92,21 +90,6 @@ class DataAnalyse(mc.MetaConfig):
         conn.commit()
         c.close()
         conn.close()
-
-
-    def convert_to_str(self, numlist):
-        try:
-            if numlist != None:
-                s = map(str, numlist)  # ['1','2','3']
-                s = ''.join(s)  # '123'
-            else:
-                s = 'None'
-                return s
-        except (ValueError, TypeError, RuntimeError):
-            print('\nEmpty object or none, continue, value = None\n')
-            s = 'None'
-            pass
-        return s
 
 
     def parse_info(self, db_name, filename, col_index, col_name, col_price, col_quality, col_url, coeff, min_price, max_price):

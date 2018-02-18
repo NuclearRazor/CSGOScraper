@@ -14,20 +14,20 @@ pd.options.mode.chained_assignment = None
 
 class ParseMarkets(mc.MetaConfig):
 
-    def __init__(self, _data):
+    def __init__(self, _data, _comission):
         super().__init__()
 
-        self.initUI(_data)
+        self.initUI(_data, _comission)
 
 
-    def initUI(self, _data):
-        self.quazi_hash(_data)
+    def initUI(self, _data, _comission):
+        self.quazi_hash(_data, _comission)
 
 
-    def quazi_hash(self, _data):
+    def quazi_hash(self, _data, _comission):
 
         _opskins_config = {}
-        comission_list = self.get_comission()
+        comission_list = _comission
 
         # for the purity of comparison, we will adopt
         # a constant exchange rate at the time of information scraping
@@ -60,21 +60,6 @@ class ParseMarkets(mc.MetaConfig):
         if _data["opskins_config"]:
             _data.pop('opskins_config', None)
             [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
-
-
-    def convert_to_str(self, numlist):
-        try:
-            if numlist != None:
-                s = map(str, numlist)  # ['1','2','3']
-                s = ''.join(s)  # '123'
-            else:
-                s = 'None'
-                return s
-        except (ValueError, TypeError, RuntimeError):
-            print('\nEmpty object or none, continue, value = None\n')
-            s = 'None'
-            pass
-        return s
 
 
     def get_url_regular(self, link):
@@ -212,31 +197,18 @@ class ParseMarkets(mc.MetaConfig):
                 float_items.append(each[flt])
 
         json_dict = {'rows_num': row_index, 'names': name_items, \
-        'qualitys': quality_items, 'prices': price_items, 'floats': float_items}
+        'qualities': quality_items, 'prices': price_items, 'floats': float_items}
 
         return json_dict
 
 
 if __name__ == '__main__':
 
-    start_fx = datetime.datetime.now().replace(microsecond=0)
-
-    shops = ['csgotm_data.csv', 'opskins_data.csv']
-    exchangers = ['csgosell_data.csv', 'csmoney_data.csv', 'skinsjar_data.csv']
-
-    scraping_config = {"shops": shops, "exchangers": exchangers, \
-                       "opskins_config": \
-                           {"comission": 1, "exchange_rate": 60, "record_count": 500, "mint": 3, "maxt": 150}}
+    start_fx = datetime.datetime.now().replace(microsecond = 0)
 
     MetaApp = mc.createWidget()
-    MainApp = ParseMarkets(scraping_config)
-
-    analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0,\
-                      "min_price": 1, "max_price": 1000,\
-                      "min_profit": 30, "max_profit": 150, \
-                      "sort_flag": 'profit_priceASC',\
-                      "compare_equal": True, "bound_profit": 150}
-
+    scraping_config, fee, analyze_config = MetaApp.parse_options()
+    MainApp = ParseMarkets(scraping_config, fee)
     db = da.DataAnalyse(analyze_config)
 
     print("\nStarted. TIME: " + str(start_fx))
