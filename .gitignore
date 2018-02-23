@@ -15,3 +15,7 @@ analyst\.py
 geckodriver\.log
 
 options_debug\.txt
+
+bot_config\.py
+
+UI\.py

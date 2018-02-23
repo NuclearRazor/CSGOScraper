@@ -74,6 +74,13 @@ class ParseMarkets(mc.MetaConfig):
         return webpage
 
 
+    def csmoney_usd_course(self):
+        money_url = 'https://cs.money/get_info?hash='
+        json_mon = json.loads(self.get_url_safe(money_url))
+        convert_value_item = float(json_mon["list_currency"]["RUB"]["value"])
+        return convert_value_item
+
+
     def parse_csgotmmarket(self, site_comission = 1):
 
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
@@ -161,13 +168,6 @@ class ParseMarkets(mc.MetaConfig):
         skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
         my_df = pd.DataFrame(list(map(list, zip(row_index, short_name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
         my_df.to_csv('skinsjar_data.csv', index=False)
-
-
-    def csmoney_usd_course(self):
-        money_url = 'https://cs.money/get_info?hash='
-        json_mon = json.loads(self.get_url_safe(money_url))
-       	convert_value_item = float(json_mon["list_currency"]["RUB"]["value"])
-        return convert_value_item
 
 
     def json_filter(self, webpage, name, quality, price, flt):
