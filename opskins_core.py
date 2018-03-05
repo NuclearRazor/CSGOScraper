@@ -9,7 +9,7 @@ import http.cookiejar
 import requests
 from lxml import html
 import config as mc
-import parser as pa
+import scraper as pa
 
 instance = None
 

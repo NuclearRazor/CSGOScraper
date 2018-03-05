@@ -1,0 +1,989 @@
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++++++-+get_data%3A+start+scraping+all+data%0A++++++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 451
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539080&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539081&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539081&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539081&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539081&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539081&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539082&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539082&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A05%3A25+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539083&timeout=20 HTTP/1.1" 200 357
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539084&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539085&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539085&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539085&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539085&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539085&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++++++-+get_data%3A+start+scraping+all+data%0A++++++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 451
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539086&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539087&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539087&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539087&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A11%3A20+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539088&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++++++-+get_data%3A+start+scraping+all+data%0A++++++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 451
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539089&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A11%3A23+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539090&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A11%3A30+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539091&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A11%3A32+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539092&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+01%3A11%3A33+is%3A+56.375038 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539093&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539093&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539094&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539095&timeout=20 HTTP/1.1" 200 350
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539096&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+21%3A39%3A39+is%3A+56.231998 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539097&timeout=20 HTTP/1.1" 200 355
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539099&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539100&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539101&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539102&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539103&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539104&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539105&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539106&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539106&timeout=20 HTTP/1.1" 200 353
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539107&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A45%3A58+is%3A+56.258999 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539108&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539109&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539110&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539111&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539111&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539112&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539112&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539113&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539114&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539114&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539114&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539115&timeout=20 HTTP/1.1" 200 296
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539116&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539117&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539118&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539118&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539119&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539120&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539120&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539120&timeout=20 HTTP/1.1" 200 357
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539121&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A53%3A41+is%3A+56.258999 HTTP/1.1" 200 277
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 348
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539123&timeout=20 HTTP/1.1" 200 348
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539124&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539124&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539125&timeout=20 HTTP/1.1" 200 348
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539126&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 348
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539127&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539127&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539129&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539130&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:AttributeError occurred, args=("module 'parser' has no attribute 'createWidget'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 71, in handle_main
+    _fp = wg.createWidget()
+AttributeError: module 'parser' has no attribute 'createWidget'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:ModuleNotFoundError occurred, args=("No module named 'parser.py'; 'parser' is not a package",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    wg = importlib.import_module('parser.py')
+  File "C:\Python_ENVS\Anaconda\lib\importlib\__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 978, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 961, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 945, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'parser.py'; 'parser' is not a package
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:TypeError occurred, args=("the 'package' argument is required to perform a relative import for '.parser'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    wg = importlib.import_module( '.' + 'parser')
+  File "C:\Python_ENVS\Anaconda\lib\importlib\__init__.py", line 121, in import_module
+    raise TypeError(msg.format(name))
+TypeError: the 'package' argument is required to perform a relative import for '.parser'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:AttributeError occurred, args=("module 'parser' has no attribute 'createWidget'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _fp = pr.createWidget()
+AttributeError: module 'parser' has no attribute 'createWidget'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:AttributeError occurred, args=("module 'parser' has no attribute 'ParseMarkets'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.ParseMarkets()
+AttributeError: module 'parser' has no attribute 'ParseMarkets'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 1009
+ERROR:TeleBot:AttributeError occurred, args=("module 'parser' has no attribute 'createWidget'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+AttributeError: module 'parser' has no attribute 'createWidget'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+ERROR:TeleBot:TypeError occurred, args=("__init__() missing 2 required positional arguments: '_data' and '_comission'",)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 236, in createWidget
+    instance = ParseMarkets()
+TypeError: __init__() missing 2 required positional arguments: '_data' and '_comission'
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+ERROR:TeleBot:JSONDecodeError occurred, args=('Expecting value: line 1 column 1 (char 0)',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 237, in createWidget
+    instance = ParseMarkets()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 31, in __init__
+    self.initUI(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 52, in initUI
+    self.quazi_hash(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 62, in quazi_hash
+    self.convert_course = self.csmoney_usd_course()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 107, in csmoney_usd_course
+    json_mon = json.loads(self.get_url_safe(money_url))
+  File "C:\Python_ENVS\Anaconda\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+ERROR:TeleBot:JSONDecodeError occurred, args=('Expecting value: line 1 column 1 (char 0)',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 231, in createWidget
+    instance = ParseMarkets(scraping_config, fee, analyze_config)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 25, in __init__
+    self.initUI(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 45, in initUI
+    self.quazi_hash(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 55, in quazi_hash
+    self.convert_course = self.csmoney_usd_course()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 100, in csmoney_usd_course
+    json_mon = json.loads(self.get_url_safe(money_url))
+  File "C:\Python_ENVS\Anaconda\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+ERROR:TeleBot:JSONDecodeError occurred, args=('Expecting value: line 1 column 1 (char 0)',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 232, in createWidget
+    instance = ParseMarkets(scraping_config, fee, analyze_config)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 25, in __init__
+    self.initUI(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 45, in initUI
+    self.quazi_hash(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 55, in quazi_hash
+    self.convert_course = self.csmoney_usd_course()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 101, in csmoney_usd_course
+    json_mon = json.loads(self.get_url_safe(money_url))
+  File "C:\Python_ENVS\Anaconda\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+ERROR:TeleBot:JSONDecodeError occurred, args=('Expecting value: line 1 column 1 (char 0)',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 70, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 232, in createWidget
+    instance = ParseMarkets(scraping_config, fee, analyze_config)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 25, in __init__
+    self.initUI(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 45, in initUI
+    self.quazi_hash(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 55, in quazi_hash
+    self.convert_course = self.csmoney_usd_course()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 101, in csmoney_usd_course
+    json_mon = json.loads(self.get_url_safe(money_url))
+  File "C:\Python_ENVS\Anaconda\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539144&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:root:2018-03-04 22:18:57	Can't get exchange rate from cs.money source distanation
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A18%3A53+is%3A+None HTTP/1.1" 200 272
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539145&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539145&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539145&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539145&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539145&timeout=20 HTTP/1.1" 409 143
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 159, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\__init__.py", line 129, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 175, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539146&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539147&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539147&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539147&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539147&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539147&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539148&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539148&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539149&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:root:2018-03-04 22:22:37	Can't get exchange rate from cs.money source distanation
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A22%3A36+is%3A+None HTTP/1.1" 200 272
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539150&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539151&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539151&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539151&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539152&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539153&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539153&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539153&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539154&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539155&timeout=20 HTTP/1.1" 200 355
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539156&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539156&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539157&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A25%3A56+is%3A+57.076037 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539158&timeout=20 HTTP/1.1" 200 355
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+ERROR:TeleBot:JSONDecodeError occurred, args=('Expecting value: line 1 column 1 (char 0)',)
+Traceback (most recent call last):
+  File "C:\Python_ENVS\Anaconda\lib\site-packages\telebot\util.py", line 58, in run
+    task(*args, **kwargs)
+  File "C:/Users/nuclear_razor/Desktop/Решение задач/Программирование/cs/git_cs/csgo_parser/bot.py", line 69, in handle_main
+    _parser = pr.createWidget()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 232, in createWidget
+    instance = ParseMarkets(scraping_config, fee, analyze_config)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 25, in __init__
+    self.initUI(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 45, in initUI
+    self.quazi_hash(_data, _comission)
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 55, in quazi_hash
+    self.convert_course = self.csmoney_usd_course()
+  File "C:\Users\nuclear_razor\Desktop\Решение задач\Программирование\cs\git_cs\csgo_parser\scraper.py", line 101, in csmoney_usd_course
+    json_mon = json.loads(self.get_url_safe(money_url))
+  File "C:\Python_ENVS\Anaconda\lib\json\__init__.py", line 354, in loads
+    return _default_decoder.decode(s)
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 339, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Python_ENVS\Anaconda\lib\json\decoder.py", line 357, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:root:2018-03-04 22:26:57	Can't get exchange rate from cs.money source distanation
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A26%3A56+is%3A+None HTTP/1.1" 200 272
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539160&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:root:2018-03-04 22:27:15	Can't get exchange rate from cs.money source distanation
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A27%3A14+is%3A+None HTTP/1.1" 200 272
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539161&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539161&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 503 None
+INFO:root:2018-03-04 22:43:05	Can't get exchange rate from cs.money source distanation
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+22%3A43%3A01+is%3A+None HTTP/1.1" 200 272
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539162&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 1009
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539165&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+00%3A00%3A45+is%3A+56.457001 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539166&timeout=20 HTTP/1.1" 200 355
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): market.csgo.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /itemdb/current_730.json HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): market.csgo.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /itemdb/items_730_1520283638.csv HTTP/1.1" 200 29519694
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539167&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539167&timeout=20 HTTP/1.1" 200 351
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539168&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+00%3A01%3A30+is%3A+56.457001 HTTP/1.1" 200 277
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51643/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "chrome", "platformName": "any", "goog:chromeOptions": {"extensions": [], "args": []}}}, "desiredCapabilities": {"browserName": "chrome", "version": "", "platform": "ANY", "goog:chromeOptions": {"extensions": [], "args": []}}}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session {"capabilities": {"firstMatch": [{}], "alwaysMatch": {"browserName": "firefox", "acceptInsecureCerts": true}}, "desiredCapabilities": {"browserName": "firefox", "acceptInsecureCerts": true}}
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/url {"url": "https://opskins.com/?loc=shop_browse", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/element {"using": "xpath", "value": "//*[@id=\"modalContainer\"]", "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:GET http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/cookie {"sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+DEBUG:selenium.webdriver.remote.remote_connection:POST http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/execute/sync {"script": "return navigator.userAgent;", "args": [], "sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=1&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=2&appId=730&contextId=2 HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=3&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=4&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=5&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=6&appId=730&contextId=2 HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=7&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=8&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=9&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=10&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=11&appId=730&contextId=2 HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=12&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=13&appId=730&contextId=2 HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): opskins.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /ajax/browse_scroll.php?page=14&appId=730&contextId=2 HTTP/1.1" 200 None
+DEBUG:selenium.webdriver.remote.remote_connection:DELETE http://127.0.0.1:51653/session/41e71b1e-352a-490c-a0b0-b08c787209b2/window {"sessionId": "41e71b1e-352a-490c-a0b0-b08c787209b2"}
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:selenium.webdriver.remote.remote_connection:Finished Request
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): csgosell.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /phpLoaders/forceBotUpdate/all.txt HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /load_bots_inventory?hash= HTTP/1.1" 200 None
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): skinsjar.com
+DEBUG:requests.packages.urllib3.connectionpool:"GET /api/v3/load/bots?refresh=0&v=0 HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendDocument?chat_id=69360910 HTTP/1.1" 200 369
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539169&timeout=20 HTTP/1.1" 200 23
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=type%3A%0A++++++++-+rate%3A+get+csmoney+USD-RUB+course%0A++++++++-+get_last%3A+get+last+scraped+final+table%0A+++++++++-+get_data%3A+start+scraping+all+data%0A++++++++-+set_mags%3A+set+mag+names+to+scrape%0A HTTP/1.1" 200 435
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539170&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+00%3A12%3A00+is%3A+56.457001 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539171&timeout=20 HTTP/1.1" 200 355
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendDocument?chat_id=69360910 HTTP/1.1" 200 369
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539172&timeout=20 HTTP/1.1" 200 351
+INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): cs.money
+DEBUG:requests.packages.urllib3.connectionpool:"GET /get_info?hash= HTTP/1.1" 200 None
+DEBUG:requests.packages.urllib3.connectionpool:"POST /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/sendMessage?chat_id=69360910&text=Course+at+00%3A14%3A47+is%3A+56.457001 HTTP/1.1" 200 277
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
+DEBUG:requests.packages.urllib3.connectionpool:"GET /bot439289445:AAGqQ9Vp85ocLeapGYrNdVIiO-wk7WoVc70/getUpdates?offset=684539173&timeout=20 HTTP/1.1" 200 23
