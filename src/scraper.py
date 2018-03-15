@@ -15,26 +15,37 @@ instance = None
 
 class ParseMarkets(mc.MetaConfig):
 
-    def __init__(self, _data, _comission, _analyze_config):
+    def __init__(self):
         super().__init__()
 
-        print('IMPORT WAS TESTED OK')
         import os
 
         start_fx = datetime.datetime.now().replace(microsecond=0)
-        self.initUI(_data, _comission)
-        da.DataAnalyse(_analyze_config)
+
+        MetaApp = mc.createWidget()
+        scraping_config, fee, analyze_config = MetaApp.parse_options()
+        
+        self.initUI(scraping_config, fee)
+        da.DataAnalyse(analyze_config)
+
         print("\nStarted. TIME: " + str(start_fx))
         finish_fx = datetime.datetime.now().replace(microsecond=0)
         print("Finished. TIME: " + str(finish_fx))
         print("Elapsed. Time:", str((finish_fx - start_fx)))
 
         _path = os.getcwd()
+        print('PATH DEBUG = {}'.format(_path))
         _data_path = os.path.join(_path, 'scraped_files')
+        print('DATA PATH DEBUG = {}'.format(_data_path))
         _files = [i for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
+        print('DATA FILES = {}'.format(_files))
         _path = [item for item in _files if 'interval' in item]
+        print('ALL PATH = {}'.format(_path))
 
-        self._filepath = os.path.join(_data_path, _path[0])
+        if len(_path) != 0:
+            self._filepath = os.path.join(_data_path, _path[0])
+        else:
+            self._filepath = None
 
 
     def getFilePath(self):
@@ -98,7 +109,6 @@ class ParseMarkets(mc.MetaConfig):
     def csmoney_usd_course(self):
         try:
             money_url = 'https://cs.money/get_info?hash='
-            print('TEST = {}'.format(self.get_url_safe(money_url)))
             json_mon = json.loads(self.get_url_safe(money_url))
             convert_value_item = float(json_mon["list_currency"]["RUB"]["value"])
         except:
@@ -228,14 +238,6 @@ class ParseMarkets(mc.MetaConfig):
 
         return json_dict
 
-def createWidget():
-    global instance
-    if instance != None:
-         return None
-    MetaApp = mc.createWidget()
-    scraping_config, fee, analyze_config = MetaApp.parse_options()
-    instance = ParseMarkets(scraping_config, fee, analyze_config)
-    return instance
 
 #uncomment it to use scraper like a standalone module
 # if __name__ == '__main__':

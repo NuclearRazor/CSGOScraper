@@ -21,7 +21,7 @@ logging.basicConfig(filename='logging_data.log', level=logging.DEBUG)
 def handle_main(message):
 
     if 'help' in message.text:
-        _help_text = u"type:\n\
+        _help_text = u"\rtype:\n\
         - rate: get csmoney USD-RUB course\n\
         - get_last: get last scraped final table\n \
         - get_data: start scraping all data\n\
@@ -42,16 +42,16 @@ def handle_main(message):
             logging.info('{}\tCan\'t send final table'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
     if 'rate' in message.text:
-        _time = dt.datetime.now().strftime("%H:%M:%S")
 
         def get_rate(value="RUB"):
             try:
                 money_url = 'https://cs.money/get_info?hash='
                 scraper = cfscrape.create_scraper(delay=15)
+                time_point = dt.datetime.now().strftime("%H:%M:%S")
                 webpage = scraper.get(money_url).content
                 json_mon = json.loads(webpage)
-                convert_value_item = float(json_mon["list_currency"][value]["value"])
-                return convert_value_item
+                convert_value_item = json_mon["list_currency"][value]["value"]
+                return str(convert_value_item), time_point
             except:
                 print('Alert: can\'t get exchange rate by get method')
                 logging.info('{}\tCan\'t get exchange rate from cs.money source distanation'.format(
@@ -61,26 +61,29 @@ def handle_main(message):
         try:
             #TODO
             #add rate by stdcin user cmd
-            _rate = get_rate("RUB")
-            _rate_course = 'Course at ' + _time + ' is: ' + str(_rate)
+            _evalue = "RUB"
+            _mvalue = "USD"
+            _rate, _time = get_rate(_evalue)
+            _rate_course = 'Current ' + _mvalue + ' to ' +  _evalue + ' rate at ' + _time + ' is: ' + _rate
             bot.send_message(message.chat.id, _rate_course)
         except:
             bot.send_message(message.chat.id, \
                              "Error while getting exchange rate.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
 
+
     if 'get_data' in message.text:
-        ###DEBUG METHOD START
-        #TODO
-        #ERRORS HANDLER
         import scraper as pr
-        print('GET DATA CMD OK')
-        _parser = pr.createWidget()
-        _fp = _parser.getFilePath()
-        doc = open(_fp, 'rb')
-        print('fp = {}'.format(_fp))
-        bot.send_document(message.chat.id, doc)
-        ###DEBUG METHOD END
-        ###NO TRY/EXCEPT STATEMENT
+        try:
+            _parser = pr.ParseMarkets()
+            _fp = _parser.getFilePath()
+            doc = open(_fp, 'rb')
+            print('fp = {}'.format(_fp))
+            bot.send_document(message.chat.id, doc)
+        except AttributeError:
+            bot.send_message(message.chat.id, \
+                             "Error while getting all data.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
+            logging.info('{}\tCan\'t get all data by scraper'.format(
+                        dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
 
 class BotUI():
@@ -91,9 +94,12 @@ class BotUI():
 
 
     def initReTU(self):
-        bot.polling(True)
         while True:
-            time.sleep(3)
+            try:
+                bot.polling(none_stop=True)
+            except Exception as e:
+                logging.error(e)
+                time.sleep(15)
 
 
 if __name__ == '__main__':

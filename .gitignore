@@ -19,3 +19,5 @@ options_debug\.txt
 bot_config\.py
 
 UI\.py
+
+*.log
