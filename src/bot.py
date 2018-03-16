@@ -8,13 +8,52 @@ import os
 import datetime as dt
 import cfscrape
 import json
+import sqlite3
+import re
 
 API_TOKEN = ''
+
+conn = None
+c = None
 
 bot = telebot.TeleBot(API_TOKEN)
 #telebot.logger.setLevel(logging.DEBUG)
 
 logging.basicConfig(filename='logging_data.log', level=logging.DEBUG)
+
+
+def store_to_db(timer = None, data = None):
+    global c
+    global conn
+
+    dbname = 'statisticsinfo.db'
+
+    _TIME = 'TIME'
+    _DATA = 'DATA'
+    _TIMER = 'TIMER'
+
+    # make column name to db or pass it
+    parameter_name = 'CREATE TABLE IF NOT EXISTS %s(%s, %s, %s)' % (
+        dbname.replace('.db', ''), repr(_TIME), repr(_TIMER), repr(_DATA))
+    parameter_name = parameter_name.replace('\'', '"')
+
+    # connect to database with statistical info
+    # (for the first time store all passing data through bot without any filters)
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    c.execute(parameter_name)
+
+    _time = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    parameter_save = 'INSERT INTO %s(%s, %s, %s) VALUES (?, ?, ?)' % (
+        dbname.replace('.db', ''), repr(_TIME), repr(_TIMER), repr(_DATA))
+    _store_data = list()
+    _store_data.append((_time, timer, data))
+    # store in db list with values to save
+    c.executemany(parameter_save, _store_data)
+    conn.commit()
+    # close cursor and db connector
+    c.close()
+    conn.close()
 
 
 @bot.message_handler(commands=['help', 'get_last', 'rate', 'get_data'])
@@ -58,15 +97,30 @@ def handle_main(message):
                     dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 return
 
+        _evalue = ''
+        _search_value_pattern = r'\w+'
+        _searched = re.findall(_search_value_pattern, message.text)
         try:
-            #TODO
-            #add rate by stdcin user cmd
-            _evalue = "RUB"
+            if _searched is not None:
+                if len(_searched[1]) == 3:
+                    _evalue = _searched[1]
+        except Exception as e:
+            logging.info('{}\tCan\'t parse currency: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+            pass
+
+
+        try:
+            # default option
+            if len(_evalue) == 0:
+                bot.send_message(message.chat.id, 'Wrong typed currency or this is not in all currencies referer list, use RUB')
+                _evalue = "RUB"
             _mvalue = "USD"
             _rate, _time = get_rate(_evalue)
             _rate_course = 'Current ' + _mvalue + ' to ' +  _evalue + ' rate at ' + _time + ' is: ' + _rate
             bot.send_message(message.chat.id, _rate_course)
+            store_to_db(data = _rate_course)
         except:
+            bot.send_message(message.chat.id, 'Currency was typed: {}'.format(_evalue))
             bot.send_message(message.chat.id, \
                              "Error while getting exchange rate.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
 

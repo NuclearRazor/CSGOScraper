@@ -6,12 +6,10 @@ import requests
 import config as mc
 import opskins_core as op
 import db as da
-
 import cfscrape
 
 pd.options.mode.chained_assignment = None
 
-instance = None
 
 class ParseMarkets(mc.MetaConfig):
 
@@ -31,16 +29,13 @@ class ParseMarkets(mc.MetaConfig):
         print("\nStarted. TIME: " + str(start_fx))
         finish_fx = datetime.datetime.now().replace(microsecond=0)
         print("Finished. TIME: " + str(finish_fx))
-        print("Elapsed. Time:", str((finish_fx - start_fx)))
+        self.time_fix = str((finish_fx - start_fx))
+        print("Elapsed. Time:", self.time_fix)
 
         _path = os.getcwd()
-        print('PATH DEBUG = {}'.format(_path))
         _data_path = os.path.join(_path, 'scraped_files')
-        print('DATA PATH DEBUG = {}'.format(_data_path))
         _files = [i for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
-        print('DATA FILES = {}'.format(_files))
         _path = [item for item in _files if 'interval' in item]
-        print('ALL PATH = {}'.format(_path))
 
         if len(_path) != 0:
             self._filepath = os.path.join(_data_path, _path[0])
@@ -50,6 +45,10 @@ class ParseMarkets(mc.MetaConfig):
 
     def getFilePath(self):
         return self._filepath
+
+
+    def getTimeScrapingDuration(self):
+        return self.time_fix
 
 
     def initUI(self, _data, _comission):
