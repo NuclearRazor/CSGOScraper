@@ -1,5 +1,0 @@
-csgo_tm = 10%
-cs_money = 3%
-skinsjar = 3%
-csgosell = 3%
-opskins = 5%

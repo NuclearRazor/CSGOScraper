@@ -22,7 +22,7 @@ bot = telebot.TeleBot(API_TOKEN)
 logging.basicConfig(filename='logging_data.log', level=logging.DEBUG)
 
 
-def store_to_db(timer = None, data = None):
+def store_to_db(timer = None, data = None, table = None):
     global c
     global conn
 
@@ -50,6 +50,17 @@ def store_to_db(timer = None, data = None):
     _store_data.append((_time, timer, data))
     # store in db list with values to save
     c.executemany(parameter_save, _store_data)
+
+    # store final table into database
+    if table is not None:
+        import pandas as pd
+
+        try:
+            df = pd.read_csv(table, engine='python')
+            df.to_sql('DATA_TABLE', conn, if_exists='append', index=False)
+        except Exception as e:
+            logging.info('{}\tCan\'t store table data: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+
     conn.commit()
     # close cursor and db connector
     c.close()
@@ -60,10 +71,10 @@ def store_to_db(timer = None, data = None):
 def handle_main(message):
 
     if 'help' in message.text:
-        _help_text = u"\rtype:\n\
-        - rate: get csmoney USD-RUB course\n\
-        - get_last: get last scraped final table\n \
-        - get_data: start scraping all data\n\
+        _help_text = u"\rType with separator '/' for use next commands:\n\n\
+        - rate CUR: get csmoney exchange rate for typed currency (RUB as default)\n\n\
+        - get_last: get last scraped final table\n\n\
+        - get_data: start scraping all data\n\n\
         - set_mags: set mag names to scrape\n"
         bot.send_message(message.chat.id, _help_text)
 
@@ -108,21 +119,22 @@ def handle_main(message):
             logging.info('{}\tCan\'t parse currency: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
             pass
 
-
         try:
             # default option
             if len(_evalue) == 0:
                 bot.send_message(message.chat.id, 'Wrong typed currency or this is not in all currencies referer list, use RUB')
+                # set default currency as RUB
                 _evalue = "RUB"
             _mvalue = "USD"
             _rate, _time = get_rate(_evalue)
             _rate_course = 'Current ' + _mvalue + ' to ' +  _evalue + ' rate at ' + _time + ' is: ' + _rate
             bot.send_message(message.chat.id, _rate_course)
             store_to_db(data = _rate_course)
-        except:
+        except Exception as e:
             bot.send_message(message.chat.id, 'Currency was typed: {}'.format(_evalue))
             bot.send_message(message.chat.id, \
                              "Error while getting exchange rate.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
+            logging.info('{}\tCan\'t scrape exchange rate: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     if 'get_data' in message.text:
@@ -130,14 +142,15 @@ def handle_main(message):
         try:
             _parser = pr.ParseMarkets()
             _fp = _parser.getFilePath()
+            _tx = _parser.getTimeScrapingDuration()
             doc = open(_fp, 'rb')
-            print('fp = {}'.format(_fp))
             bot.send_document(message.chat.id, doc)
-        except AttributeError:
+            store_to_db(timer=_tx, table = _fp)
+        except Exception as e:
             bot.send_message(message.chat.id, \
                              "Error while getting all data.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
-            logging.info('{}\tCan\'t get all data by scraper'.format(
-                        dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            logging.info('{}\tCan\'t get all data by scraper: {}'.format(
+                        dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
 class BotUI():

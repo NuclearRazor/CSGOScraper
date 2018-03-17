@@ -69,7 +69,6 @@ class MetaConfig():
 def createWidget():
     global instance
     if instance is not None:
-        del instance
-        return MetaConfig()   
+        return instance
     instance = MetaConfig()
     return instance

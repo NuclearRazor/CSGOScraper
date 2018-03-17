@@ -9,7 +9,6 @@ import http.cookiejar
 import requests
 from lxml import html
 import config as mc
-import scraper as pa
 
 instance = None
 
@@ -135,6 +134,8 @@ class Opskins_Market(mc.MetaConfig):
             driver = selenium.webdriver.Chrome()
         except:
             driver = selenium.webdriver.Firefox()
+            # 'hide' browser
+            driver.set_window_position(-2000, 0)
 
         driver.get(self.shop_url)
         # 120 - empiric correctly value

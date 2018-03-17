@@ -21,3 +21,5 @@ bot_config\.py
 UI\.py
 
 *.log
+
+src/coefficients\.txt
