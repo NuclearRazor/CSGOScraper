@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+import datetime as dt
 import json
 import pandas as pd
 import requests
@@ -7,6 +7,7 @@ import config as mc
 import opskins_core as op
 import db as da
 import cfscrape
+import logging
 
 pd.options.mode.chained_assignment = None
 
@@ -18,7 +19,7 @@ class ParseMarkets(mc.MetaConfig):
 
         import os
 
-        start_fx = datetime.datetime.now().replace(microsecond=0)
+        start_fx = dt.datetime.now().replace(microsecond=0)
 
         MetaApp = mc.createWidget()
         scraping_config, fee, analyze_config = MetaApp.parse_options()
@@ -27,18 +28,18 @@ class ParseMarkets(mc.MetaConfig):
         da.DataAnalyse(analyze_config)
 
         print("\nStarted. TIME: " + str(start_fx))
-        finish_fx = datetime.datetime.now().replace(microsecond=0)
+        finish_fx = dt.datetime.now().replace(microsecond=0)
         print("Finished. TIME: " + str(finish_fx))
         self.time_fix = str((finish_fx - start_fx))
         print("Elapsed. Time:", self.time_fix)
 
         _path = os.getcwd()
         _data_path = os.path.join(_path, 'scraped_files')
-        _files = [i for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
-        _path = [item for item in _files if 'interval' in item]
+        _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
+        _newest = sorted(_files, key=lambda x: os.path.getctime(x))[-1]
 
-        if len(_path) != 0:
-            self._filepath = os.path.join(_data_path, _path[0])
+        if len(_newest) != 0:
+            self._filepath = _newest
         else:
             self._filepath = None
 
@@ -110,20 +111,19 @@ class ParseMarkets(mc.MetaConfig):
             money_url = 'https://cs.money/get_info?hash='
             json_mon = json.loads(self.get_url_safe(money_url))
             convert_value_item = float(json_mon["list_currency"]["RUB"]["value"])
-        except:
-            #NEED FIX
-            #stdout to user/send by bot info message
+        except Exception as e:
             convert_value_item = 1
+            logging.error('{}\tCan\'t scrape exchange rate: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
         return convert_value_item
 
 
     def parse_csgotmmarket(self, site_comission = 1):
 
         csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
-        site_data = self.get_url_regular(csgo_url)
+        site_data = self.get_url_safe(csgo_url)
         data = json.loads(site_data)
         file_name = 'https://market.csgo.com/itemdb/' + data['db']
-        site_data = self.get_url_regular(file_name)
+        site_data = self.get_url_safe(file_name)
 
         with open('csgotm_full_data.csv', 'wb') as file:
             file.write(site_data)
@@ -241,7 +241,7 @@ class ParseMarkets(mc.MetaConfig):
 #uncomment it to use scraper like a standalone module
 # if __name__ == '__main__':
 #
-#     start_fx = datetime.datetime.now().replace(microsecond = 0)
+#     start_fx = dt.datetime.now().replace(microsecond = 0)
 #
 #     MetaApp = mc.createWidget()
 #     scraping_config, fee, analyze_config = MetaApp.parse_options()
@@ -249,6 +249,6 @@ class ParseMarkets(mc.MetaConfig):
 #     db = da.DataAnalyse(analyze_config)
 #
 #     print("\nStarted. TIME: " + str(start_fx))
-#     finish_fx = datetime.datetime.now().replace(microsecond = 0)
+#     finish_fx = dt.datetime.now().replace(microsecond = 0)
 #     print("Finished. TIME: " + str(finish_fx))
 #     print("Elapsed. Time:", str((finish_fx - start_fx)))
