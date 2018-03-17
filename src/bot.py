@@ -176,6 +176,8 @@ def function_name(message):
                     _checker = True
                     if isinstance(_value, list):
                         _file_dump[item][_key] = _value
+                    elif isinstance(_value, dict):
+                        _file_dump[item][_key] = _value
                     elif _value.isdigit():
                         _file_dump[item][_key] = int(_value)
                     elif _value.isdigit() == False:
@@ -241,6 +243,7 @@ def function_name(message):
 
 @bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata'])
 def handle_main(message):
+    time.sleep(0.5)
     if 'help' in message.text:
         _help_text = u"\rType next commands to use the bot:\n\n\
         /rate CUR: get csmoney exchange rate for typed currency (RUB as default)\n\n\
@@ -251,13 +254,12 @@ def handle_main(message):
         bot.send_message(message.chat.id, _help_text)
 
     if 'getlast' in message.text:
-        _path = os.getcwd()
-        _data_path = os.path.join(_path, 'scraped_files')
         try:
-            _files = [i for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
-            _path = [item for item in _files if 'interval' in item]
-            _filepath = os.path.join(_data_path, _path[0])
-            doc = open(_filepath, 'rb')
+            _path = os.getcwd()
+            _data_path = os.path.join(_path, 'scraped_files')
+            _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
+            _newest = sorted(_files, key=lambda x: os.path.getctime(x))[-1]
+            doc = open(_newest, 'rb')
             bot.send_document(message.chat.id, doc)
         except Exception as e:
             bot.send_message(message.chat.id, "Can\'t send final table")
@@ -274,10 +276,10 @@ def handle_main(message):
                 json_mon = json.loads(webpage)
                 convert_value_item = json_mon["list_currency"][value]["value"]
                 return str(round(float(convert_value_item), 2)), time_point
-            except:
+            except Exception as e:
                 print('Alert: can\'t get exchange rate by get method')
-                logging.info('{}\tCan\'t get exchange rate from cs.money source distanation'.format(
-                    dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                logging.info('{}\tCan\'t get exchange rate from cs.money source distanation: {}'.format(
+                    dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
                 return
 
         _evalue = ''

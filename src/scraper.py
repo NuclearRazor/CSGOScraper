@@ -88,10 +88,12 @@ class ParseMarkets(mc.MetaConfig):
                       'csmoney_data.csv': self.parse_csmoneymarket,\
                       'skinsjar_data.csv': self.parse_skinsjarmarket\
                      }
-
-        if _data["opskins_config"]:
-            _data.pop('opskins_config', None)
-            [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
+        try:
+            if _data["opskins_config"]:
+                _data.pop('opskins_config', None)
+                [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
+        except Exception as e:
+            logging.error('{}\tError: Can\'t find file with name: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def get_url_regular(self, link):
@@ -243,10 +245,7 @@ class ParseMarkets(mc.MetaConfig):
 #
 #     start_fx = dt.datetime.now().replace(microsecond = 0)
 #
-#     MetaApp = mc.createWidget()
-#     scraping_config, fee, analyze_config = MetaApp.parse_options()
-#     MainApp = ParseMarkets(scraping_config, fee)
-#     db = da.DataAnalyse(analyze_config)
+#     MainApp = ParseMarkets()
 #
 #     print("\nStarted. TIME: " + str(start_fx))
 #     finish_fx = dt.datetime.now().replace(microsecond = 0)
