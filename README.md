@@ -13,8 +13,8 @@ The price of goods is indicated in **rubles**
 
 ##  **Dependencies:**
 
-- telebot
-- cfscrape
+- telebot (if you want to use Telegram bot)
+- cfscrape (for 'safely' get-requests)
 
 ##  **Usage:**
 
@@ -39,7 +39,9 @@ Software was tested on Windows 8.1, x64, i486, MSC v.1900 (AMD 64).
 
 2. In result table you can see URL link's to each good item on opskins market
 
-3. You can controll market and exchangers comission and it's scraping options in _parser.py_:
+3. You can controll market and exchangers comission and it's scraping options in options.ini
+
+4. You can get item info in final table by /getitem NAME bot command
 
 **shops**, **exchangers** - to determinate what kind of data you want to store, comparison occurs between every unique shop and all exhangers, like:
 
@@ -78,6 +80,25 @@ scraping_config = {"shops": shops, "exchangers": exchangers, "opskins_config": {
 
 analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0, "min_price": 1, "max_price": 1000, "min_profit": 30, "max_profit": 150, "sort_flag": 'profit_priceDESC', "compare_equal": True, "bound_profit": 150}
 
+## Bot usage
+
+(*) To use bot please make your own API Telegram token
+
+(**) type /help to get this list of commands in your bot dialog
+
+**Supported commands:**
+
+**/rate** CUR: get csmoney exchange rate for typed currency (RUB as default)
+
+**/getlast**: get last scraped final table
+
+**/getdata**: start scraping all data
+
+**/setconfig** KEY VALUE: set options to scraper, keys must be named as is
+
+**/getconfig**: get options table for scraping
+
+**/getitem** NAME: get info in last final table for entered item name
 
 ## **Coming feauture**
 
