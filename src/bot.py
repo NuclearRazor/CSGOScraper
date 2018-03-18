@@ -336,7 +336,8 @@ def handle_main(message):
         /getlast: get last scraped final table\n\n\
         /getdata: start scraping all data\n\n\
         /setconfig KEY VALUE: set options to scraper, keys must be named as is\n\n\
-        /getconfig: get options table for scraping\n"
+        /getconfig: get options table for scraping\n\n\
+        /getitem NAME: get info in last final table for entered item name\n"
         bot.send_message(message.chat.id, _help_text)
 
     if 'getlast' in message.text:
