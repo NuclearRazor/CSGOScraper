@@ -76,8 +76,13 @@ def check_file(filename):
         return False
 
 
+def similar(a, b):
+    from difflib import SequenceMatcher
+    return SequenceMatcher(None, a, b).ratio()
+
+
 @bot.message_handler(regexp = '/setconfig')
-def function_name(message):
+def handle_cmd(message):
     '''
     update value for key in options.ini
     '''
@@ -200,7 +205,7 @@ def function_name(message):
 
 
 @bot.message_handler(regexp = '/getconfig')
-def function_name(message):
+def handle_cmd(message):
     '''
     get options.csv - table witk KEY and VALUE columns
     '''
@@ -238,6 +243,88 @@ def function_name(message):
         print('Cannot find file: ', _filename)
         bot.send_message(message.chat.id, 'Can\'t find file with name: {}'.format(_filename))
         logging.info('{}\tCan\'t find file with name: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), _filename))
+
+
+@bot.message_handler(regexp = '/getitem')
+def handle_cmd(message):
+
+    bot.reply_to(message, "\nSearching info in final table for entered item name:\n\n\
+    1. Use maximally similar names to item names in tables\n\
+    2. This method works only with last final table\n")
+
+    _pattern = r'[\w\D]+'
+    _searcheditem = re.findall(_pattern, message.text)
+
+    if _searcheditem is not None:
+        try:
+            _itemname = _searcheditem[0].split()
+            _searchitem = _itemname[1]
+        except IndexError:
+            bot.send_message(message.chat.id, 'Incorrect item name')
+            return
+    else:
+        _searchitem = ''
+
+    if sys.platform == 'win32':
+        sys._enablelegacywindowsfsencoding()
+
+    _path = os.getcwd()
+    _data_path = os.path.join(_path, 'scraped_files')
+    _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
+    _newest = sorted(_files, key=lambda x: os.path.getmtime(x))[-1]
+    origin_file = pd.read_csv(_newest, sep=',')
+
+    _index = 0
+    _index_list = list()
+    _names_first = list()
+    _prices_first = list()
+    _qualities_first = list()
+    _names_second = list()
+    _prices_second = list()
+    _qualities_second = list()
+    _profit = list()
+    _from_to_box = list()
+    _url_first = list()
+    _url_second = list()
+
+    try:
+        # minimum checker for one column name
+        if "Name1" in origin_file:
+            for item in origin_file["Name1"]:
+
+                _check = similar(_searchitem, item)
+
+                if _check >= 0.35:
+                    _index_list.append(_index)
+                    _names_first.append(item)
+                    _prices_first.append(origin_file.loc[origin_file['Name1'] == item, 'Price1'].values[0])
+                    _qualities_first.append(origin_file.loc[origin_file['Name1'] == item, 'Quality1'].values[0])
+                    _names_second.append(origin_file.loc[origin_file['Name1'] == item, 'Name2'].values[0])
+                    _prices_second.append(origin_file.loc[origin_file['Name1'] == item, 'Price2'].values[0])
+                    _qualities_second.append(origin_file.loc[origin_file['Name1'] == item, 'Quality2'].values[0])
+                    _profit.append(origin_file.loc[origin_file['Name1'] == item, 'Profit_1_TO_2'].values[0])
+                    _from_to_box.append(origin_file.loc[origin_file['Name1'] == item, 'FROM_TO'].values[0])
+                    _url_first.append(origin_file.loc[origin_file['Name1'] == item, 'URL1'].values[0])
+                    _url_second.append(origin_file.loc[origin_file['Name1'] == item, 'URL2'].values[0])
+                    _index += 1
+
+        if len(_index_list) == 0:
+            bot.send_message(message.chat.id, 'No item information found')
+            return
+        _headers = ['Index', 'Name1', 'Price1', 'Quality1', 'Name2', 'Price2', 'Quality2', 'Profit_1_TO_2', 'FROM_TO', 'URL1', 'URL2']
+        df = pd.DataFrame(list(map(list, zip(_index_list, _names_first, _prices_first, _qualities_first, _names_second,
+                                             _prices_second, _qualities_second, _profit, _from_to_box, _url_first, _url_second))), columns=_headers)
+        file_name = 'iteminfo.csv'
+        df.to_csv(file_name, index=False)
+        _path_final = os.getcwd()
+        _iteminfo_path = os.path.join(_path_final, file_name)
+        doc = open(_iteminfo_path, 'rb')
+        bot.send_document(message.chat.id, doc)
+        store_to_db(table=_iteminfo_path)
+    except Exception as e:
+        bot.send_message(message.chat.id, 'Can\'t find info for item: {}'.format(_searchitem))
+        logging.error(
+            '{}\tError: {} Can\'t find info for item: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e, _searchitem))
 
 
 @bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata'])
