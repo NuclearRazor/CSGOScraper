@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import parser as pr
 import telebot
 import time
 import sys
@@ -258,7 +257,7 @@ def handle_main(message):
             _path = os.getcwd()
             _data_path = os.path.join(_path, 'scraped_files')
             _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
-            _newest = sorted(_files, key=lambda x: os.path.getctime(x))[-1]
+            _newest = sorted(_files, key=lambda x: os.path.getmtime(x))[-1]
             doc = open(_newest, 'rb')
             bot.send_document(message.chat.id, doc)
         except Exception as e:
@@ -274,6 +273,10 @@ def handle_main(message):
                 time_point = dt.datetime.now().strftime("%H:%M:%S")
                 webpage = scraper.get(money_url).content
                 json_mon = json.loads(webpage)
+                _allkeys = list(json_mon["list_currency"].keys())
+                if value not in _allkeys:
+                    bot.reply_to(message, 'There is no supported currency: {}\n\nAll supported currencies:\n\n{}\n'.format(value, _allkeys))
+                    return
                 convert_value_item = json_mon["list_currency"][value]["value"]
                 return str(round(float(convert_value_item), 2)), time_point
             except Exception as e:
@@ -285,10 +288,10 @@ def handle_main(message):
         _evalue = ''
         _search_value_pattern = r'\w+'
         _searched = re.findall(_search_value_pattern, message.text)
+
         try:
             if _searched is not None:
-                if len(_searched[1]) == 3:
-                    _evalue = _searched[1]
+                _evalue = _searched[1]
         except Exception as e:
             logging.info('{}\tCan\'t parse currency: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
             pass
@@ -300,13 +303,17 @@ def handle_main(message):
                 # set default currency as RUB
                 _evalue = "RUB"
             _mvalue = "USD"
-            _rate, _time = get_rate(_evalue)
+            try:
+                _rate, _time = get_rate(_evalue)
+            # finally if cannot scrape currency function will be return None -> NoneType
+            except TypeError:
+                return
             _rate_course = 'Current ' + _mvalue + ' to ' +  _evalue + ' rate at ' + _time + ' is: ' + _rate
             bot.send_message(message.chat.id, _rate_course)
             store_to_db(data = _rate_course)
         except Exception as e:
             bot.send_message(message.chat.id, 'Currency was typed: {}'.format(_evalue))
-            bot.send_message(message.chat.id, \
+            bot.send_message(message.chat.id,
                              "Error while getting exchange rate.\nPlease report about this issue to:\nhttps://github.com/NuclearRazor/csgo_scraper/issues")
             logging.info('{}\tCan\'t scrape exchange rate: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 

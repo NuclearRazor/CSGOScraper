@@ -36,7 +36,7 @@ class ParseMarkets(mc.MetaConfig):
         _path = os.getcwd()
         _data_path = os.path.join(_path, 'scraped_files')
         _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
-        _newest = sorted(_files, key=lambda x: os.path.getctime(x))[-1]
+        _newest = sorted(_files, key=lambda x: os.path.getmtime(x))[-1]
 
         if len(_newest) != 0:
             self._filepath = _newest
