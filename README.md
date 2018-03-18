@@ -1,4 +1,4 @@
-## **csgo parser**
+## CSGO SCRAPER
 
 This parser get and compare data from the next sites:
 
@@ -8,22 +8,32 @@ This parser get and compare data from the next sites:
 - skinsjar
 - opskins
 
-_File **coefficients.txt** allows to edit sites comission.
-The price of goods is indicated in **rubles**_
+**options.ini** allows you to edit eny scraping parameter.
+The price of goods is indicated in **rubles**
 
-### **Usage**
+##  **Dependencies:**
+
+- telebot
+- cfscrape
+
+##  **Usage:**
 
 Software was tested on Windows 8.1, x64, i486, MSC v.1900 (AMD 64).
 
-1. Install Anaconda python from original website:
+1. Install Anaconda python from original website, minimum:
 	-	Anaconda 4.4.0 (64-bit) 
     
-2. Start scraping items by following command in your terminal:
+2. Install all dependencies
+    
+3. Start scraping items by following command in your terminal:
 	-	python parser.py
     
-3. Open .csv files in folder 'scraped_files' for analytical usage
+    3.1 Or you can use your telegram bot instance and make all through it:
+    	-	python bot.py
+    
+4. Open .csv files in folder 'scraped_files' for analytical usage or use your telegram bot instance
 
-**Advantages**
+## **Advantages**
 
 1. Scrape and compare data take amount of 1 minute (a lot of scrapers with payment pass it in 10 - 50 minutes):
 
@@ -47,7 +57,8 @@ opskins <--> csgosell, opskins <--> skinsjar, opskins <--> csmoney, ..., etc
 4. sort by price and profit relative to second shop/exchanger in descending order: default (without flag)
 
 For p.1, main influence for time scraping is coming from **record_count** parameter for Opskins scraping if timeout values are constant.
-The table data correspond to a small sample of 10 tests:
+
+### The table data correspond to a small sample of 10 tests:
 
 | Record count  | Average time | Min(timeout), const | Max(timeout), const |
 | ------------- | ------------ | ------------------- | ------------------- |
@@ -68,13 +79,13 @@ scraping_config = {"shops": shops, "exchangers": exchangers, "opskins_config": {
 analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0, "min_price": 1, "max_price": 1000, "min_profit": 30, "max_profit": 150, "sort_flag": 'profit_priceDESC', "compare_equal": True, "bound_profit": 150}
 
 
-**Coming feauture**
+## **Coming feauture**
 
 - search and parse info about item by name from steam-analyst - standalone module at now
-- telegram bot for simple UI (API)
+- boost scraping time
 
-**License**
+## **License**
 
 MIT
 
-### **For informational purposes only**
+##  **For informational purposes only**
