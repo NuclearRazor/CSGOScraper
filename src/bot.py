@@ -81,6 +81,10 @@ def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
 
+def filterfiles(nec_files, todel_files):
+    return [file for file in nec_files if file not in todel_files]
+
+
 @bot.message_handler(regexp = '/setconfig')
 def handle_cmd(message):
     '''
@@ -327,7 +331,7 @@ def handle_cmd(message):
             '{}\tError: {} Can\'t find info for item: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e, _searchitem))
 
 
-@bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata'])
+@bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata', 'getscraped'])
 def handle_main(message):
     time.sleep(0.5)
     if 'help' in message.text:
@@ -335,10 +339,31 @@ def handle_main(message):
         /rate CUR: get csmoney exchange rate for typed currency (RUB as default)\n\n\
         /getlast: get last scraped final table\n\n\
         /getdata: start scraping all data\n\n\
+        /getscraped: get all scraped tables for shops and exchangers\n\n\
         /setconfig KEY VALUE: set options to scraper, keys must be named as is\n\n\
         /getconfig: get options table for scraping\n\n\
         /getitem NAME: get info in last final table for entered item name\n"
         bot.send_message(message.chat.id, _help_text)
+
+    if 'getscraped' in message.text:
+        try:
+            _path = os.getcwd()
+            _files = [i for i in filter(lambda x: x.endswith('.csv'), os.listdir(_path))]
+            _unnecessary = ['options.csv', 'iteminfo.csv']
+            _filteredfiles = filterfiles(_files, _unnecessary)
+            _markfiles = ', '.join(_filteredfiles)
+            bot.reply_to(message, 'Send files: {}'.format(_markfiles))
+
+            if len(_filteredfiles) != 0:
+                _filteredfiles = [os.path.join(_path, i) for i in _filteredfiles]
+                for file_path in _filteredfiles:
+                    doc = open(file_path, 'rb')
+                    bot.send_document(message.chat.id, doc)
+            else:
+                bot.send_document(message.chat.id, 'There no scraped files')
+        except Exception as e:
+            bot.send_message(message.chat.id, "Can\'t send scraped files")
+            logging.error('{}\tCan\'t send scraped files: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
     if 'getlast' in message.text:
         try:
@@ -362,6 +387,7 @@ def handle_main(message):
                 webpage = scraper.get(money_url).content
                 json_mon = json.loads(webpage)
                 _allkeys = list(json_mon["list_currency"].keys())
+                _allkeys = ', '.join(_allkeys)
                 if value not in _allkeys:
                     bot.reply_to(message, 'There is no supported currency: {}\n\nAll supported currencies:\n\n{}\n'.format(value, _allkeys))
                     return

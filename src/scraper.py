@@ -93,7 +93,7 @@ class ParseMarkets(mc.MetaConfig):
                 _data.pop('opskins_config', None)
                 [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
         except Exception as e:
-            logging.error('{}\tError: Can\'t find file with name: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+            logging.error('{}\tError: Can\'t scrape, error: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def get_url_regular(self, link):
@@ -241,6 +241,6 @@ class ParseMarkets(mc.MetaConfig):
 
 
 #uncomment it to use scraper like a standalone module
-if __name__ == '__main__':
-
-    MainApp = ParseMarkets()
+# if __name__ == '__main__':
+#
+#     MainApp = ParseMarkets()
