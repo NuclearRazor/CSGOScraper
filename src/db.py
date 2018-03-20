@@ -26,11 +26,21 @@ class DataAnalyse(mc.MetaConfig):
 
 
         db_name = 'parsing_data'
+
         # delete file for speed boost
         try:
             os.remove(db_name+'.db')
         except:
             print("Can't remove database file")
+
+        # delete all previous compared tables
+        try:
+            _path = os.getcwd()
+            _data_path = os.path.join(_path, 'scraped_files')
+            _files = [os.path.join(_data_path, i) for i in  os.listdir(_data_path)]
+            [os.remove(i) for i in _files]
+        except:
+            pass
             
         # make new directory
         dir = "./scraped_files"

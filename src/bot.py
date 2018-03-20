@@ -17,7 +17,6 @@ conn = None
 c = None
 
 bot = telebot.TeleBot(API_TOKEN)
-#telebot.logger.setLevel(logging.DEBUG)
 
 logging.basicConfig(filename='logging_data.log', level=logging.DEBUG)
 
@@ -331,19 +330,41 @@ def handle_cmd(message):
             '{}\tError: {} Can\'t find info for item: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e, _searchitem))
 
 
-@bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata', 'getscraped'])
+@bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata', 'getscraped', 'getcompared'])
 def handle_main(message):
     time.sleep(0.5)
     if 'help' in message.text:
         _help_text = u"\rType next commands to use the bot:\n\n\
         /rate CUR: get csmoney exchange rate for typed currency (RUB as default)\n\n\
-        /getlast: get last scraped final table\n\n\
+        /getlast: get last compared final table\n\n\
         /getdata: start scraping all data\n\n\
         /getscraped: get all scraped tables for shops and exchangers\n\n\
+        /getcompared: get all compared tables for shops and exchangers\n\n\
         /setconfig KEY VALUE: set options to scraper, keys must be named as is\n\n\
         /getconfig: get options table for scraping\n\n\
         /getitem NAME: get info in last final table for entered item name\n"
         bot.send_message(message.chat.id, _help_text)
+
+
+    if 'getcompared' in message.text:
+        try:
+            _path = os.getcwd()
+            _data_path = os.path.join(_path, 'scraped_files')
+            _files = [i for i in  os.listdir(_data_path)]
+            _markfiles = ', '.join(_files)
+            bot.reply_to(message, 'Send files: {}'.format(_markfiles))
+
+            if len(_files) != 0:
+                _files = [os.path.join(_data_path, i) for i in os.listdir(_data_path)]
+                for file_path in _files:
+                    doc = open(file_path, 'rb')
+                    bot.send_document(message.chat.id, doc)
+            else:
+                bot.send_document(message.chat.id, 'There no compared files')
+        except Exception as e:
+            bot.send_message(message.chat.id, "Can\'t send compared files")
+            logging.error('{}\tCan\'t send compared files: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+
 
     if 'getscraped' in message.text:
         try:
@@ -365,6 +386,7 @@ def handle_main(message):
             bot.send_message(message.chat.id, "Can\'t send scraped files")
             logging.error('{}\tCan\'t send scraped files: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
+
     if 'getlast' in message.text:
         try:
             _path = os.getcwd()
@@ -376,6 +398,7 @@ def handle_main(message):
         except Exception as e:
             bot.send_message(message.chat.id, "Can\'t send final table")
             logging.error('{}\tCan\'t send final table: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+
 
     if 'rate' in message.text:
 
