@@ -241,13 +241,6 @@ class ParseMarkets(mc.MetaConfig):
 
 
 #uncomment it to use scraper like a standalone module
-# if __name__ == '__main__':
-#
-#     start_fx = dt.datetime.now().replace(microsecond = 0)
-#
-#     MainApp = ParseMarkets()
-#
-#     print("\nStarted. TIME: " + str(start_fx))
-#     finish_fx = dt.datetime.now().replace(microsecond = 0)
-#     print("Finished. TIME: " + str(finish_fx))
-#     print("Elapsed. Time:", str((finish_fx - start_fx)))
+if __name__ == '__main__':
+
+    MainApp = ParseMarkets()
