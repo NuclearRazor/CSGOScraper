@@ -94,6 +94,8 @@ analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0, "
 
 **/getdata**: start scraping all data
 
+**/getscraped**: get all scraped tables for shops and exchangers
+
 **/setconfig** KEY VALUE: set options to scraper, keys must be named as is
 
 **/getconfig**: get options table for scraping
