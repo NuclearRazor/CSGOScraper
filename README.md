@@ -104,10 +104,7 @@ analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0, "
 
 **/getitem** NAME: get info in last final table for entered item name
 
-## **Coming feauture**
-
-- search and parse info about item by name from steam-analyst - standalone module at now
-- boost scraping time
+**/template** each command on newline: bot will handle all your listed commands (that are supported)
 
 ## **License**
 
