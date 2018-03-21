@@ -16,7 +16,10 @@ API_TOKEN = ''
 conn = None
 c = None
 
-bot = telebot.TeleBot(API_TOKEN)
+main_commands = ['help', 'getlast', 'rate', 'getdata', 'getscraped', 'getcompared']
+regular_commands = ['/setconfig', '/getconfig', '/getitem']
+
+bot = telebot.TeleBot(API_TOKEN, num_threads = 4)
 
 logging.basicConfig(filename='logging_data.log', level=logging.DEBUG)
 
@@ -84,8 +87,48 @@ def filterfiles(nec_files, todel_files):
     return [file for file in nec_files if file not in todel_files]
 
 
+@bot.message_handler(regexp = '/template')
+def command_template(message):
+    bot.send_message(message.chat.id, "Handle your commands...")
+
+    try:
+        _allcmds = message.text.splitlines()
+        _alexer = list(filter(None, _allcmds))
+
+        for cmd in _alexer:
+            message.text = cmd
+
+            if isinstance(cmd, str):
+                _cmd = cmd
+            else:
+                continue
+
+            handle_main(message)
+
+            message.text = _cmd
+
+            _sep = ' '
+            _restcmd = _cmd.split(_sep, 1)[0]
+
+            # this is a simple handlers
+            if _restcmd == '/setconfig':
+                bot.message_handler(regexp = _restcmd, func = handle_setconfig)
+                handle_setconfig(message)
+
+            if _restcmd == '/getconfig':
+                bot.message_handler(regexp = _restcmd, func = handle_getconfig)
+                handle_getconfig(message)
+
+            if _restcmd == '/getitem':
+                bot.message_handler(regexp = _restcmd, func = handle_item)
+                handle_item(message)
+    except Exception as e:
+        bot.send_message(message.chat.id, "Can\'t handle commands")
+        logging.error('{}\tCan\'t handle commands: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+
+
 @bot.message_handler(regexp = '/setconfig')
-def handle_cmd(message):
+def handle_setconfig(message):
     '''
     update value for key in options.ini
     '''
@@ -208,7 +251,7 @@ def handle_cmd(message):
 
 
 @bot.message_handler(regexp = '/getconfig')
-def handle_cmd(message):
+def handle_getconfig(message):
     '''
     get options.csv - table witk KEY and VALUE columns
     '''
@@ -249,11 +292,7 @@ def handle_cmd(message):
 
 
 @bot.message_handler(regexp = '/getitem')
-def handle_cmd(message):
-
-    bot.reply_to(message, "\nSearching info in final table for entered item name:\n\n\
-    1. Use maximally similar names to item names in tables\n\
-    2. This method works only with last final table\n")
+def handle_item(message):
 
     _pattern = r'[\w\D]+'
     _searcheditem = re.findall(_pattern, message.text)
@@ -267,6 +306,10 @@ def handle_cmd(message):
             return
     else:
         _searchitem = ''
+
+    bot.reply_to(message, "\nSearching info in final table for entered item name: {}\n\n\
+    1. Use maximally similar names to item names in tables\n\
+    2. This method works only with last final table\n".format(_searchitem))
 
     if sys.platform == 'win32':
         sys._enablelegacywindowsfsencoding()
@@ -330,21 +373,34 @@ def handle_cmd(message):
             '{}\tError: {} Can\'t find info for item: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e, _searchitem))
 
 
-@bot.message_handler(commands=['help', 'getlast', 'rate', 'getdata', 'getscraped', 'getcompared'])
+@bot.message_handler(commands=main_commands)
 def handle_main(message):
+    # make a little pause
     time.sleep(0.5)
+
+
     if 'help' in message.text:
         _help_text = u"\rType next commands to use the bot:\n\n\
-        /rate CUR: get csmoney exchange rate for typed currency (RUB as default)\n\n\
-        /getlast: get last compared final table\n\n\
-        /getdata: start scraping all data\n\n\
-        /getscraped: get all scraped tables for shops and exchangers\n\n\
-        /getcompared: get all compared tables for shops and exchangers\n\n\
-        /setconfig KEY VALUE: set options to scraper, keys must be named as is\n\n\
-        /getconfig: get options table for scraping\n\n\
-        /getitem NAME: get info in last final table for entered item name\n"
-        bot.send_message(message.chat.id, _help_text)
+/rate CUR\n- get csmoney exchange rate for typed currency (RUB as default)\n\
+Example: /rate EUR\n\n\
+/getlast\n- get last compared final table\n\n\
+/getdata\n- start scraping all data\n\n\
+/getscraped\n- get all scraped tables for shops and exchangers\n\n\
+/getcompared\n- get all compared tables for shops and exchangers\n\n\
+/setconfig KEY VALUE\n- set options to scraper, keys must be named as is\n\
+Example: /setconfig min_price 100\n\n\
+/getconfig\n- get options table for scraping\n\n\
+/getitem NAME\n- get info in last final table for entered item name\n\
+Example: /getitem AK-47\n\n\
+/template each command on newline\n- bot will handle all your listed commands (that are supported)\n\
+Example:\n\n\
+/template\n\
+/help\n\
+/getlast\n\
+/getitem AUG\n\
+/help\n"
 
+        bot.send_message(message.chat.id, _help_text)
 
     if 'getcompared' in message.text:
         try:
@@ -394,6 +450,7 @@ def handle_main(message):
             _files = [os.path.join(_data_path, i) for i in filter(lambda x: x.endswith('.csv'), os.listdir(_data_path))]
             _newest = sorted(_files, key=lambda x: os.path.getmtime(x))[-1]
             doc = open(_newest, 'rb')
+            time.sleep(0.01)
             bot.send_document(message.chat.id, doc)
         except Exception as e:
             bot.send_message(message.chat.id, "Can\'t send final table")
