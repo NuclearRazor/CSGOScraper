@@ -90,11 +90,13 @@ analyze_config = {"shops": shops, "exchangers": exchangers, "overall_rate": 0, "
 
 **/rate** CUR: get csmoney exchange rate for typed currency (RUB as default)
 
-**/getlast**: get last scraped final table
+**/getlast**: get last compared final table
 
-**/getdata**: start scraping all data
+**/getdata**: start scraping all data (it will return resul table)
 
 **/getscraped**: get all scraped tables for shops and exchangers
+
+**/getcompared**: get all compared tables for shops and exchangers
 
 **/setconfig** KEY VALUE: set options to scraper, keys must be named as is
 
