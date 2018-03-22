@@ -13,8 +13,14 @@ The price of goods is indicated in **rubles**
 
 ##  **Dependencies:**
 
-- telebot (if you want to use Telegram bot)
+- pyTelegramBotAPI (if you want to use Telegram bot)
 - cfscrape (for 'safely' get-requests)
+- requests
+- selenium
+- pandas
+- lxml
+
+*Project includes Dockerfile and requirements.txt
 
 ##  **Usage:**
 
