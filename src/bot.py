@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import telebot
+from telebot import apihelper
 import time
 import sys
 import logging
@@ -12,6 +13,9 @@ import re
 import pandas as pd
 
 API_TOKEN = ''
+
+#For using SOCKS5, but be carefull it way cause SSLError (not cause TU errors):
+#apihelper.proxy = {'https':'socks5://userproxy:password@proxy_address:port'}
 
 conn = None
 c = None

@@ -1,6 +1,6 @@
-pandas==0.21.0
-lxml==3.7.3
 cfscrape==1.9.0
+pandas==0.22.0
+requests==2.18.4
+lxml==3.7.3
 selenium==3.7.0
-requests==2.7.0
-pyTelegramBotAPI==3.6.1
+pyTelegramBotAPI==3.6.2
