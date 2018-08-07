@@ -1,6 +1,6 @@
 ## CSGO SCRAPER
 
-This parser get and compare data from the next sites:
+This scraper get data from the next sites and compare item prices for the best profit:
 
 - csgotm
 - csgosell
@@ -26,26 +26,26 @@ The price of goods is indicated in **rubles**
 
 Software was tested on Windows 8.1, x64, i486, MSC v.1900 (AMD 64).
 
-1. Install Anaconda python from original website, minimum:
+1. Install Anaconda python from original website, minimum version is:
 	-	Anaconda 4.4.0 (64-bit) 
     
 2. Install all dependencies
     
-3. Start scraping items by following command in your terminal:
-	-	python parser.py
+3. _Start scraping_ items by following command in your terminal:
+	-	python scraper.py
     
-    3.1 Or you can use your telegram bot instance and make all through it:
+    3.1 Or you can use your _telegram bot_ instance and make all through it:
     	-	python bot.py
     
 4. Open .csv files in folder 'scraped_files' for analytical usage or use your telegram bot instance
 
 ## **Advantages**
 
-1. Scrape and compare data take amount of 1 minute (a lot of scrapers with payment pass it in 10 - 50 minutes):
+1. All evaluations take amount of ~ 3 - 10 minutes (a lot of scrapers with payment pass it in 10 - 50 minutes):
 
-2. In result table you can see URL link's to each good item on opskins market
+2. Result table include URL links to each good item on opskins market
 
-3. You can controll market and exchangers comission and it's scraping options in options.ini
+3. You can take a control on market and exchanges commission and its scraping options in options.ini
 
 4. You can get item info in final table by /getitem NAME bot command
 
