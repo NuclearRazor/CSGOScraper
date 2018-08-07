@@ -130,14 +130,17 @@ class Opskins_Market(mc.MetaConfig):
 
     # parse items from opskins market
     def parse_opskins(self):
-        try: #too rude
+        # try to use chrome
+        try:
             driver = selenium.webdriver.Chrome()
+        # if not, then use mozilla
         except:
-            driver = selenium.webdriver.Firefox()
-            # 'hide' browser
-            driver.set_window_position(-2000, 0)
+            # ypu may use
+            # executable_path constructor variable
+            driver = selenium.webdriver.Firefox(executable_path='C:\LIBS_ETC\BROWSER_DRIVERS\geckodriver.exe')
 
         driver.get(self.shop_url)
+
         # 120 - empiric correctly value
         wait = WebDriverWait(driver, 120)
         wait.until(EC.presence_of_element_located((By.XPATH, self.loaded_xpath)))

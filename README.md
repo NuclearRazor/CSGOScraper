@@ -14,7 +14,7 @@ The price of goods is indicated in **rubles**
 ##  **Dependencies:**
 
 - pyTelegramBotAPI (if you want to use Telegram bot)
-- cfscrape (for 'safely' get-requests)
+- cfscrape
 - requests
 - selenium
 - pandas

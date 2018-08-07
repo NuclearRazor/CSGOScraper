@@ -291,7 +291,7 @@ class DataAnalyse(mc.MetaConfig):
         conn.close()
 
 
-    #ru quality to universal quality
+    # translate russian description into international
     def translate_csgotm_qual(self, current_qual):
         if current_qual == 'Закаленное в боях':
             return u'BS'
@@ -307,7 +307,7 @@ class DataAnalyse(mc.MetaConfig):
 
 
     #make a result table with current profits
-    # --profit_and_price2-- defines the way analyzer should sort items
+    #defines the way analyzer should sort items
     def find_profit_in_DB_in_range(self, db_name, min_profit, max_profit, tables, output_filepath, profit_and_price2):
         #safety
         loc_min_pr = int(min_profit)

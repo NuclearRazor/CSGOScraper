@@ -88,12 +88,12 @@ class ParseMarkets(mc.MetaConfig):
                       'csmoney_data.csv': self.parse_csmoneymarket,\
                       'skinsjar_data.csv': self.parse_skinsjarmarket\
                      }
-        try:
-            if _data["opskins_config"]:
-                _data.pop('opskins_config', None)
-                [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
-        except Exception as e:
-            logging.error('{}\tError: Can\'t scrape, error: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+        #try:
+        if _data["opskins_config"]:
+            _data.pop('opskins_config', None)
+            [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
+        # except Exception as e:
+        #     logging.error('{}\tError: Can\'t scrape, error: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def get_url_regular(self, link):
@@ -121,91 +121,106 @@ class ParseMarkets(mc.MetaConfig):
 
     def parse_csgotmmarket(self, site_comission = 1):
 
-        csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
-        site_data = self.get_url_safe(csgo_url)
-        data = json.loads(site_data)
-        file_name = 'https://market.csgo.com/itemdb/' + data['db']
-        site_data = self.get_url_safe(file_name)
+        try:
 
-        with open('csgotm_full_data.csv', 'wb') as file:
-            file.write(site_data)
+            csgo_url = 'https://market.csgo.com/itemdb/current_730.json'
+            site_data = self.get_url_safe(csgo_url)
+            data = json.loads(site_data)
+            file_name = 'https://market.csgo.com/itemdb/' + data['db']
+            site_data = self.get_url_safe(file_name)
 
-        origin_file = pd.read_csv('csgotm_full_data.csv', delimiter=";")
-        keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
-        new_file = origin_file[keep_col]
-        comission = int(site_comission)/100
-        new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float(x/100)*(1 + comission), 2))
-        new_file['c_market_name_en'] = new_file['c_market_name_en'].str.replace(r"\(.*\)", "")
-        csgotm_csv_db = new_file.reset_index()
-        csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
+            with open('csgotm_full_data.csv', 'wb') as file:
+                file.write(site_data)
+
+            origin_file = pd.read_csv('csgotm_full_data.csv', delimiter=";")
+            keep_col = ['c_market_name_en', 'c_price', 'c_offers', 'c_popularity', 'c_rarity', 'c_quality']
+
+            # stay only columns that we need
+            new_file = origin_file[keep_col]
+
+            comission = int(site_comission)//100
+            new_file['c_price'] = new_file['c_price'].apply(lambda x: round(float(x/100)*(1 + comission), 2))
+            new_file['c_market_name_en'] = new_file['c_market_name_en'].str.replace(r"\(.*\)", "")
+            csgotm_csv_db = new_file.reset_index()
+            csgotm_csv_db.to_csv('csgotm_data.csv', index=False)
+
+        except Exception as e:
+            logging.error('{}\tError: Can\'t scrape Csgo market: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def parse_csmoneymarket(self, site_comission = 1):
 
-        csmoney_url = 'https://cs.money/load_bots_inventory?hash='
-        site_data = self.get_url_safe(csmoney_url)
-        clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
-        csmoney_comission = int(site_comission)/100
-        csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, self.convert_course)
-        csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
-        self.save_data(csmoney_header, clear_data, csmoney_fixed_price, 'csmoney_data')
+        try:
+
+            csmoney_url = 'https://cs.money/load_bots_inventory?hash='
+            site_data = self.get_url_safe(csmoney_url)
+            clear_data = self.json_filter(site_data, 'm', 'e', 'p', 'f')
+            csmoney_comission = int(site_comission)//100
+            csmoney_fixed_price = self.evaluate_price(clear_data['prices'], csmoney_comission, self.convert_course)
+            csmoney_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+            self.save_data(csmoney_header, clear_data, csmoney_fixed_price, 'csmoney_data')
+
+        except Exception as e:
+            logging.error('{}\tError: Can\'t scrape Csmoney market: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def parse_csgosellmarket(self, site_comission = 1):
 
-        csgosell_url = 'https://csgosell.com/phpLoaders/forceBotUpdate/all.txt'
-        site_data = self.get_url_safe(csgosell_url)
-        clear_data = self.json_filter(site_data, 'h', 'e', 'p', 'f')
-        csgosell_comission = int(site_comission)/100
-        csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, self.convert_course)
-        csgosell_header = ["index", "c_market_name_en", "c_price", "c_quality"]
-        self.save_data(csgosell_header, clear_data, csgosell_fixed_price, 'csgosell_data')
+        try:
+
+            csgosell_url = 'https://csgosell.com/phpLoaders/forceBotUpdate/all.txt'
+            site_data = self.get_url_safe(csgosell_url)
+            clear_data = self.json_filter(site_data, 'h', 'e', 'p', 'f')
+            csgosell_comission = int(site_comission)//100
+            csgosell_fixed_price = self.evaluate_price(clear_data['prices'], csgosell_comission, self.convert_course)
+            csgosell_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+            self.save_data(csgosell_header, clear_data, csgosell_fixed_price, 'csgosell_data')
+
+        except Exception as e:
+            logging.error('{}\tError: Can\'t scrape Csgosell market: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def parse_skinsjarmarket(self, site_comission = 1):
 
-        skinsjar_url = 'https://skinsjar.com/api/v3/load/bots?refresh=0&v=0'
+        try:
 
-        site_data = self.get_url_regular(skinsjar_url)
+            skinsjar_url = 'https://skinsjar.com/api/v3/load/bots?refresh=0&v=0'
 
-        #name = []
-        short_name = []
-        price = []
-        each_el = []
-        float_val = []
-        ext = []
-        row_index = []
-        row_value = 0
-        data = json.loads(site_data)
+            site_data = self.get_url_regular(skinsjar_url)
 
-        for each in data['items']:
-            each_el.append(each)
-            '''
-            item names with qualities
-            # if 'name' in each:
-            #     name.append(each['name'])
-            #     row_index.append(row_value)
-            #     row_value += 1
-            '''
-            if 'shortName' in each:
-                #item names without qualities
-                short_name.append(each['shortName'])
-                row_index.append(row_value)
-                row_value += 1
-            if 'exterior' in each:
-                ext.append(each['exterior'])
+            short_name = []
+            price = []
+            each_el = []
+            float_val = []
+            ext = []
+            row_index = []
+            row_value = 0
+            data = json.loads(site_data)
 
-        for item in each_el:
-            if 'price' in item:
-                price.append(item['price'])
-            if 'floatMax' in item:
-                float_val.append(item['floatMax'])
+            for each in data['items']:
+                each_el.append(each)
+                if 'shortName' in each:
+                    #item names without qualities
+                    short_name.append(each['shortName'])
+                    row_index.append(row_value)
+                    row_value += 1
+                if 'exterior' in each:
+                    ext.append(each['exterior'])
 
-        skinsjar_comission = int(site_comission)/100
-        skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, self.convert_course)
-        skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
-        my_df = pd.DataFrame(list(map(list, zip(row_index, short_name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
-        my_df.to_csv('skinsjar_data.csv', index=False)
+            for item in each_el:
+                if 'price' in item:
+                    price.append(item['price'])
+                if 'floatMax' in item:
+                    float_val.append(item['floatMax'])
+
+            skinsjar_comission = int(site_comission)//100
+            skinsjar_fixed_price = self.evaluate_price(price, skinsjar_comission, self.convert_course)
+            skinsjar_header = ["index", "c_market_name_en", "c_price", "c_quality"]
+            my_df = pd.DataFrame(list(map(list, zip(row_index, short_name, skinsjar_fixed_price, ext))), columns=skinsjar_header)
+            my_df.to_csv('skinsjar_data.csv', index=False)
+
+        except Exception as e:
+            logging.error('{}\tError: Can\'t scrape Skinsjar market: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def json_filter(self, webpage, name, quality, price, flt):
@@ -240,7 +255,7 @@ class ParseMarkets(mc.MetaConfig):
         return json_dict
 
 
-#uncomment it to use scraper like a standalone module
-# if __name__ == '__main__':
-#
-#     MainApp = ParseMarkets()
+#uncomment it to use scraper like standalone script
+if __name__ == '__main__':
+
+    MainApp = ParseMarkets()
