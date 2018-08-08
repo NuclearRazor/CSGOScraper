@@ -166,9 +166,11 @@ class Opskins_Market(mc.MetaConfig):
                 expires=expire_value, discard=True, comment=None,
                 comment_url=None, rfc2109=False
             )
+
             # set edited cookies
             b.set_cookie(ck)
-        # create "lazy" headers
+
+        # create header
         h = {
             'User-Agent': user_agent,
             'referer': 'https://opskins.com/?loc=shop_browse',
@@ -187,9 +189,11 @@ class Opskins_Market(mc.MetaConfig):
             r.encoding = 'utf-8'
             page_index += 1
             results = results + self.parse_output(r.text)
+            
             # go to the next page or not
             if (len(results) > self.record_count):
                 break
+
             # add some "stochastic"
             wait_time = self.mint + 0.01 * random.randint(0, self.maxt)
             time.sleep(wait_time)

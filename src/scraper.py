@@ -88,12 +88,12 @@ class ParseMarkets(mc.MetaConfig):
                       'csmoney_data.csv': self.parse_csmoneymarket,\
                       'skinsjar_data.csv': self.parse_skinsjarmarket\
                      }
-        #try:
-        if _data["opskins_config"]:
-            _data.pop('opskins_config', None)
-            [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
-        # except Exception as e:
-        #     logging.error('{}\tError: Can\'t scrape, error: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
+        try:
+            if _data["opskins_config"]:
+                _data.pop('opskins_config', None)
+                [[_hash_data[_item](_hash_params[_item]) for _item in _data[_key]] for _key in _data]
+        except Exception as e:
+            logging.error('{}\tError: Can\'t scrape, error: {}'.format(dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), e))
 
 
     def get_url_regular(self, link):

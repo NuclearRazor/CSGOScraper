@@ -43,14 +43,12 @@ class MetaConfig():
 
     # evaluate prices in list
     def evaluate_price(self, prices_data, comission, cource_value):
-        fixed_price = [round((float(p_item)*(1.0+comission))*cource_value, 2) for p_item in prices_data]
-        return fixed_price
+        return [round((float(p_item)*(1.0+comission))*cource_value, 2) for p_item in prices_data]
 
 
     # evaluate price value while scrape opskins items
     def evaluate_opskins_price(self, price_element, comission, cource_value):
-        fixed_price = round((float(price_element)*(1.0+comission))*cource_value, 2)
-        return fixed_price
+        return round((float(price_element)*(1.0+comission))*cource_value, 2)
 
 
     # check file coefficients.txt
@@ -61,14 +59,15 @@ class MetaConfig():
         if os.path.isfile(file_path):
             return True
         else:
-            print('Cannot find file: ', filename)
+            print('Cannot find file: {}'.format(filename))
             return False
 
 
 # return instance of MetaConfig class
 def createWidget():
     global instance
+
+    instance = MetaConfig()
+
     if instance is not None:
         return instance
-    instance = MetaConfig()
-    return instance
