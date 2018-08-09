@@ -1,4 +1,5 @@
-## CSGO SCRAPER
+## CSGOS 
+CS:GO items scraper
 
 This scraper get data from the next sites and compare item prices for the best profit:
 
